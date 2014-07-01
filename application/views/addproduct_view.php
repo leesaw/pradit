@@ -13,13 +13,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <h3 class="page-header">เพิ่มข้อมูลสินค้า</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="panel panel-default">
 					<div class="panel-heading"><strong>กรุณาใส่ข้อมูลให้ครบทุกช่อง</strong></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 

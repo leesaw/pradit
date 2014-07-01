@@ -18,7 +18,7 @@
         </div>
 		
 		<div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -57,6 +57,7 @@
             "bProcessing": true,
             "sPaginationType": "full_numbers",
             'bServerSide'    : false,
+            "autoWidth": false,
             "bDeferRender": true,
             'sAjaxSource'    : '<?php echo site_url("managecustomer/getdatabyajax"); ?>',
             "fnServerData": function ( sSource, aoData, fnCallback ) {

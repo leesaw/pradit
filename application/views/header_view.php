@@ -8,4 +8,4 @@ w3.org/1999/xhtml'>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/sb-admin.css" >
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/plugins/dataTables/dataTables.bootstrap.css" >
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/jquery-ui-1.10.4.min.css" >
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/plugins/dataTables/jquery.dataTables.css" >
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/plugins/dataTables/jquery.dataTables.css" > -->
