@@ -10676,7 +10676,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "ไม่พบข้อมูล",
 	
 	
 			/**
@@ -10708,7 +10708,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "แสดงข้อมูลที่ _START_ ถึง _END_ จากทั้งหมด _TOTAL_  ข้อมูล",
 	
 	
 			/**
@@ -10729,7 +10729,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "แสดงข้อมูลที่ 0 ถึง 0 จากทั้งหมด 0 ข้อมูล",
 	
 	
 			/**
