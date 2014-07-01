@@ -95,14 +95,14 @@
 											<p class="help-block"><?php echo form_error('pricenovat'); ?></p>
                                     </div>
 							</div>
-							<!--
+							
 							<div class="col-lg-3 col-lg-offset-1">
 									<div class="form-group">
                                             <label>ราคารวม VAT *</label>
                                             <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo set_value('pricevat'); ?>">
 											<p class="help-block"><?php echo form_error('pricevat'); ?></p>
                                     </div>
-							</div> -->
+							</div>
 							<div class="col-lg-3 col-lg-offset-1">
 									<div class="form-group">
                                             <label>ราคารวมส่วนลด *</label>

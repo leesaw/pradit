@@ -18,12 +18,12 @@
         </div>
 		
 		<div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <div class="panel panel-default">
 					<div class="panel-heading"><button type="button" class="btn btn-outline btn-success" onClick="window.location.href='<?php echo site_url("manageuser/adduser"); ?>'">เพิ่มผู้ใช้งาน</button></div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped row-border table-hover" id="dataTables-example">
+                            <table class="table table-striped row-border table-hover" id="usertable">
                                 <thead>
                                     <tr>
                                         <th>Username</th>
@@ -69,15 +69,15 @@
 </div>
 
 <?php $this->load->view('js_footer'); ?>
-<script src="<?php echo base_url(); ?>/js/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="<?php echo base_url(); ?>/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script src="<?php echo base_url(); ?>/js/bootbox.min.js"></script>
+<script src="<?php echo base_url(); ?>js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="<?php echo base_url(); ?>js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="<?php echo base_url(); ?>js/bootbox.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#usertable').dataTable({"order": [[ 0, "asc" ]]});
+	});
+</script>
 	
 <script>
     // tooltip demo
