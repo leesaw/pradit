@@ -12,13 +12,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-md-10">
                 <h3 class="page-header">เพิ่มข้อมูลลูกค้า</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-md-10">
                 <div class="panel panel-default">
 					<div class="panel-heading"><strong>กรุณาใส่ข้อมูลให้ครบทุกช่อง</strong></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 
@@ -27,7 +27,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-3">
                                 <?php echo form_open('managecustomer/save'); ?>
                                     <div class="form-group">
                                             <label>รหัสลูกค้า *</label>
@@ -37,7 +37,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label>คำนำหน้า *</label>
                                         <select class="form-control" name="title" id="title">
@@ -49,7 +49,7 @@
                                     </div>
 							</div>
 							
-							<div class="col-lg-8 col-lg-offset-1">
+							<div class="col-md-8">
 									<div class="form-group">
                                             <label>ชื่อลูกค้า *</label>
                                             <input type="text" class="form-control" name="name" id="name" value="<?php echo set_value('name'); ?>">
@@ -58,7 +58,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12">
+							<div class="col-md-8">
 									<div class="form-group">
                                             <label>ที่อยู่ *</label>
                                             <textarea class="form-control" name="address" id="address" rows="3"><?php echo set_value('address'); ?></textarea>
@@ -67,7 +67,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label>จังหวัด *</label>
                                         <select class="form-control" name="province" id="province">
@@ -78,7 +78,7 @@
                                         </select>
                                     </div>
 							</div>
-							<div class="col-lg-3 col-lg-offset-1">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>รหัสไปรษณีย์ *</label>
                                             <input type="text" class="form-control" name="zipcode" id="zipcode" maxlength="5" value="<?php echo set_value('zipcode'); ?>">
@@ -87,7 +87,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									
 									<div class="form-group">
                                             <label>เบอร์โทรศัพท์ *</label>
@@ -95,7 +95,7 @@
 											<p class="help-block"><?php echo form_error('telephone'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									
 									<div class="form-group">
                                             <label>FAX *</label>
@@ -105,14 +105,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<div class="form-group">
                                             <label>ชื่อผู้ติดต่อ *</label>
                                             <input type="text" class="form-control" name="contactname" id="contactname" value="<?php echo set_value('contactname'); ?>">
 											<p class="help-block"><?php echo form_error('contactname'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-md-4">
 									<div class="form-group">
                                             <label>วงเงินอนุมัติ (Credit) *</label>
                                             <input type="text" class="form-control" name="credit" id="credit" value="<?php echo set_value('credit'); ?>">
@@ -121,14 +121,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-4">
 									<div class="form-group">
                                             <label>เลขประจำตัวผู้เสียภาษี *</label>
                                             <input type="text" class="form-control" name="taxid" id="taxid" value="<?php echo set_value('taxid'); ?>">
 											<p class="help-block"><?php echo form_error('taxid'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-4">
 									<div class="form-group">
                                         <label>เงื่อนไขการชำระเงิน *</label>
                                         <select class="form-control" name="status" id="status">
@@ -138,7 +138,7 @@
                                         </select>
                                     </div>
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>จำนวนวันเครดิต </label>
                                             <input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo set_value('creditday'); ?>">
@@ -147,7 +147,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-4">
 									<div class="form-group">
                                             <label>ราคาขาย *</label>
                                             <select class="form-control" name="saleprice" id="saleprice">
@@ -157,7 +157,7 @@
                                         </select>
                                     </div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-md-4">
 									<div class="form-group">
                                             <label>ส่วนลด *</label>
                                             <input type="text" class="form-control" name="discount" id="discount" value="<?php echo set_value('discount'); ?>">
@@ -167,7 +167,7 @@
 							
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<button type="submit" class="btn btn-primary">  เพิ่มข้อมูลลูกค้า  </button>
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("managecustomer"); ?>'"> ยกเลิก </button>
 							</div>

@@ -162,4 +162,13 @@ class Manageuser extends CI_Controller {
 			}
 			$this->load->view('edituser_view',$data);
 	}
+	
+	function banUser()
+	{
+		
+		$id = $this->uri->segment(3);
+		$result = $this->user->banUser($id);
+		
+		redirect('manageuser', 'refresh');
+	}
 }

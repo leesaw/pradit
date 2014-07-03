@@ -27,7 +27,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <?php echo form_open('managebranch/save'); ?>
                                     <div class="form-group">
                                             <label>ชื่อสาขา *</label>
@@ -58,7 +58,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-4">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label>เบอร์โทรศัพท์ *</label>
@@ -66,7 +66,7 @@
 											<p class="help-block"><?php echo form_error('telephone'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label>FAX *</label>
@@ -76,7 +76,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-5">
+							<div class="col-md-5">
 									<div class="form-group">
                                             <label>เลขประจำตัวผู้เสียภาษี *</label>
                                             <input type="text" class="form-control" name="taxid" id="taxid" value="<?php echo set_value('taxid'); ?>">
@@ -86,7 +86,7 @@
 							
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 								<button type="submit" class="btn btn-primary">  เพิ่มข้อมูลสาขา  </button>
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("managebranch"); ?>'"> ยกเลิก </button>
 								</form>

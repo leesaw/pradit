@@ -45,7 +45,8 @@ function checkpass($id, $password)
  {
 	$this->db->select("id, username, firstname, lastname, status");
 	$this->db->order_by("id", "asc");
-	$this->db->from('users');				
+	$this->db->from('users');	
+	$this->db->where('status >', 0);
 	$query = $this->db->get();		
 	return $query->result();
  }
@@ -76,6 +77,17 @@ function checkpass($id, $password)
  {
 	$this->db->where('id', $user['id']);
 	unset($user['id']);
+	$query = $this->db->update('users', $user); 	
+	return $query;
+ }
+ 
+ function banUser($id=NULL)
+ {
+	$this->db->where('id', $id);
+	$user = array(
+				'username' => "",
+				'status' => 0
+			);
 	$query = $this->db->update('users', $user); 	
 	return $query;
  }

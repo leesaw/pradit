@@ -8,7 +8,7 @@
 <div id="wrapper">
 	<?php $this->load->view('menu'); ?>
 	
-	<?php $url = site_url("manageuser/delete"); ?>
+	<?php $url = site_url("manageuser/banUser"); ?>
 	
 	<div id="page-wrapper">
 		<div class="row">
@@ -18,9 +18,9 @@
         </div>
 		
 		<div class="row">
-            <div class="col-md-10">
+            <div class="col-lg-10">
                 <div class="panel panel-default">
-					<div class="panel-heading"><button type="button" class="btn btn-outline btn-success" onClick="window.location.href='<?php echo site_url("manageuser/adduser"); ?>'">เพิ่มผู้ใช้งาน</button></div>
+					<div class="panel-heading"><button type="button" class="btn btn-success" onClick="window.location.href='<?php echo site_url("manageuser/adduser"); ?>'"><b>เพิ่มผู้ใช้งาน</b></button></div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-striped row-border table-hover" id="usertable">
@@ -30,7 +30,7 @@
                                         <th>ชื่อ</th>
                                         <th>นามสกุล</th>
                                         <th>สิทธิ</th>
-										<th>จัดการ</th>
+										<th width="60">จัดการ</th>
                                     </tr>
                                 </thead>
 								<tbody>

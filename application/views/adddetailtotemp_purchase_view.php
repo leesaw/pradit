@@ -28,7 +28,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                 <?php 
 									echo form_open('managepurchase/previewCashPurchase'); ?>
                                     <div class="form-group">
@@ -42,7 +42,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-4">
+							<div class="col-md-5">
                                     <div class="form-group">
                                     	<label>เลขที่ใบสั่งซื้อ *</label>
                                         <input type="text" class="form-control" name="purchaseid" id="purchaseid" value="<?php echo set_value('purchaseid'); ?>">
@@ -52,7 +52,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                     	<label>ชื่อซัพพลายเออร์ *</label>
 										<input type="hidden" name="cusid" id="cusid" value="<?php echo $cusid; ?>">
@@ -63,7 +63,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-8">
                                     <div class="form-group">
                                     	<label>ที่อยู่ซัพพลายเออร์ *</label>
 										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="3"><?php echo set_value('cusaddress'); ?></textarea>
@@ -73,7 +73,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                     	<label>ชื่อผู้ติดต่อ *</label>
 										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo set_value('cuscontact'); ?>">
@@ -84,7 +84,7 @@
 						</div>
 						<div class="row">
 						<!--
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                     	<label>ราคาซื้อ *</label>
                                             <select class="form-control" name="lastprice" id="lastprice">
@@ -96,7 +96,7 @@
 
 							</div>
 						-->
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                     	<label>เงื่อนไขการชำระเงิน *</label>
                                             <select class="form-control" name="condition" id="condition">
@@ -108,7 +108,7 @@
 									
 
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>จำนวนวันเครดิต </label>
                                             <input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo set_value('creditday'); ?>">
@@ -118,7 +118,7 @@
 						</div>
 						
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -147,9 +147,9 @@
 		</div>
 		
 						<div class="row">
-							<div class="col-lg-6">
-									<button type="submit" class="btn btn-primary btn-lg">  ยืนยันข้อมูลซัพพลายเออร์  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
+							<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-md">  ยืนยันข้อมูลซัพพลายเออร์  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								

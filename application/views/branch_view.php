@@ -20,7 +20,7 @@
 		<div class="row">
             <div class="col-lg-10">
                 <div class="panel panel-default">
-					<div class="panel-heading"><button type="button" class="btn btn-outline btn-success" onClick="window.location.href='<?php echo site_url("managebranch/addbranch"); ?>'">เพิ่มข้อมูลสาขา</button></div>
+					<div class="panel-heading"><button type="button" class="btn btn btn-success" onClick="window.location.href='<?php echo site_url("managebranch/addbranch"); ?>'"><b>เพิ่มข้อมูลสาขา</b></button></div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-striped row-border table-hover" id="dataTables-example">
@@ -30,7 +30,7 @@
 										<th>ที่อยู่</th>
 										<th>เบอร์โทร</th>
 										<th>Fax</th>
-										<th>จัดการ</th>
+										<th width="60">จัดการ</th>
                                     </tr>
                                 </thead>
 								<tbody>

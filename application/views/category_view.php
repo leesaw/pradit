@@ -20,7 +20,7 @@
 		<div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
-					<div class="panel-heading"><button type="button" class="btn btn-outline btn-success" onClick="window.location.href='<?php echo site_url("managecat/addcat"); ?>'">เพิ่มประเภทสินค้า</button></div>
+					<div class="panel-heading"><button type="button" class="btn btn btn-success" onClick="window.location.href='<?php echo site_url("managecat/addcat"); ?>'">เพิ่มประเภทสินค้า</button></div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-striped row-border table-hover" id="dataTables-example">

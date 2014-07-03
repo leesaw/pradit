@@ -27,7 +27,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <?php echo form_open('manageuser/save'); ?>
                                     <div class="form-group">
                                             <label>Username *</label>

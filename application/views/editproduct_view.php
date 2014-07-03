@@ -12,13 +12,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-8">
-                <h3 class="page-header">แก้ไขข้อมูลสินค้า</h3>
+            <div class="col-md-12">
+                <h3 class="page-heading">แก้ไขข้อมูลสินค้า</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-md-12">
                 <div class="panel panel-default">
 				
 								
@@ -33,7 +33,7 @@
 					<div class="panel-heading"><strong>กรุณาใส่ข้อมูลให้ครบทุกช่อง</strong></div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-md-4">
 								<?php echo form_open('manageproduct/update'); ?>
 								
 								<?php if(is_array($product_array)) {
@@ -46,14 +46,14 @@
 											<p class="help-block"><?php echo form_error('standardid'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-md-4">
                                     <div class="form-group">
                                             <label>รหัสสินค้าผู้จำหน่าย *</label>
                                             <input type="text" class="form-control" name="supplierid" id="supplierid" value="<?php echo $loop->supplierID; ?>" >
 											<p class="help-block"><?php echo form_error('supplierid'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-md-4">
                                     <div class="form-group">
                                             <label>Barcode *</label>
                                             <input type="text" class="form-control" name="barcode" id="barcode" value="<?php echo $loop->barcode; ?>" disabled>
@@ -62,14 +62,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<div class="form-group">
                                             <label>ชื่อสินค้า *</label>
                                             <input type="text" class="form-control" name="name" id="name" value="<?php echo $loop->pname; ?>">
 											<p class="help-block"><?php echo form_error('name'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label>ประเภทสินค้า *</label>
                                         <select class="form-control" name="categoryid" id="categoryid">
@@ -84,14 +84,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>หน่วย *</label>
 											<input type="text" class="form-control" name="unit" id="unit" value="<?php echo $loop->unit; ?>">
 											<p class="help-block"><?php echo form_error('unit'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-3 col-lg-offset-1">
+							<div class="col-md-3 col-md-offset-1">
 									<div class="form-group">
                                             <label>ราคาทุน *</label>
                                             <input type="text" class="form-control" name="cost" id="cost" value="<?php echo $loop->costPrice; ?>">
@@ -100,31 +100,37 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="panel panel-info">
+							<div class="panel-heading"><b>ราคาขาย </b></div>
+							<div class="panel-body">
+							<!--
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคาไม่รวม VAT *</label>
                                             <input type="text" class="form-control" name="pricenovat" id="pricenovat" value="<?php echo $loop->priceNoVAT; ?>">
 											<p class="help-block"><?php echo form_error('pricenovat'); ?></p>
                                     </div>
 							</div>
-							<!--
-							<div class="col-lg-3 col-lg-offset-1">
+							-->
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคารวม VAT *</label>
                                             <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo $loop->priceVAT; ?>">
 											<p class="help-block"><?php echo form_error('pricevat'); ?></p>
                                     </div>
-							</div> -->
-							<div class="col-lg-3 col-lg-offset-1">
+							</div>
+							<div class="col-md-3 col-md-offset-1">
 									<div class="form-group">
                                             <label>ราคารวมส่วนลด *</label>
                                             <input type="text" class="form-control" name="pricediscount" id="pricediscount" value="<?php echo $loop->priceDiscount; ?>">
 											<p class="help-block"><?php echo form_error('pricediscount'); ?></p>
                                     </div>
 							</div>
+							</div>
+							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-8">
+							<div class="col-md-8">
 									<div class="form-group">
                                             <label>รายละเอียดสินค้า *</label>
 											<textarea class="form-control" name="detail" id="detail" rows="3"><?php echo $loop->detail; ?></textarea>
@@ -134,7 +140,7 @@
 						</div>
 						
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<button type="submit" class="btn btn-primary">  แก้ไขข้อมูลสินค้า  </button>
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("manageproduct/viewSelectedCat/".$loop->categoryID); ?>'"> ยกเลิก </button>
 							</div>

@@ -12,13 +12,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-10">
                 <h3 class="page-header">แก้ไขข้อมูลผู้จำหน่าย (Supplier)</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-10">
                 <div class="panel panel-default">
 				<?php if ($this->session->flashdata('showresult') == 'success') {
 						echo '<div class="panel-heading"><div class="alert alert-success"> ระบบทำการแก้ไขข้อมูลเรียบร้อยแล้ว</div>'; 
@@ -31,7 +31,7 @@
 					<div class="panel-heading"><strong>กรุณาใส่ข้อมูลให้ครบทุกช่อง</strong></div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-3">
 								<?php echo form_open('managesupplier/update'); ?>
 								
 								<?php if(is_array($sup_array)) {
@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label class="control-label">คำนำหน้า *</label>
                                         <select class="form-control" name="title" id="title">
@@ -61,7 +61,7 @@
                                     </div>
 							</div>
 							
-							<div class="col-lg-8 col-lg-offset-1">
+							<div class="col-md-8">
 									<div class="form-group">
                                             <label class="control-label">ชื่อผู้จำหน่าย *</label>
                                             <input type="text" class="form-control" name="name" id="name" value="<?php echo $loop->name; ?>">
@@ -70,7 +70,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12">
+							<div class="col-md-8">
 									<div class="form-group">
                                             <label class="control-label">ที่อยู่ *</label>
                                             <textarea class="form-control" name="address" id="address" rows="3"><?php echo $loop->address; ?></textarea>
@@ -79,7 +79,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label class="control-label">จังหวัด *</label>
                                         <select class="form-control" name="province" id="province">
@@ -93,7 +93,7 @@
                                         </select>
                                     </div>
 							</div>
-							<div class="col-lg-3 col-lg-offset-1">
+							<div class="col-md-3 col-md-offset-1">
 									<div class="form-group">
                                             <label class="control-label">รหัสไปรษณีย์ *</label>
 											<input type="text" class="form-control" name="zipcode" id="zipcode" value="<?php echo $loop->zipcode; ?>">
@@ -102,7 +102,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-5">
 									
 									<div class="form-group">
                                             <label class="control-label">เบอร์โทรศัพท์ *</label>
@@ -110,7 +110,7 @@
 											<p class="help-block"><?php echo form_error('telephone'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-md-5">
 									
 									<div class="form-group">
                                             <label class="control-label">FAX *</label>
@@ -121,7 +121,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-5">
 									<div class="form-group">
                                             <label class="control-label">ชื่อผู้ติดต่อ *</label>
                                             <input type="text" class="form-control" name="contactname" id="contactname" value="<?php echo $loop->contactName; ?>">
@@ -130,14 +130,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-4">
 									<div class="form-group">
                                             <label class="control-label">เลขประจำตัวผู้เสียภาษี *</label>
                                             <input type="text" class="form-control" name="taxid" id="taxid" value="<?php echo $loop->taxID; ?>">
 											<p class="help-block"><?php echo form_error('taxid'); ?></p>
                                     </div>
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-4">
 									<div class="form-group">
                                         <label class="control-label">เงื่อนไขการชำระเงิน *</label>
                                         <select class="form-control" name="status" id="status">
@@ -147,7 +147,7 @@
                                         </select>
                                     </div>
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>จำนวนวันเครดิต </label>
                                             <input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo $loop->creditDay; ?>">
@@ -157,7 +157,7 @@
 						</div>
 						<?php } } ?>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<button type="submit" class="btn btn-primary">  แก้ไขข้อมูลผู้จำหน่าย  </button>
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("managesupplier"); ?>'"> ยกเลิก </button>
 							</div>

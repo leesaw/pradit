@@ -29,7 +29,7 @@
                     <div class="panel-body">
 					<?php echo form_open('managepurchase/saveCashPurchase'); ?>
 						<div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">เลขที่ใบสั่งซื้อ</label>
@@ -46,7 +46,7 @@
 						echo form_hidden('branchid', $loop->id);
 					?>
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">ที่อยู่สาขาที่ออกใบสั่งซื้อ</label>
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-4">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">เบอร์โทรศัพท์</label>
@@ -71,7 +71,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-4">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">Fax</label>
@@ -81,7 +81,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-4">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">เลขประจำตัวผู้เสียภาษี</label>
@@ -95,7 +95,7 @@
 						</div>
 						<?php } }?>
 						<div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ชื่อซัพพลายเออร์</label>
@@ -105,10 +105,10 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">วันที่</label>
+                                    	<label class="control-label" for="inputSuccess">วันที่ (วัน/เดือน/ปี)</label>
 										<input type="text" class="form-control" name="date" id="date" value="<?php echo date('d')."/".date('m')."/".(date('Y')+543); ?>" readonly>
 										</div>
                                     </div>
@@ -116,7 +116,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-12">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ที่อยู่ซัพพลายเออร์</label>
@@ -127,7 +127,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ชื่อผู้ติดต่อ</label>
@@ -139,7 +139,7 @@
 						</div>
 						<div class="row">
 						<!--
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ราคาขาย</label>
@@ -154,7 +154,7 @@
 
 							</div>
 						-->
-							<div class="col-lg-3">
+							<div class="col-md-4">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">เงื่อนไขการชำระเงิน</label>
@@ -168,7 +168,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนวันเครดิต</label>
@@ -180,7 +180,7 @@
 						</div>
 						
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -241,7 +241,7 @@
 						?>
 						<!--
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">รวมเป็นเงิน</label>
@@ -250,7 +250,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ยอดหลังหักส่วนลด</label>
@@ -262,7 +262,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนภาษีมูลค่าเพิ่ม 7%</label>
@@ -276,7 +276,7 @@
 							</div>
 						-->
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-5">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนเงินรวมทั้งสิ้น</label>
@@ -290,9 +290,9 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
-									<button type="submit" class="btn btn-primary btn-lg">  ยืนยันข้อมูลลูกค้า  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
+							<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-md">  ยืนยันข้อมูลลูกค้า  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								

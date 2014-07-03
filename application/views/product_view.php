@@ -12,13 +12,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-8">
                 <h3 class="page-header">จัดการข้อมูลสินค้า</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-2">
+            <div class="col-md-3">
 				<div class="panel-body">
 					<div class="row">
 						<div class="well" style="width:220px; padding: 8px 10px;">
@@ -42,7 +42,7 @@
 			
 			<?php if ($page>0) { ?>
 			
-			<div class="col-lg-9">
+			<div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -53,7 +53,7 @@
 										<th>รหัสสินค้าผู้จำหน่าย</th>
 										<th>ชื่อ</th>
 										<th>ประเภท</th>
-										<th>จัดการ</th>
+										<th width="80">จัดการ</th>
                                     </tr>
                                 </thead>
 								

@@ -139,8 +139,8 @@ class Manageproduct extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('unit', 'unit', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
-		//$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
+		//$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
 		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|numeric');
 		$this->form_validation->set_rules('detail', 'detail', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
@@ -154,8 +154,8 @@ class Manageproduct extends CI_Controller {
 			$categoryid= ($this->input->post('categoryid'));
 			$unit= ($this->input->post('unit'));
 			$cost= ($this->input->post('cost'));
-			$pricenovat= ($this->input->post('pricenovat'));
-			//$pricevat= ($this->input->post('pricevat'));
+			//$pricenovat= ($this->input->post('pricenovat'));
+			$pricevat= ($this->input->post('pricevat'));
 			$pricediscount= ($this->input->post('pricediscount'));
 			$detail= ($this->input->post('detail'));
 			
@@ -169,8 +169,8 @@ class Manageproduct extends CI_Controller {
 				'categoryID' => $categoryid,
 				'unit' => $unit,
 				'costPrice' => $cost,
-				'priceNoVAT' => $pricenovat,
-				//'priceVAT' => $pricevat,
+				//'priceNoVAT' => $pricenovat,
+				'priceVAT' => $pricevat,
 				'priceDiscount' => $pricediscount,
 				'detail' => $detail
 			);
@@ -251,8 +251,8 @@ class Manageproduct extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('unit', 'unit', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
-		//$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
+		//$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
 		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|numeric');
 		$this->form_validation->set_rules('detail', 'detail', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
@@ -267,8 +267,8 @@ class Manageproduct extends CI_Controller {
 			$categoryid= ($this->input->post('categoryid'));
 			$unit= ($this->input->post('unit'));
 			$cost= ($this->input->post('cost'));
-			$pricenovat= ($this->input->post('pricenovat'));
-			//$pricevat= ($this->input->post('pricevat'));
+			//$pricenovat= ($this->input->post('pricenovat'));
+			$pricevat= ($this->input->post('pricevat'));
 			$pricediscount= ($this->input->post('pricediscount'));
 			$detail= ($this->input->post('detail'));
 			
@@ -282,8 +282,8 @@ class Manageproduct extends CI_Controller {
 				'categoryID' => $categoryid,
 				'unit' => $unit,
 				'costPrice' => $cost,
-				'priceNoVAT' => $pricenovat,
-				//'priceVAT' => $pricevat,
+				//'priceNoVAT' => $pricenovat,
+				'priceVAT' => $pricevat,
 				'priceDiscount' => $pricediscount,
 				'detail' => $detail
 			);
