@@ -12,7 +12,7 @@ Class Stock extends CI_Model
  
  function getTemp($in=NULL)
  {
-	$this->db->select("barcode");
+	$this->db->select("barcode, amount");
 	$this->db->from('stock_product_temp');	
 	$this->db->where('in', $in);
 	$query = $this->db->get();			
@@ -121,9 +121,9 @@ Class Stock extends CI_Model
 	return $this->db->insert_id();	
  }
  
- function incrementStock($productid=NULL, $branchid=NULL)
+ function incrementStock($productid=NULL, $branchid=NULL, $amount=NULL)
  {
-	$this->db->set('amount', 'amount+1', FALSE);
+	$this->db->set('amount', 'amount+'.$amount, FALSE);
 	$this->db->where('productID', $productid);
 	$this->db->where('branchID', $branchid);
 	$this->db->update('stock');

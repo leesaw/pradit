@@ -308,6 +308,8 @@ class Managestock extends CI_Controller {
 		
 		foreach($query as $loop) {
 			$barcodeid = $loop->barcode;
+			$amount = $loop->amount;
+			$barcode['amount'] = $amount;
 			
 			$query2 = $this->stock->getProductID($barcodeid);
 			foreach($query2 as $loop2) {
@@ -320,7 +322,7 @@ class Managestock extends CI_Controller {
 				$pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
 				$this->stock->addNewStockTable($pid);
 			}
-			$this->stock->incrementStock($productid,$branchid);
+			$this->stock->incrementStock($productid,$branchid,$amount);
 		}
 		
 		$this->stock->delAllStockTemp(1);
