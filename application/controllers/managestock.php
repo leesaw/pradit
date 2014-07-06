@@ -506,7 +506,6 @@ class Managestock extends CI_Controller {
 					'amount' => $amount
 				);
 		$query = $this->stock->editAmountTemp($stocktemp);
-		redirect('managestock/addstockfrombarcode', 'refresh');
 		
 	}
 }

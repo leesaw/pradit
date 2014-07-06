@@ -163,14 +163,20 @@ function edit_amount(tempid) {
 			var amount = result;
 			$.ajax({
 					'url' : '<?php echo site_url('managestock/edit_amount_temp_in'); ?>',
-					'dataType': 'json',
 					'type':'post',
-					'data':{tempid:tempid, 
-							amount:amount
-							}
+					'data': {tempid:tempid, 
+							amount:amount},
+					'error' : function(data){ 
+						alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+                    },
+					'success' : function(data){
+						window.location.reload();
+					}
 				}); 
 						
-		}		
+		}else if(result != null && result<=0) {
+			alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+		}
 	});
 }
 /*
