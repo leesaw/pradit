@@ -183,6 +183,14 @@ Class Stock extends CI_Model
 	return $this->db->insert_id();	
  }
  
+ function editAmountTemp($stocktemp=NULL)
+ {
+	$this->db->where('tempid', $stocktemp['tempid']);
+	unset($stock['tempid']);
+	$query = $this->db->update('stock_product_temp', $stocktemp); 	
+	return $query;
+ }
+ 
 
 }
 ?>

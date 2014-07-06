@@ -69,6 +69,12 @@
 											<input type="text" class="form-control" name="zipcode" id="zipcode" value="<?php echo $loop->zipcode; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
+							<div class="col-md-4">
+									<div class="form-group has-success">
+                                        <label class="control-label" for="inputSuccess">ภาค</label>
+                                        <input type="text" class="form-control" name="part" id="part" value="<?php echo $loop->part; ?>" style="font-weight: bold;" readonly>
+                                    </div>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -142,6 +148,14 @@
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ส่วนลด</label>
                                             <input type="text" class="form-control" name="discount" id="discount" value="<?php echo $loop->discount; ?>" style="font-weight: bold;" readonly>
+                                    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+									<div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">หมายเหตุ</label>
+											<textarea class="form-control" name="note" id="note" rows="3" style="font-weight: bold;" readonly><?php echo $loop->note; ?></textarea>
                                     </div>
 							</div>
 						</div>

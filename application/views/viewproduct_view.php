@@ -70,7 +70,7 @@
 							<div class="col-md-3 col-md-offset-1">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคาทุน</label>
-                                            <input type="text" class="form-control" name="cost" id="cost" value="<?php echo $loop->costPrice; ?>" style="font-weight: bold;" readonly>
+                                            <input type="text" class="form-control" name="cost" id="cost" value="<?php echo number_format($loop->costPrice, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 						</div>
@@ -82,20 +82,26 @@
 							<div class="col-md-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคาไม่รวม VAT</label>
-                                            <input type="text" class="form-control" name="pricenovat" id="pricenovat" value="<?php echo $loop->priceNoVAT; ?>" style="font-weight: bold;" readonly>
+                                            <input type="text" class="form-control" name="pricenovat" id="pricenovat" value="<?php echo number_format($loop->priceNoVAT, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 							-->
 							<div class="col-md-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคารวม VAT</label>
-                                            <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo $loop->priceVAT; ?>" style="font-weight: bold;" readonly>
+                                            <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo number_format($loop->priceVAT, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div> 
-							<div class="col-md-3 col-md-offset-1">
+							<div class="col-md-3">
+									<div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">ราคาต่ำสุด</label>
+                                            <input type="text" class="form-control" name="lowestprice" id="lowestprice" value="<?php echo number_format($loop->lowestprice, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
+                                    </div>
+							</div> 
+							<div class="col-md-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคารวมส่วนลด</label>
-                                            <input type="text" class="form-control" name="pricediscount" id="pricediscount" value="<?php echo $loop->priceDiscount; ?>" style="font-weight: bold;" readonly>
+                                            <input type="text" class="form-control" name="pricediscount" id="pricediscount" value="<?php echo number_format($loop->priceDiscount, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 							</div>
@@ -106,6 +112,14 @@
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">รายละเอียดสินค้า</label>
 											<textarea class="form-control" name="detail" id="detail" rows="3" style="font-weight: bold;" readonly><?php echo $loop->detail; ?></textarea>
+                                    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+									<div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">ราคารวมส่วนลด</label>
+                                            <input type="text" class="form-control" name="shelf" id="shelf" value="<?php echo $loop->shelf; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 						</div>

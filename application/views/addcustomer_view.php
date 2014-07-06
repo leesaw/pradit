@@ -85,6 +85,19 @@
 											<p class="help-block"><?php echo form_error('zipcode'); ?></p>
                                     </div>
 							</div>
+							<div class="col-md-4">
+									<div class="form-group">
+                                            <label>ภาค *</label>
+                                            <select class="form-control" name="part" id="part">
+											<option value="ภาคเหนือ">ภาคเหนือ</option>
+											<option value="ภาคตะวันออกเฉียงเหนือ">ภาคตะวันออกเฉียงเหนือ</option>
+											<option value="ภาคกลาง">ภาคกลาง</option>
+											<option value="ภาคตะวันออก">ภาคตะวันออก</option>
+											<option value="ภาคตะวันตก">ภาคตะวันตก</option>
+											<option value="ภาคใต้">ภาคใต้</option>
+											</select>
+                                    </div>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -165,6 +178,15 @@
                                     </div>
 							</div>
 							
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+									<div class="form-group">
+                                            <label>หมายเหตุ</label>
+											<textarea class="form-control" name="note" id="note" rows="3"><?php echo set_value('note'); ?></textarea>
+											<p class="help-block"><?php echo form_error('note'); ?></p>
+                                    </div>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">

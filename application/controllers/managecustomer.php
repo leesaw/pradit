@@ -98,6 +98,9 @@ class Managecustomer extends CI_Controller {
 			$saleprice= ($this->input->post('saleprice'));
 			$status= ($this->input->post('status'));
 			$creditday= ($this->input->post('creditday'));
+			// add new column 05072014
+			$part = ($this->input->post('part'));
+			$note = ($this->input->post('note'));
 
 			$customer = array(
 				'customerID' => $customerid,
@@ -114,7 +117,9 @@ class Managecustomer extends CI_Controller {
 				'discount' => $discount,
 				'salePrice' => $saleprice,
 				'status' => $status,
-				'creditDay' => $creditday
+				'creditDay' => $creditday,
+				'part' => $part,
+				'note' => $note
 			);
 
 			$result = $this->customer->addCustomer($customer);
@@ -241,6 +246,10 @@ class Managecustomer extends CI_Controller {
 			$saleprice= ($this->input->post('saleprice'));
 			$status= ($this->input->post('status'));
 			$creditday= ($this->input->post('creditday'));
+			// add new column 05072014
+			$part = ($this->input->post('part'));
+			$note = ($this->input->post('note'));
+			
 
 			$customer = array(
 				'id' => $id,
@@ -258,7 +267,9 @@ class Managecustomer extends CI_Controller {
 				'discount' => $discount,
 				'salePrice' => $saleprice,
 				'status' => $status,
-				'creditDay' => $creditday
+				'creditDay' => $creditday,
+				'part' => $part,
+				'note' => $note
 			);
 
 			$result = $this->customer->editCustomer($customer);

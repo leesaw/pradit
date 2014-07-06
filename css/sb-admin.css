@@ -30,11 +30,15 @@
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin: 20px 0 0 250px;
+        margin: 20px 0 0 220px;
         padding: 0 30px;
         min-height: 800px;
         border-left: 1px solid #e7e7e7;
     }
+}
+
+.labelmenu {
+	font-size: 13px;
 }
 
 .navbar-static-side ul li {
@@ -136,7 +140,7 @@
     .navbar-static-side {
         z-index: 1;
         position: absolute;
-        width: 250px;
+        width: 220px;
         margin-top: 120px;
     }
 

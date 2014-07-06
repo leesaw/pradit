@@ -130,6 +130,10 @@ class Manageproduct extends CI_Controller {
         return $query->num_rows();
     }
 	
+	function is_money($str)
+	{
+		return (bool) preg_match('/^[\-+]?[0-9]+[\.,][0-9]+$/', $str);
+	}
 	
     function save()
 	{
@@ -138,10 +142,11 @@ class Manageproduct extends CI_Controller {
 		$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required|callback_barcode_is_exist');
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('unit', 'unit', 'trim|xss_clean|required');
-		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|call_is_money');
 		//$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|call_is_money');
+		$this->form_validation->set_rules('lowestprice', 'lowestprice', 'trim|xss_clean|required|call_is_money');
+		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|call_is_money');
 		$this->form_validation->set_rules('detail', 'detail', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_message('numeric', 'กรุณาใส่เฉพาะตัวเลขเท่านั้น');
@@ -153,11 +158,14 @@ class Manageproduct extends CI_Controller {
 			$name= ($this->input->post('name'));
 			$categoryid= ($this->input->post('categoryid'));
 			$unit= ($this->input->post('unit'));
-			$cost= ($this->input->post('cost'));
+			$cost= str_replace(",", "", ($this->input->post('cost')));
 			//$pricenovat= ($this->input->post('pricenovat'));
-			$pricevat= ($this->input->post('pricevat'));
-			$pricediscount= ($this->input->post('pricediscount'));
+			$pricevat= str_replace(",", "", ($this->input->post('pricevat')));
+			$pricediscount= str_replace(",", "", ($this->input->post('pricediscount')));
 			$detail= ($this->input->post('detail'));
+			// add new column 05072014
+			$lowestprice = str_replace(",", "", ($this->input->post('lowestprice')));
+			$shelf = ($this->input->post('shelf'));
 			
 			$barcodeid= ($this->input->post('barcode'));
 
@@ -172,7 +180,9 @@ class Manageproduct extends CI_Controller {
 				//'priceNoVAT' => $pricenovat,
 				'priceVAT' => $pricevat,
 				'priceDiscount' => $pricediscount,
-				'detail' => $detail
+				'detail' => $detail,
+				'lowestprice' => $lowestprice,
+				'shelf' => $shelf
 			);
 
 			$result = $this->product->addProduct($product);
@@ -250,10 +260,11 @@ class Manageproduct extends CI_Controller {
 		//$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required|callback_barcode_is_exist');
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('unit', 'unit', 'trim|xss_clean|required');
-		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('cost', 'cost', 'trim|xss_clean|required|call_is_money');
 		//$this->form_validation->set_rules('pricenovat', 'pricenovat', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|numeric');
-		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|numeric');
+		$this->form_validation->set_rules('pricevat', 'pricevat', 'trim|xss_clean|required|call_is_money');
+		$this->form_validation->set_rules('lowestprice', 'lowestprice', 'trim|xss_clean|required|call_is_money');
+		$this->form_validation->set_rules('pricediscount', 'pricediscount', 'trim|xss_clean|required|call_is_money');
 		$this->form_validation->set_rules('detail', 'detail', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_message('numeric', 'กรุณาใส่เฉพาะตัวเลขเท่านั้น');
@@ -266,11 +277,14 @@ class Manageproduct extends CI_Controller {
 			$name= ($this->input->post('name'));
 			$categoryid= ($this->input->post('categoryid'));
 			$unit= ($this->input->post('unit'));
-			$cost= ($this->input->post('cost'));
+			$cost= str_replace(",", "", ($this->input->post('cost')));
 			//$pricenovat= ($this->input->post('pricenovat'));
-			$pricevat= ($this->input->post('pricevat'));
-			$pricediscount= ($this->input->post('pricediscount'));
+			$pricevat= str_replace(",", "", ($this->input->post('pricevat')));
+			$pricediscount= str_replace(",", "", ($this->input->post('pricediscount')));
 			$detail= ($this->input->post('detail'));
+			// add new column 05072014
+			$lowestprice = str_replace(",", "", ($this->input->post('lowestprice')));
+			$shelf = ($this->input->post('shelf'));
 			
 			//$barcodeid= ($this->input->post('barcode'));
 
@@ -285,7 +299,9 @@ class Manageproduct extends CI_Controller {
 				//'priceNoVAT' => $pricenovat,
 				'priceVAT' => $pricevat,
 				'priceDiscount' => $pricediscount,
-				'detail' => $detail
+				'detail' => $detail,
+				'lowestprice' => $lowestprice,
+				'shelf' => $shelf
 			);
 
 			$result = $this->product->editProduct($product);

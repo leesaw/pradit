@@ -32,7 +32,7 @@
 
             <div class="navbar-default navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
-                    <ul class="nav" id="side-menu">
+                    <ul class="nav labelmenu" id="side-menu">
                         <li class="sidebar-search">
                                 <!-- /input-group -->
                         </li>

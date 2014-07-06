@@ -82,7 +82,7 @@
 							<div class="col-md-3 col-md-offset-1">
 									<div class="form-group">
                                             <label>ราคาทุน *</label>
-                                            <input type="text" class="form-control" name="cost" id="cost" value="<?php echo set_value('cost'); ?>">
+                                            <input type="text" class="form-control" name="cost" id="cost" onChange="numberWithCommas(this);" value="<?php echo set_value('cost'); ?>">
 											<p class="help-block"><?php echo form_error('cost'); ?></p>
                                     </div>
 							</div>
@@ -103,14 +103,21 @@
 							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคารวม VAT *</label>
-                                            <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo set_value('pricevat'); ?>">
+                                            <input type="text" class="form-control" name="pricevat" id="pricevat" onChange="numberWithCommas(this);" value="<?php echo set_value('pricevat'); ?>">
 											<p class="help-block"><?php echo form_error('pricevat'); ?></p>
                                     </div>
 							</div>
-							<div class="col-md-3 col-md-offset-1">
+							<div class="col-md-3">
+									<div class="form-group">
+                                            <label>ราคาต่ำสุด *</label>
+                                            <input type="text" class="form-control" name="lowestprice" id="lowestprice" onChange="numberWithCommas(this);" value="<?php echo set_value('lowestprice'); ?>">
+											<p class="help-block"><?php echo form_error('lowestprice'); ?></p>
+                                    </div>
+							</div>
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคารวมส่วนลด *</label>
-                                            <input type="text" class="form-control" name="pricediscount" id="pricediscount" value="<?php echo set_value('pricediscount'); ?>">
+                                            <input type="text" class="form-control" name="pricediscount" id="pricediscount" onChange="numberWithCommas(this);" value="<?php echo set_value('pricediscount'); ?>">
 											<p class="help-block"><?php echo form_error('pricediscount'); ?></p>
                                     </div>
 							</div>
@@ -123,6 +130,15 @@
                                             <label>รายละเอียดสินค้า *</label>
 											<textarea class="form-control" name="detail" id="detail" rows="3"><?php echo set_value('detail'); ?></textarea>
 											<p class="help-block"><?php echo form_error('detail'); ?></p>
+                                    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-5">
+									<div class="form-group">
+                                            <label>ชั้นเก็บ</label>
+                                            <input type="text" class="form-control" name="shelf" id="shelf" value="<?php echo set_value('shelf'); ?>">
+											<p class="help-block"><?php echo form_error('shelf'); ?></p>
                                     </div>
 							</div>
 						</div>
@@ -150,6 +166,13 @@ $(".alert-message").alert();
 window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);
 </script>
 <script>
+function numberWithCommas(obj) {
+	var x=$(obj).val();
+    var parts = x.toString().split(".");
+	parts[0] = parts[0].replace(/,/g,"");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    $(obj).val(parts.join("."));
+}
 function autobarcode(obj) {
 	var input=$(obj).val();
 	$('#barcode').val(input);

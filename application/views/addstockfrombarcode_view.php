@@ -55,8 +55,8 @@
 										<th></th>
                                         <th>Barcode</th>
 										<th>ชื่อ</th>
+										<th width="80">จำนวน</th>
 										<th>หน่วย</th>
-										<th>ประเภท</th>
 										<th>จัดการ</th>
                                     </tr>
                                 </thead>
@@ -105,7 +105,7 @@ $('#fancyboxview').fancybox({
     $(document).ready(function()
     {
 		$("#barcode").focus();
-	
+		
         var oTable = $('#tablebarcode').dataTable
         ({
             "bJQueryUI": false,
@@ -157,6 +157,30 @@ function del_confirm(val1) {
 
 		});
 }
+function edit_amount(tempid) {
+	bootbox.prompt("กรุณาป้อนจำนวนสินค้า", function(result) {       
+		if (result != null && result>0) {                                                                        
+			var amount = result;
+			$.ajax({
+					'url' : '<?php echo site_url('managestock/edit_amount_temp_in'); ?>',
+					'dataType': 'json',
+					'type':'post',
+					'data':{tempid:tempid, 
+							amount:amount
+							}
+				}); 
+						
+		}		
+	});
+}
+/*
+$(function() {
+    $('#barcode').bind('blur', function(e) {
+        e.preventDefault();
+        $(this).focus();
+    });
+});
+*/
 $(".alert-message").alert();
 window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);
 </script>

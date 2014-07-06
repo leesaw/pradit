@@ -100,6 +100,19 @@
 											<p class="help-block"><?php echo form_error('zipcode'); ?></p>
                                     </div>
 							</div>
+							<div class="col-md-4">
+									<div class="form-group">
+                                            <label>ภาค *</label>
+                                            <select class="form-control" name="part" id="part">
+											<option value="ภาคเหนือ" <?php if ($loop->part == 'ภาคเหนือ') echo "selected"; ?>>ภาคเหนือ</option>
+											<option value="ภาคตะวันออกเฉียงเหนือ" <?php if ($loop->part == 'ภาคตะวันออกเฉียงเหนือ') echo "selected"; ?>>ภาคตะวันออกเฉียงเหนือ</option>
+											<option value="ภาคกลาง" <?php if ($loop->part == 'ภาคกลาง') echo "selected"; ?>>ภาคกลาง</option>
+											<option value="ภาคตะวันออก" <?php if ($loop->part == 'ภาคตะวันออก') echo "selected"; ?>>ภาคตะวันออก</option>
+											<option value="ภาคตะวันตก" <?php if ($loop->part == 'ภาคตะวันตก') echo "selected"; ?>>ภาคตะวันตก</option>
+											<option value="ภาคใต้" <?php if ($loop->part == 'ภาคใต้') echo "selected"; ?>>ภาคใต้</option>
+											</select>
+                                    </div>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -178,6 +191,15 @@
                                             <label class="control-label">ส่วนลด *</label>
                                             <input type="text" class="form-control" name="discount" id="discount" value="<?php echo $loop->discount; ?>">
 											<p class="help-block"><?php echo form_error('discount'); ?></p>
+                                    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+									<div class="form-group">
+                                            <label>หมายเหตุ</label>
+											<textarea class="form-control" name="note" id="note" rows="3"><?php echo $loop->note; ?></textarea>
+											<p class="help-block"><?php echo form_error('note'); ?></p>
                                     </div>
 							</div>
 						</div>

@@ -139,7 +139,8 @@ class Managestock extends CI_Controller {
 				$barcode = array(
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
-					'in' => 1
+					'in' => 1,
+					'amount' => 1
 				);
 				$result2 = $this->stock->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -211,13 +212,14 @@ class Managestock extends CI_Controller {
 		$in = $this->uri->segment(3);
 		$this->load->library('Datatables');
 		$this->datatables
-		->select("stock_product_temp.barcode, product.barcode as pbarcode, product.name as pname, unit, category.name as cname, stock_product_temp.tempid as tempid")
+		->select("stock_product_temp.barcode, product.barcode as pbarcode, product.name as pname, stock_product_temp.amount as samount, unit, stock_product_temp.tempid as tempid")
 		->from('stock_product_temp')
-		->join('product', 'product.barcode = stock_product_temp.barcode')
-		->join('category', 'product.categoryID = category.id')
+		->join('product', 'product.barcode = stock_product_temp.barcode','left')
+		->join('category', 'product.categoryID = category.id','left')
 		->where('in', $in)
 		->edit_column("tempid",
-		'<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-remove"></span></button>
+		'<button class="btnAmount btn btn-success btn-xs" onclick="edit_amount($1)" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip" title="แก้ไขจำนวน"><span class="glyphicon glyphicon-plus"></span></button>
+		<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-remove"></span></button>
 		',"tempid");
 	
 		echo $this->datatables->generate(); 
@@ -493,5 +495,18 @@ class Managestock extends CI_Controller {
 		
 		$data['title'] = "Pradit and Friends - View Product";
 		$this->load->view('viewstockproduct_out_view',$data);
+	}
+	
+	function edit_amount_temp_in()
+	{
+		$tempid=$this->input->post('tempid');
+		$amount=$this->input->post('amount');
+		$stocktemp = array(
+					'tempid' => $tempid,
+					'amount' => $amount
+				);
+		$query = $this->stock->editAmountTemp($stocktemp);
+		redirect('managestock/addstockfrombarcode', 'refresh');
+		
 	}
 }
