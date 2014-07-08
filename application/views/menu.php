@@ -88,7 +88,7 @@
 
                         </li>
 						<?php } ?>
-						<?php if ($this->session->userdata('sessstatus') == 1) {?>
+						<?php if ($this->session->userdata('sessstatus') == 1 || $this->session->userdata('sessstatus') == 2) {?>
 						<li>
                             <a href=""><i class="fa fa-truck fa-fw"></i> สินค้า (Product)<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
@@ -104,6 +104,8 @@
                             </ul>
 
                         </li>
+						<?php } ?>
+						<?php if ($this->session->userdata('sessstatus') == 1) {?>
 						<li>
                             <a href=""><i class="fa fa-shopping-cart fa-fw"></i> ข้อมูลลูกค้า (Customer)<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">

@@ -95,6 +95,7 @@ class Managepurchase extends CI_Controller {
 				$barcode = array(
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
+					'amount' => 1,
 					'status' => 0  // 0 = no status
 				);
 				$result2 = $this->purchase->addBarcodeTemp($barcode);
@@ -142,7 +143,7 @@ class Managepurchase extends CI_Controller {
 		->from('purchase')
 		->where('branchID', $branchid)
 		->edit_column("id",'<div class="tooltip-demo">
-	<a href="'.site_url("managepurchase/printCashPurchase/$1").'" class="btn btn-primary btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-print"></span></a>
+	<a href="'.site_url("managepurchase/printCashPurchase/$1").'" class="btn btn-primary btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ปริ้น"><span class="glyphicon glyphicon-print"></span></a>
 	</div>',"id");
 	
 		echo $this->datatables->generate(); 
@@ -170,6 +171,9 @@ class Managepurchase extends CI_Controller {
 		$this->load->model('branch','',TRUE);
 		
 		$data['count'] = $this->purchase->getTempCount();
+		foreach($this->purchase->getLastID() as $loop) {
+			$data['lastid']=$loop->lastid;
+		}
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -245,10 +249,18 @@ class Managepurchase extends CI_Controller {
 			$data['cuscontact']= ($this->input->post('cuscontact'));
 			$data['condition']= ($this->input->post('condition'));
 			$data['creditday']= ($this->input->post('creditday'));
+			$data['vat'] = ($this->input->post('vat'));
 			
 			$query = $this->branch->getOneBranch($this->input->post('branchid'));
 			if($query){
 				$data['branch_array'] =  $query;
+			}
+			
+			$barcode = ($this->input->post('barcode'));
+			$price = ($this->input->post('price'));
+			for ($i=0; $i<count($barcode); $i++) {
+				$temp = array('barcode' =>$barcode[$i], 'price' => $price[$i] );
+				$this->purchase->editPriceTemp($temp);
 			}
 						
 			$query = $this->purchase->getPurchaseTemp3();
@@ -279,7 +291,8 @@ class Managepurchase extends CI_Controller {
 			
 			$data['cusid'] = ($this->input->post('cusid'));
 			$data['title'] = "Pradit and Friends - Add Barcode";
-			$this->load->view("adddetailtotemp_purchase_view", $data);
+			redirect('managepurchase/showtemptopurchase', 'refresh');
+			//$this->load->view("adddetailtotemp_purchase_view", $data);
 		}
 	}
 	
@@ -367,6 +380,7 @@ class Managepurchase extends CI_Controller {
 		}
 		
 		//echo $html;
+		$mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printPurchasehtml", $data, TRUE));
         $mpdf->Output();
@@ -387,4 +401,16 @@ class Managepurchase extends CI_Controller {
         $mpdf->WriteHTML($html);
         $mpdf->Output();
     } 
+	
+	function edit_amount_temp_in()
+	{
+		$tempid=$this->input->post('tempid');
+		$amount=$this->input->post('amount');
+		$purchasetemp = array(
+					'tempid' => $tempid,
+					'amount' => $amount
+				);
+		$query = $this->purchase->editAmountTemp($purchasetemp);
+		
+	}
 }

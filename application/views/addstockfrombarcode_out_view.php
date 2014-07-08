@@ -21,7 +21,7 @@
 		<div class="row">
             <div class="col-lg-8">
                 <div class="panel panel-default">
-					<div class="panel-heading"><strong>กรุณาสแกน Barcode</strong></div>
+					<div class="panel-heading"><strong>กรุณาสแกน Barcode</strong><button type="button" class="btn btn-success pull-right" onClick="window.location.href='<?php echo site_url("manageproduct/addproduct"); ?>'"> <span class="glyphicon glyphicon-plus"></span> เพิ่มรายการสินค้าใหม่ </button></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 
 						  else if ($this->session->flashdata('showresult') == 'fail') echo '<div class="alert-message alert alert-danger"> ไม่มี Barcode นี้ในระบบ</div>';
 					
@@ -35,7 +35,7 @@
                                     	<label>Barcode *</label>
                                         <input type="text" class="form-control" name="barcode" id="barcode" value="" placeholder="ยิง Barcode">
 										<p class="help-block"><?php echo form_error('barcode'); ?></p>	
-										<button type="submit" class="btn btn-primary btn-lg">  เพิ่มรายการ  </button>
+										<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-barcode"></span>  เพิ่มรายการ  </button>
                                     </div>
 									
 								</form>
@@ -68,9 +68,9 @@
 			</div>	
 		</div>
 						<div class="row">
-							<div class="col-lg-6">
-									<a id="fancyboxview" href="<?php echo site_url("managestock/showtemptostock_out");  ?>"><button type="button" class="btn btn-success btn-lg">  ยืนยันรายการสินค้าทั้งหมด  </button></a>
-									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managestock/cleartemp/0"); ?>'"> เริ่มต้นใหม่ทั้งหมด </button>
+							<div class="col-lg-10">
+									<a id="fancyboxview" href="<?php echo site_url("managestock/showtemptostock_out");  ?>"><button type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันรายการสินค้าทั้งหมด  </button></a>
+									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managestock/cleartemp/0"); ?>'"><span class="glyphicon glyphicon-repeat"></span> เริ่มต้นใหม่ทั้งหมด </button>
 							</div>
 						</div>
 								
@@ -92,7 +92,7 @@
 <script type='text/javascript'> 
 $(document).ready(function() {
 $('#fancyboxview').fancybox({ 
-'width': '40%',
+'width': '70%',
 'height': '70%', 
 'autoScale':false,
 'transitionIn':'none', 
@@ -156,6 +156,29 @@ function del_confirm(val1) {
 				}
 
 		});
+}
+
+function edit_amount(tempid) {
+	bootbox.prompt("กรุณาป้อนจำนวนสินค้า", function(result) {       
+		if (result != null && result>0) {                                                                        
+			var amount = result;
+			$.ajax({
+					'url' : '<?php echo site_url('managestock/edit_amount_temp_in'); ?>',
+					'type':'post',
+					'data': {tempid:tempid, 
+							amount:amount},
+					'error' : function(data){ 
+						alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+                    },
+					'success' : function(data){
+						window.location.reload();
+					}
+				}); 
+						
+		}else if(result != null && result<=0) {
+			alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+		}
+	});
 }
 $(".alert-message").alert();
 window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);

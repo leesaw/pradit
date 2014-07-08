@@ -10,22 +10,22 @@
 		
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <h3 class="page-header">ประวัติสินค้าเข้าสต็อกทั้งหมด</h3>
             </div>
         </div>
 		<div class="row">
 			<form method="post">
-				<div class="col-lg-4">
+				<div class="col-md-4">
 					<div class="form-group">
-						<a href="<?php echo site_url("managebill/historystockexcel_in"); ?>" class="btn btn-success btn-lg">Export Excel</a>
+						<a href="<?php echo site_url("managebill/historystockexcel_in"); ?>" class="btn btn-success btn-md">Export Excel</a>
                     </div>
 				</div>
 			</form>
 		</div>
 		
 		<div class="row">
-            <div class="col-lg-2">
+            <div class="col-md-3">
 				<div class="panel-body">
 					<div class="row">
 						<div class="well" style="width:220px; padding: 8px 10px;">
@@ -49,7 +49,7 @@
 			
 			<?php if ($page>0) { ?>
 			
-			<div class="col-lg-9">
+			<div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">

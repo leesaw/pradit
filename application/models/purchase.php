@@ -11,13 +11,21 @@ Class Purchase extends CI_Model
 	return $query->num_rows();
  }
  
+ function getLastID()
+ {
+	$result = $this->db->select("max(id) as lastid")
+					  ->from("purchase")
+					  ->get()->result();
+	return $result;
+ }
+ 
  function getPurchaseTemp()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, unit, category.name as cname, purchase_product_temp.tempid as tid");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, unit, category.name as cname, purchase_product_temp.tempid as tid,amount");
 	$this->db->from('purchase_product_temp');
-	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode');
-	$this->db->join('category', 'product.categoryID = category.id');
+	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode','left');
+	$this->db->join('category', 'product.categoryID = category.id','left');
 	//$this->db->where('status', 0);
 	$query = $this->db->get();		
 	return $query->result();
@@ -26,9 +34,9 @@ Class Purchase extends CI_Model
  function getPurchaseTemp2()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, count(*) as amount,unit, purchase_product_temp.tempid as tid");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, purchase_product_temp.tempid as tid, costPrice, purchase_product_temp.barcode as _barcode");
 	$this->db->from('purchase_product_temp');
-	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode');
+	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode','left');
 	//$this->db->where('status', 1);
 	$this->db->group_by('purchase_product_temp.barcode');
 	$query = $this->db->get();		
@@ -38,9 +46,9 @@ Class Purchase extends CI_Model
  function getPurchaseTemp3()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, count(*) as amount,unit, costPrice, purchase_product_temp.tempid as tid, product.id as pid");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, costPrice, purchase_product_temp.tempid as tid, product.id as pid, price");
 	$this->db->from('purchase_product_temp');
-	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode');
+	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode','left');
 	//$this->db->where('status', 1);
 	$this->db->group_by('purchase_product_temp.barcode');
 	$query = $this->db->get();		
@@ -70,8 +78,8 @@ Class Purchase extends CI_Model
  {
 	$this->db->select("purchase.id as bid, purchaseID, date, supplierName, supplierAddress, supplierContact, purchase.creditDay as creditDay, purchase.status as purstatus, title, users.firstname as fname, users.lastname as lname");
 	$this->db->from('purchase');	
-	$this->db->join('supplier','supplier.id=purchase.supplierID');
-	$this->db->join('users','users.id=purchase.userID');
+	$this->db->join('supplier','supplier.id=purchase.supplierID','left');
+	$this->db->join('users','users.id=purchase.userID','left');
 	$this->db->where('purchase.id', $id);
 	$query = $this->db->get();		
 	return $query->result();
@@ -82,8 +90,8 @@ Class Purchase extends CI_Model
 	$this->db->_protect_identifiers=false;
 	$this->db->select("purchase_product.productID as pid, amount, pricePerUnit, CONCAT(product.standardID,' ', product.name) as productname, unit, costPrice, purchase.status as purstatus, creditDay");
 	$this->db->from('purchase_product');	
-	$this->db->join('product','product.id=purchase_product.productID');
-	$this->db->join('purchase','purchase.purchaseID=purchase_product.purchaseID');
+	$this->db->join('product','product.id=purchase_product.productID','left');
+	$this->db->join('purchase','purchase.purchaseID=purchase_product.purchaseID','left');
 	$this->db->where('purchase_product.purchaseID', $purchaseid);
 	$query = $this->db->get();		
 	return $query->result();
@@ -117,6 +125,22 @@ Class Purchase extends CI_Model
  {
 	$this->db->where('tempid', $id);
 	$this->db->delete('purchase_product_temp'); 
+ }
+ 
+ function editAmountTemp($temp=NULL)
+ {
+	$this->db->where('tempid', $temp['tempid']);
+	unset($stock['tempid']);
+	$query = $this->db->update('purchase_product_temp', $temp); 	
+	return $query;
+ }
+ 
+ function editPriceTemp($temp=NULL)
+ {
+	$this->db->where('barcode', $temp['barcode']);
+	unset($temp['barcode']);
+	$query = $this->db->update('purchase_product_temp', $temp); 	
+	return $query;
  }
  
 }

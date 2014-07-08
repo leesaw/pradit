@@ -33,7 +33,7 @@
 									echo form_open('managepurchase/previewCashPurchase'); ?>
                                     <div class="form-group">
                                     	<label>สาขาที่ออกใบสั่งซื้อ *</label>
-                                        <select class="form-control" name="branchid" id="branchid">
+                                        <select class="form-control" name="branchid" id="branchid" onchange="autonumber(this);">
 										<?php 	if(is_array($branch_array)) {
 												foreach($branch_array as $loop){
 													echo "<option value='".$loop->id."'>".$loop->name."</option>";
@@ -116,26 +116,45 @@
                                     </div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+								<label>ราคา *</label>
+                                <div class="form-group">
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="0">ไม่รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="1" checked>รวม VAT</label>
+								</div>
+								</div>
+							</div>
+						</div>
 						
 		<div class="row">
 			<div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped row-border table-hover" id="tablebarcode" width="100%">
+                            <table class="table table-hover" id="tablebarcode" width="100%">
                                 <thead>
                                     <tr>
-										<th>NO.</th>
+										<th>ลำดับ</th>
                                         <th>รหัสสินค้า/รายละเอียด</th>
 										<th>จำนวน</th>
+										<th style="text-align: center;width: 20%">ราคาต่อหน่วย</th>
                                     </tr>
                                 </thead>
 								<tbody>
-								<?php if(isset($temp_array)) { foreach($temp_array as $loop) { ?>
+								<?php 
+									$numIndex = 0;
+									if(isset($temp_array)) { foreach($temp_array as $loop) { 
+										$numIndex++;
+									?>
 									<tr>
-									<td></td>
+									<td><?php echo $numIndex; ?></td>
 									<td><?php echo $loop->productname; ?></td>
-									<td><?php echo $loop->amount." ".$loop->unit; ?></td>
+									<td><?php echo $loop->sumamount." ".$loop->unit; ?></td>
+									<td>
+									<input type="hidden" name="barcode[]" value="<?php echo $loop->_barcode; ?>">
+									<input type="text" class="form-control" name="price[]" id="price<?php echo $loop->tid; ?>" value="<?php echo $loop->costPrice; ?>"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -148,7 +167,7 @@
 		
 						<div class="row">
 							<div class="col-md-6">
-									<button type="submit" class="btn btn-primary btn-md">  ยืนยันข้อมูลซัพพลายเออร์  </button></a>
+									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูลซัพพลายเออร์  </button></a>
 									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
@@ -172,42 +191,12 @@
     $(document).ready(function()
     {
 		$("#barcode").focus();
+		// auto insert po id
+		var _lastid = <?php echo json_encode($lastid); ?>;
+		var mytextbox = document.getElementById('branchid').value  + "-PO" + zeroPad(++_lastid,7);;
+		$('#purchaseid').val(mytextbox);
 	
-        var oTable = $('#tablebarcode').dataTable
-        ({
-            "bJQueryUI": false,
-            "bProcessing": true,
-            "sPaginationType": "simple_numbers",
-            'bServerSide'    : false,
-			'bFilter'  : false,
-			"bInfo": false,
-			"bLengthChange" : false,
-			"bPaginate" : false,
-			"iDisplayLength": 10000,
-            "bDeferRender": false,
-            "fnServerData": function ( sSource, aoData, fnCallback ) {
-                $.ajax( {
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": sSource,
-                    "data": aoData,
-                    "success":fnCallback
-                
-                });
-            },
-			
-			"fnDrawCallback": function ( oSettings ) {
-                /* Need to redo the counters if filtered or sorted */
-                if ( oSettings.bSorted || oSettings.bFiltered )
-                {
-                    for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-                    {
-                        $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
-                    }
-                }
-            }
-			
-        });
+        
 		
     });
 </script>
@@ -258,6 +247,17 @@ $(document).ready(function()
 	
 	
 });
+
+function autonumber(obj,id) {
+	var _lastid = <?php echo json_encode($lastid); ?>;
+	var po=$(obj).val() + "-PO" + zeroPad(++_lastid,7);
+	$('#purchaseid').val(po);
+}
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
 </script>
 </body>
 </html>

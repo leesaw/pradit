@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                     <div class="form-group">
-                                    	<a href="<?php echo site_url("managebill/printCashBill/".$purchaseid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบซื้อเงินสด</a>
+                                    	<a href="<?php echo site_url("managepurchase/printCashPurchase/".$purchaseid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบซื้อเงินสด</a>
                                     </div>
 							</div>
 						</div>

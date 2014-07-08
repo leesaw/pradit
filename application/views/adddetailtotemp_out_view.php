@@ -17,7 +17,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-2">
+                            <div class="col-md-2">
                                 <?php 
 									$attributes = array('class' =>'myform', 'id' => 'myform');
 									echo form_open('managestock/savetemptostock_out', $attributes); ?>
@@ -34,13 +34,15 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-md-5">
                                     <div class="form-group">
                                     	<label>สถานะ *</label>
 										<div class="form-group">
 										<label class="radio-inline"><input type="radio" name="status" value="1" checked>ขายออก</label>
 										<label class="radio-inline"><input type="radio" name="status" value="2">ย้ายคลัง</label>
 										<label class="radio-inline"><input type="radio" name="status" value="3">เบิกใช้ซ่อม</label>
+										<label class="radio-inline"><input type="radio" name="status" value="4">ของเคลม</label>
+										<label class="radio-inline"><input type="radio" name="status" value="5">ของแถม</label>
 										</div>
                                     </div>
 									
@@ -48,7 +50,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-4">
+							<div class="col-md-4">
                                     <div class="form-group">
                                             <label>รายละเอียด</label>
 											<textarea class="form-control" name="detail" id="detail" rows="2"></textarea>
@@ -59,7 +61,7 @@
 		
 		
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-md-6">
 									<button type="submit" class="btn btn-primary btn-lg">  บันทึก  </button></a>
 									<button type="button" id="cancel" class="btn btn-warning btn-lg">  ยกเลิก  </button></a>
 							</div>

@@ -3,7 +3,7 @@ Class Stock extends CI_Model
 {
  function getStock()
  {
-	$this->db->select("id, productID, userID, onDate, branchID, status");
+	$this->db->select("id, productID, userID, onDate, branchID, status, amount");
 	$this->db->order_by("id", "asc");
 	$this->db->from('stock_product');		
 	$query = $this->db->get();		
@@ -40,12 +40,12 @@ Class Stock extends CI_Model
 
  function getStockFull()
  {
- 	$this->db->select("stock_product.id, onDate, stock_product.status, standardID, supplierID, barcode, product.name, category.name, unit, username, firstname, lastname, branch.name, stock_product.detail");
+ 	$this->db->select("stock_product.id, onDate, stock_product.status, standardID, supplierID, barcode, product.name, category.name, unit, username, firstname, lastname, branch.name, stock_product.detail, amount");
  	$this->db->from("stock_product");
- 	$this->db->join("product", "product.id = stock_product.productID");
- 	$this->db->join("branch", "branch.id = stock_product.branchID");
- 	$this->db->join("category", "category.id = product.categoryID");
- 	$this->db->join("users", "users.id = stock_product.userID");
+ 	$this->db->join("product", "product.id = stock_product.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_product.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_product.userID",'left');
  	$query = $this->db->get();
  	return $query->result();
  }
@@ -59,12 +59,12 @@ Class Stock extends CI_Model
  
  function getOneStockIN($id=NULL)
  {
- 	$this->db->select("stock_product.id as stockid, onDate, stock_product.status as stockstatus, stock_product.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID");
+ 	$this->db->select("stock_product.id as stockid, onDate, stock_product.status as stockstatus, stock_product.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
  	$this->db->from("stock_product");
- 	$this->db->join("product", "product.id = stock_product.productID");
- 	$this->db->join("branch", "branch.id = stock_product.branchID");
- 	$this->db->join("category", "category.id = product.categoryID");
- 	$this->db->join("users", "users.id = stock_product.userID");
+ 	$this->db->join("product", "product.id = stock_product.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_product.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_product.userID",'left');
 	$this->db->where("stock_product.id", $id);
  	$query = $this->db->get();
  	return $query->result();
@@ -72,12 +72,12 @@ Class Stock extends CI_Model
  
  function getOneStockOUT($id=NULL)
  {
- 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID");
+ 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
  	$this->db->from("stock_out");
- 	$this->db->join("product", "product.id = stock_out.productID");
- 	$this->db->join("branch", "branch.id = stock_out.branchID");
- 	$this->db->join("category", "category.id = product.categoryID");
- 	$this->db->join("users", "users.id = stock_out.userID");
+ 	$this->db->join("product", "product.id = stock_out.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_out.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_out.userID",'left');
 	$this->db->where("stock_out.id", $id);
  	$query = $this->db->get();
  	return $query->result();
@@ -129,9 +129,9 @@ Class Stock extends CI_Model
 	$this->db->update('stock');
  }
  
- function decrementStock($productid=NULL, $branchid=NULL)
+ function decrementStock($productid=NULL, $branchid=NULL, $amount=NULL)
  {
-	$this->db->set('amount', 'amount-1', FALSE);
+	$this->db->set('amount', 'amount-'.$amount, FALSE);
 	$this->db->where('productID', $productid);
 	$this->db->where('branchID', $branchid);
 	$this->db->update('stock');

@@ -21,21 +21,22 @@
 		<div class="row">
             <div class="col-lg-8">
                 <div class="panel panel-default">
-					<div class="panel-heading"><strong>กรุณาสแกน Barcode</strong></div>
+					<div class="panel-heading"><strong>กรุณาสแกน Barcode</strong><button type="button" class="btn btn-success pull-right" onClick="window.location.href='<?php echo site_url("manageproduct/addproduct"); ?>'"> <span class="glyphicon glyphicon-plus"></span> เพิ่มรายการสินค้าใหม่ </button></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 
 						  else if ($this->session->flashdata('showresult') == 'fail') echo '<div class="alert-message alert alert-danger"> ไม่มี Barcode นี้ในระบบ</div>';
 					
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-8">
                                 <?php 
 									echo form_open('managestock/saveBarcodeTemp_in'); ?>
                                     <div class="form-group">
                                     	<label>Barcode *</label>
                                         <input type="text" class="form-control" name="barcode" id="barcode" value="" placeholder="ยิง Barcode">
-										<p class="help-block"><?php echo form_error('barcode'); ?></p>	
-										<button type="submit" class="btn btn-success btn-lg">  เพิ่มรายการ  </button>
+										<p class="help-block"><?php echo form_error('barcode'); ?></p>
+										<button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-barcode"></span>  เพิ่มรายการ  </button>
+										
                                     </div>
 									
 								</form>
@@ -68,9 +69,9 @@
 			</div>	
 		</div>
 						<div class="row">
-							<div class="col-lg-6">
-									<a id="fancyboxview" href="<?php echo site_url("managestock/showtemptostock");  ?>"><button type="button" class="btn btn-primary btn-lg">  ยืนยันรายการสินค้าทั้งหมด  </button></a>
-									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managestock/cleartemp/1"); ?>'"> เริ่มต้นใหม่ทั้งหมด </button>
+							<div class="col-lg-10">
+									<a id="fancyboxview" href="<?php echo site_url("managestock/showtemptostock");  ?>"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันรายการสินค้าทั้งหมด  </button></a>
+									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managestock/cleartemp/1"); ?>'"><span class="glyphicon glyphicon-repeat"></span> เริ่มต้นใหม่ทั้งหมด </button>
 							</div>
 						</div>
 								
