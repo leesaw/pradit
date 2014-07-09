@@ -12,14 +12,14 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-10">
+            <div class="col-md-8">
                 <h3 class="page-header">ตรวจสอบจำนวนสินค้า</h3>
             </div>
         </div>
 
 						<div class="row">
 							<form method="post">
-							<div class="col-lg-4">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <label>เลือก สาขา</label>
 										<select class="form-control" name="branchid" id="branchid" onChange="this.form.action='<?php echo site_url('managestock/viewStockByBranch')?>/'+this.value;this.form.submit()"> 
@@ -36,7 +36,7 @@
 							</form>
 						</div>
 		<div class="row">
-            <div class="col-lg-2">
+            <div class="col-md-3">
 				<div class="panel-body">
 					<div class="row">
 						<div class="well" style="width:220px; padding: 8px 10px;">
@@ -60,7 +60,7 @@
 			
 			<?php if ($page>0) { ?>
 			
-			<div class="col-lg-9">
+			<div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">

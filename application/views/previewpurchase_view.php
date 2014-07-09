@@ -14,7 +14,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">บิล</h3>
+                <h3 class="page-header">ใบสั่งซื้อ</h3>
             </div>
         </div>
 		
@@ -98,7 +98,7 @@
                             <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ชื่อซัพพลายเออร์</label>
+                                    	<label class="control-label" for="inputSuccess">ชื่อผู้จำหน่าย</label>
 										<?php echo form_hidden('cusid', $cusid); ?>
 										<input type="text" class="form-control" name="cusname" id="cusname" value="<?php echo $cusname; ?>" readonly>
 										</div>
@@ -120,7 +120,7 @@
                             <div class="col-md-12">
 									<div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ที่อยู่ซัพพลายเออร์</label>
+                                    	<label class="control-label" for="inputSuccess">ที่อยู่ผู้จำหน่าย</label>
 										<input type="text" class="form-control" name="cusaddress" id="cusaddress" value="<?php echo $cusaddress; ?>" readonly>
 										</div>
                                     </div>
@@ -128,11 +128,23 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-md-6">
-									<div class="form-group">
+                            <div class="col-md-4">
+                                    <div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ชื่อผู้ติดต่อ</label>
-										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo $cuscontact; ?>" readonly>
+                                        <label class="control-label" for="inputSuccess">เบอร์โทรศัพท์</label>
+                                        <input type="text" class="form-control" name="custelephone" id="custelephone" value="<?php echo $custelephone; ?>" readonly>
+
+										</div>
+                                      
+                                    </div>
+
+							</div>
+							<div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group has-success">
+                                        <label class="control-label" for="inputSuccess">Fax</label>
+                                        <input type="text" class="form-control" name="cusfax" id="cusfax" value="<?php echo $cusfax; ?>" readonly>
+										
 										</div>
                                     </div>
 
@@ -178,14 +190,33 @@
                                     </div>
 
 							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">วันที่รับของ</label>
+										<input type="text" class="form-control" name="receivedate" id="receivedate" value="<?php if ($receivedate == "") echo date('d')."/".date('m')."/".(date('Y')+543); else echo $receivedate; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ขนส่งโดย</label>
+										<input type="text" class="form-control" name="transport" id="transport" value="<?php echo $transport; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
+							<div class="col-md-3">
 								<div class="form-group">
 								<label class="control-label" for="inputSuccess">ราคา</label>
                                 <div class="form-group has-success">
-									<input type="text" class="form-control" name="vat" id="vat" value="<?php if ($vat>0) echo "รวม VAT"; else echo "ไม่รวม VAT";?>" readonly>
+									<input type="hidden" name="vat" value="<?php echo $vat; ?>">
+									<input type="text" class="form-control" name="vatshow" id="vatshow" value="<?php if ($vat>0) echo "รวม VAT"; else echo "ไม่รวม VAT";?>" readonly>
 								</div>
 								</div>
 							</div>

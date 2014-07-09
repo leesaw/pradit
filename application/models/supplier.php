@@ -44,8 +44,8 @@ Class Supplier extends CI_Model
  
 function searchName($term)
  {
-	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(address,' จ.  ', province_name,' ',zipcode) as supaddress, supplier.id as supid, supplier.name as supname, supplier.status as supstatus, creditDay, contactName");
+	//$this->db->_protect_identifiers=false;
+	$this->db->select("address, province_name,province_code, zipcode, supplier.id as supid, supplier.name as supname, supplier.status as supstatus, creditDay, contactName, telephone, fax");
 	$this->db->from('supplier');	
 	$this->db->join('province','province.province_code=supplier.provinceID');
 	$this->db->like('supplier.name', $term,'after');

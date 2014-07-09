@@ -97,6 +97,13 @@ class Managestock extends CI_Controller {
 		$data['title'] = "Pradit and Friends - Export Stock";
 		$this->load->view("outstock_view", $data);
 	}
+	
+	function returnstock() 
+	{
+
+		$data['title'] = "Pradit and Friends - Return Stock";
+		$this->load->view("returnstock_view", $data);
+	}
 
 	function addstockfrombarcode()
 	{
@@ -106,6 +113,16 @@ class Managestock extends CI_Controller {
 		
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("addstockfrombarcode_view", $data);
+	}
+	
+	function returnstockfrombarcode()
+	{
+		$this->load->helper(array('form'));
+		
+		$data['count'] = $this->stock->getTempCount();
+		
+		$data['title'] = "Pradit and Friends - Add Barcode";
+		$this->load->view("returnstockfrombarcode_view", $data);
 	}
 	
 	function addstockfrombarcode_out()
@@ -140,6 +157,43 @@ class Managestock extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'in' => 1,
+					'amount' => 1
+				);
+				$result2 = $this->stock->addBarcodeTemp($barcode);
+				redirect(current_url());
+			}else{
+				$this->session->set_flashdata('showresult', 'fail');
+				redirect(current_url());
+			}
+		}
+		
+		$data['count'] = $this->stock->getTempCount(1);
+		$data['title'] = "Pradit and Friends - Add Barcode";
+		$this->load->view("addstockfrombarcode_view", $data);
+	}
+	
+	function saveBarcodeTemp_return()
+	{
+		$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required');
+		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
+		$this->form_validation->set_error_delimiters('<code>', '</code>');
+		
+		if($this->form_validation->run() == TRUE) {
+			
+			$barcodeid= ($this->input->post('barcode'));
+
+			$row = $this->stock->checkBarcodeProduct($barcodeid);
+			if ($row>0)	{
+				$result = $this->stock->getTempID();
+				foreach ($result as $loop)
+				{
+					$tempid = $loop->tempid;
+				}
+				$tempid++;
+				$barcode = array(
+					'barcode' => $barcodeid,
+					'tempid' => $tempid,
+					'in' => 2,
 					'amount' => 1
 				);
 				$result2 = $this->stock->addBarcodeTemp($barcode);
@@ -234,14 +288,35 @@ class Managestock extends CI_Controller {
 		$this->datatables
 		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_product.id as stockid")
 		->from('stock_product')
-		->join('product', 'product.id = stock_product.productID')
-		->join('category', 'product.categoryID = category.id')
-		->join('branch', 'branch.id = stock_product.branchID')
+		->join('product', 'product.id = stock_product.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_product.branchID','left')
 		->where('category.id', $catid)
 		//->edit_column("pid","$1","pid");
 		
 		->edit_column("stockid",'<div class="tooltip-demo">
 	<a href="'.site_url("managestock/viewproductstockin/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
+	</div>',"stockid");
+		
+		echo $this->datatables->generate(); 
+	}
+	
+	function ajaxGetStockHistoryReturn()
+	{
+		$catid = $this->uri->segment(3);
+		$this->load->helper('date');
+		$this->load->library('Datatables');
+		$this->datatables
+		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_return.id as stockid")
+		->from('stock_return')
+		->join('product', 'product.id = stock_return.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_return.branchID','left')
+		->where('category.id', $catid)
+		//->edit_column("pid","$1","pid");
+		
+		->edit_column("stockid",'<div class="tooltip-demo">
+	<a href="'.site_url("managestock/viewproductstockreturn/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
 	</div>',"stockid");
 		
 		echo $this->datatables->generate(); 
@@ -255,9 +330,9 @@ class Managestock extends CI_Controller {
 		$this->datatables
 		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_out.id as stockid")
 		->from('stock_out')
-		->join('product', 'product.id = stock_out.productID')
-		->join('category', 'product.categoryID = category.id')
-		->join('branch', 'branch.id = stock_out.branchID')
+		->join('product', 'product.id = stock_out.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_out.branchID','left')
 		->where('category.id', $catid)
 		//->edit_column("pid","$1","pid");
 		
@@ -273,6 +348,13 @@ class Managestock extends CI_Controller {
 		$id = $this->uri->segment(3);
 		$result = $this->stock->delStockTemp($id);
 		redirect('managestock/addstockfrombarcode', 'refresh');
+	}
+	
+	function deletestocktemp_return()
+	{
+		$id = $this->uri->segment(3);
+		$result = $this->stock->delStockTemp($id);
+		redirect('managestock/returnstockfrombarcode', 'refresh');
 	}
 	
 	function deletestocktemp_out()
@@ -327,6 +409,50 @@ class Managestock extends CI_Controller {
 		}
 		
 		$this->stock->delAllStockTemp(1);
+		
+		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+		
+	}
+	
+	function savetemptostock_return()
+	{
+		
+		$branchid = ($this->input->post('branchid'));
+		$billid = ($this->input->post('billid'));
+		$detail = ($this->input->post('detail'));
+		$userid = $this->session->userdata('sessid');
+		
+			
+		$barcode = array(
+			'branchID' => $branchid,
+			'billID' => $billid,
+			'userID' => $userid,
+			'detail' => $detail
+		);
+		
+		$query = $this->stock->getTemp(2);
+		
+		foreach($query as $loop) {
+			$barcodeid = $loop->barcode;
+			$amount = $loop->amount;
+			$barcode['amount'] = $amount;
+			
+			$query2 = $this->stock->getProductID($barcodeid);
+			foreach($query2 as $loop2) {
+				$productid = $loop2->id;
+				$barcode['productID'] = $productid;
+			}
+			
+			$this->stock->addStock_return($barcode);
+			// increment amount in stock table
+			if ($this->stock->checkStock($productid,$branchid)<1) {
+				$pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
+				$this->stock->addNewStockTable($pid);
+			}
+			$this->stock->incrementStock($productid,$branchid,$amount);
+		}
+		
+		$this->stock->delAllStockTemp(2);
 		
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
@@ -394,6 +520,26 @@ class Managestock extends CI_Controller {
 		$this->load->view("adddetailtotemp_view", $data);
 	}
 	
+	function showtemptostock_return()
+	{
+		$this->load->helper(array('form'));
+		
+		$this->load->model('branch','',TRUE);
+		
+		$data['count'] = $this->stock->getTempCount();
+		
+		$query = $this->branch->getBranch();
+		if($query){
+			$data['branch_array'] =  $query;
+		}else{
+			$data['branch_array'] = array();
+		}
+		
+		
+		$data['title'] = "Pradit and Friends - Add Barcode";
+		$this->load->view("adddetailtotemp_return_view", $data);
+	}
+	
 	function showtemptostock_out()
 	{
 		$this->load->helper(array('form'));
@@ -430,6 +576,22 @@ class Managestock extends CI_Controller {
 		$this->load->view('historystockin_view',$data);
 	}
 	
+	function historyreturnstock()
+	{
+		$this->load->model('category','',TRUE);
+		$query = $this->category->getCat();
+		if($query){
+			$data['cat_array'] =  $query;
+		}else{
+			$data['cat_array'] = array();
+		}
+
+		$data['page'] = 0;
+		
+		$data['title'] = "Pradit and Friends - History Stock";
+		$this->load->view('historystockreturn_view',$data);
+	}
+	
 	function viewStockINSelectedCat() {
 		$catid = $this->uri->segment(3);
 		
@@ -446,6 +608,22 @@ class Managestock extends CI_Controller {
 		$this->load->view('historystockin_view',$data);
 	}
 	
+	function viewStockReturnSelectedCat() {
+		$catid = $this->uri->segment(3);
+		
+		$this->load->model('category','',TRUE);
+		$query = $this->category->getCat();
+		if($query){
+			$data['cat_array'] =  $query;
+		}else{
+			$data['cat_array'] = array();
+		}
+		
+		$data['page'] = 1;
+		$data['title'] = "Pradit and Friends - History Stock";
+		$this->load->view('historystockreturn_view',$data);
+	}
+	
 	function viewproductstockin()
 	{
 		$id = $this->uri->segment(3);
@@ -456,6 +634,29 @@ class Managestock extends CI_Controller {
 		
 		$data['title'] = "Pradit and Friends - View Product";
 		$this->load->view('viewstockproduct_in_view',$data);
+	}
+	
+	function viewproductstockreturn()
+	{
+		$id = $this->uri->segment(3);
+		$query = $this->stock->getOneStockReturn($id);
+		if($query){
+			$data['stock_array'] =  $query;
+		}
+		
+		$this->load->model('bill','',TRUE);
+		
+		foreach($query as $loop) {
+			$billid = $loop->stockbillid;
+		}
+		
+		$query = $this->bill->checkIDBillid($billid);
+		foreach($query as $loop) {
+			$data['bid'] = $loop->id;
+		}
+		
+		$data['title'] = "Pradit and Friends - View Product";
+		$this->load->view('viewstockproduct_return_view',$data);
 	}
 	
 	function historyexportstock()

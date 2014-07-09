@@ -34,7 +34,7 @@ Class Purchase extends CI_Model
  function getPurchaseTemp2()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, purchase_product_temp.tempid as tid, costPrice, purchase_product_temp.barcode as _barcode");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, purchase_product_temp.tempid as tid, costPrice, purchase_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
 	$this->db->from('purchase_product_temp');
 	$this->db->join('product', 'product.barcode = purchase_product_temp.barcode','left');
 	//$this->db->where('status', 1);
@@ -76,7 +76,7 @@ Class Purchase extends CI_Model
  
  function getOnePurchase($id=NULL)
  {
-	$this->db->select("purchase.id as bid, purchaseID, date, supplierName, supplierAddress, supplierContact, purchase.creditDay as creditDay, purchase.status as purstatus, title, users.firstname as fname, users.lastname as lname");
+	$this->db->select("purchase.id as bid, purchaseID, date, supplier.supplierID as _supplierid, supplierName, supplierAddress, supplierTel, supplierFax, purchase.creditDay as creditDay, purchase.status as purstatus, title, users.firstname as fname, users.lastname as lname, receiveDate, transport, vat");
 	$this->db->from('purchase');	
 	$this->db->join('supplier','supplier.id=purchase.supplierID','left');
 	$this->db->join('users','users.id=purchase.userID','left');
@@ -91,7 +91,7 @@ Class Purchase extends CI_Model
 	$this->db->select("purchase_product.productID as pid, amount, pricePerUnit, CONCAT(product.standardID,' ', product.name) as productname, unit, costPrice, purchase.status as purstatus, creditDay");
 	$this->db->from('purchase_product');	
 	$this->db->join('product','product.id=purchase_product.productID','left');
-	$this->db->join('purchase','purchase.purchaseID=purchase_product.purchaseID','left');
+	$this->db->join('purchase','purchase.id=purchase_product.purchaseID','left');
 	$this->db->where('purchase_product.purchaseID', $purchaseid);
 	$query = $this->db->get();		
 	return $query->result();
@@ -143,6 +143,30 @@ Class Purchase extends CI_Model
 	return $query;
  }
  
+ //  for buycash table
+ function addBuyCash($buycash=NULL)
+ {
+	$this->db->insert('buycash', $buycash);
+	return $this->db->insert_id();
+ }
+ 
+ function checkBuycashID($buycashid=NULL)
+ {
+	$this->db->select("id");
+	$this->db->from('buycash');		
+	$this->db->where('buycashID', $buycashid);
+	$query = $this->db->get();		
+	return $query->num_rows();
+ }
+ 
+ function getBuycashID($buycashid=NULL)
+ {
+	$this->db->select("id");
+	$this->db->from('buycash');		
+	$this->db->where('buycashID', $buycashid);
+	$query = $this->db->get();		
+	return $query->num_rows();
+ }
 }
 ?>
 

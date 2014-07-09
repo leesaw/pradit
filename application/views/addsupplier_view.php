@@ -127,7 +127,7 @@
                                         <select class="form-control" name="status" id="status">
 											<option value="0">-</option>
 											<option value="1">สด</option>
-											<option value="2">เชื่อ</option>
+											<option value="2">เครดิต</option>
                                         </select>
                                     </div>
 							</div>

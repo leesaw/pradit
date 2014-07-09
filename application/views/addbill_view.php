@@ -13,7 +13,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">ออกบิล</h3>
+                <h3 class="page-header">ออกใบส่งของชั่วคราว</h3>
             </div>
         </div>
 		

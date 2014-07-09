@@ -14,7 +14,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">Barcode สินค้าในบิล</h3>
+                <h3 class="page-header">Barcode สินค้าในใบส่งของชั่วคราว</h3>
             </div>
         </div>
 		
@@ -35,7 +35,7 @@
                                     	<label>Barcode *</label>
                                         <input type="text" class="form-control" name="barcode" id="barcode" value="" placeholder="ยิง Barcode">
 										<p class="help-block"><?php echo form_error('barcode'); ?></p>	
-										<button type="submit" class="btn btn-success btn-lg">  เพิ่มรายการ  </button>
+										<button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-barcode"></span>  เพิ่มรายการ  </button>
                                     </div>
 									
 								</form>
@@ -54,8 +54,8 @@
                                     <tr>
 										<th></th>
                                         <th>รหัสสินค้า/รายละเอียด</th>
+										<th width="80">จำนวน</th>
 										<th>หน่วย</th>
-										<th>ประเภท</th>
 										<th>จำนวนในสต็อก</th>
 										<th>จัดการ</th>
                                     </tr>
@@ -66,10 +66,11 @@
 								?>
 									<td></td>
 									<td><?php echo $loop->productname; ?></td>
+									<td><?php echo $loop->_amount; ?></td>
 									<td><?php echo $loop->unit; ?></td>
-									<td><?php echo $loop->cname; ?></td>
 									<td><?php echo $loop->sum; ?></td>
 									<td>
+									<button class="btnAmount btn btn-success btn-xs" onclick="edit_amount(<?php echo $loop->tid; ?>)" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip" title="แก้ไขจำนวน"><span class="glyphicon glyphicon-plus"></span></button>
 									<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm(<?php echo $loop->tid; ?>)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-remove"></span></button>
 									</td>
 									</tr>
@@ -83,8 +84,8 @@
 		</div>
 						<div class="row">
 							<div class="col-lg-6">
-									<a href="<?php echo site_url("managebill/showtemptobill");  ?>"><button type="button" class="btn btn-primary btn-lg">  ยืนยันรายการสินค้าทั้งหมด  </button></a>
-									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managebill/cleartemp/1"); ?>'"> เริ่มต้นใหม่ทั้งหมด </button>
+									<a href="<?php echo site_url("managebill/showtemptobill");  ?>"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันรายการสินค้าทั้งหมด  </button></a>
+									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managebill/cleartemp/1"); ?>'"><span class="glyphicon glyphicon-repeat"></span> เริ่มต้นใหม่ทั้งหมด </button>
 							</div>
 						</div>
 								
@@ -170,6 +171,28 @@ function del_confirm(val1) {
 				}
 
 		});
+}
+function edit_amount(tempid) {
+	bootbox.prompt("กรุณาป้อนจำนวนสินค้า", function(result) {       
+		if (result != null && result>0) {                                                                        
+			var amount = result;
+			$.ajax({
+					'url' : '<?php echo site_url('managebill/edit_amount_bill'); ?>',
+					'type':'post',
+					'data': {tempid:tempid, 
+							amount:amount},
+					'error' : function(data){ 
+						alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+                    },
+					'success' : function(data){
+						window.location.reload();
+					}
+				}); 
+						
+		}else if(result != null && result<=0) {
+			alert('ไม่สามารถแก้ไขจำนวนสินค้าได้');
+		}
+	});
 }
 $(".alert-message").alert();
 window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);

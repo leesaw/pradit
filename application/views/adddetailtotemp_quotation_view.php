@@ -4,6 +4,7 @@
 <?php $this->load->view('header_view'); ?>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/jquery.fancybox.css" >
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/jquery-ui-1.10.4.min.css" >
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css" >
 </head>
 
 <body>
@@ -28,11 +29,11 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                 <?php 
 									echo form_open('managebill/previewCashQuotation'); ?>
                                     <div class="form-group">
-                                    	<label>สาขาที่ออกบิล *</label>
+                                    	<label>สาขาที่ออก *</label>
                                         <select class="form-control" name="branchid" id="branchid">
 										<?php 	if(is_array($branch_array)) {
 												foreach($branch_array as $loop){
@@ -42,17 +43,18 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-4">
+							<div class="col-md-4">
                                     <div class="form-group">
-                                    	<label>เลขที่บิล *</label>
+                                    	<label>เลขที่ใบเสนอราคา *</label>
                                         <input type="text" class="form-control" name="cashid" id="cashid" value="<?php echo set_value('cashid'); ?>">
 										<p class="help-block"><?php echo form_error('cashid'); ?></p>
                                     </div>
 
 							</div>
 						</div>
+						
 						<div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-md-4">
                                     <div class="form-group">
                                     	<label>ชื่อลูกค้า *</label>
 										<input type="hidden" name="cusid" id="cusid" value="<?php echo $cusid; ?>">
@@ -63,7 +65,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-12">
                                     <div class="form-group">
                                     	<label>ที่อยู่ลูกค้า *</label>
 										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="3"><?php echo set_value('cusaddress'); ?></textarea>
@@ -73,7 +75,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                     <div class="form-group">
                                     	<label>ชื่อผู้ติดต่อ *</label>
 										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo set_value('cuscontact'); ?>">
@@ -83,8 +85,26 @@
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-md-5">
+									
+									<div class="form-group">
+                                            <label>เบอร์โทรศัพท์ *</label>
+                                            <input type="text" class="form-control" name="custelephone" id="custelephone" value="<?php echo set_value('custelephone'); ?>">
+											<p class="help-block"><?php echo form_error('custelephone'); ?></p>
+                                    </div>
+							</div>
+							<div class="col-md-5">
+									
+									<div class="form-group">
+                                            <label>FAX *</label>
+                                            <input type="text" class="form-control" name="cusfax" id="cusfax" value="<?php echo set_value('cusfax'); ?>">
+											<p class="help-block"><?php echo form_error('cusfax'); ?></p>
+                                    </div>
+							</div>
+						</div>
+						<div class="row">
 						<!--
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                     	<label>ราคาซื้อ *</label>
                                             <select class="form-control" name="lastprice" id="lastprice">
@@ -96,28 +116,34 @@
 
 							</div>
 						-->
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                     	<label>เงื่อนไขการชำระเงิน *</label>
                                             <select class="form-control" name="condition" id="condition">
 											<option value="0" <?php echo set_select('condition', '0'); ?>>-</option>
 											<option value="1" <?php echo set_select('condition', '1'); ?>>สด</option>
-											<option value="2" <?php echo set_select('condition', '2'); ?>>เชื่อ</option>
+											<option value="2" <?php echo set_select('condition', '2'); ?>>เครดิต</option>
                                         </select>
                                     </div>
 									
 
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                             <label>จำนวนวันเครดิต </label>
                                             <input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo set_value('creditday'); ?>">
 											<p class="help-block"><?php echo form_error('creditday'); ?></p>
                                     </div>
 							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+										<label>ยื่นราคาถึงวันที่ </label>
+										<input type="text" class="form-control" id="receivedate" name="receivedate" />
+									</div>
+							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                     	<label>ราคาขาย *</label>
                                             <select class="form-control" name="saleprice" id="saleprice">
@@ -129,35 +155,51 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
-                                    	<label>ส่วนลด *</label>
+                                    	<label>ส่วนลด (บาท) *</label>
                                         <input type="text" class="form-control" name="discount" id="discount" value="<?php echo set_value('discount'); ?>">
 										<p class="help-block"><?php echo form_error('discount'); ?></p>
+                                    </div>
+
+							</div>
+							<div class="col-md-3">
+                                    <div class="form-group">
+                                    	<label>ส่วนลด (%) *</label>
+                                        <input type="text" class="form-control" name="discount2" id="discount2" value="<?php echo set_value('discount2'); ?>">
+										<p class="help-block"><?php echo form_error('discount2'); ?></p>
                                     </div>
 
 							</div>
 						</div>
 						
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped row-border table-hover" id="tablebarcode" width="100%">
+                            <table class="table table-hover" id="tablebarcode" width="100%">
                                 <thead>
                                     <tr>
-										<th>NO.</th>
+										<th>ลำดับ</th>
                                         <th>รหัสสินค้า/รายละเอียด</th>
 										<th>จำนวน</th>
+										<th style="text-align: center;width: 20%">ราคาต่อหน่วย</th>
                                     </tr>
                                 </thead>
 								<tbody>
-								<?php if(isset($temp_array)) { foreach($temp_array as $loop) { ?>
+								<?php $numIndex = 0; 
+									if(isset($temp_array)) { foreach($temp_array as $loop) { 
+										$numIndex++;
+									?>
 									<tr>
-									<td></td>
-									<td><?php echo $loop->productname; ?></td>
-									<td><?php echo $loop->amount." ".$loop->unit; ?></td>
+									<td><?php echo $numIndex; ?></td>
+									<td><a id="fancyboxview" href="<?php echo site_url("manageproduct/viewproduct_iframe/".$loop->_productid);  ?>"><?php echo $loop->productname; ?></a></td>
+									<td><?php echo $loop->sumamount." ".$loop->unit; ?></td>
+									<td>
+									<input type="hidden" name="barcode[]" value="<?php echo $loop->_barcode; ?>">
+									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $loop->tid; ?>" value="<?php echo $loop->lowestPrice; ?>">
+									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $loop->tid; ?>);" id="price<?php echo $loop->tid; ?>" value="<?php echo $loop->priceVAT; ?>"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -169,9 +211,9 @@
 		</div>
 		
 						<div class="row">
-							<div class="col-lg-6">
-									<button type="submit" class="btn btn-primary btn-lg">  ยืนยันข้อมูลลูกค้า  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
+							<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูลลูกค้า  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								
@@ -190,46 +232,28 @@
 <script src="<?php echo base_url(); ?>/js/bootbox.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery.fancybox.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.4.min.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker-thai.js"></script>
+<script src="<?php echo base_url(); ?>js/locales/bootstrap-datepicker.th.js"></script>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function()
     {
 		$("#barcode").focus();
 	
-        var oTable = $('#tablebarcode').dataTable
-        ({
-            "bJQueryUI": false,
-            "bProcessing": true,
-            "sPaginationType": "simple_numbers",
-            'bServerSide'    : false,
-			'bFilter'  : false,
-			"bInfo": false,
-			"bLengthChange" : false,
-			"bPaginate" : false,
-			"iDisplayLength": 10000,
-            "bDeferRender": false,
-            "fnServerData": function ( sSource, aoData, fnCallback ) {
-                $.ajax( {
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": sSource,
-                    "data": aoData,
-                    "success":fnCallback
-                
-                });
-            },
-			
-			"fnDrawCallback": function ( oSettings ) {
-                /* Need to redo the counters if filtered or sorted */
-                if ( oSettings.bSorted || oSettings.bFiltered )
-                {
-                    for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-                    {
-                        $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
-                    }
-                }
-            }
-			
-        });
+		// auto insert po id
+		var _lastid = <?php echo json_encode($lastid); ?>;
+		var mytextbox = document.getElementById('branchid').value  + "-QT" + zeroPad(++_lastid,7);;
+		$('#cashid').val(mytextbox);
+		
+		get_datepicker("#receivedate");
+		
+		$('#fancyboxview').fancybox({ 
+		'width': '70%',
+		'height': '70%', 
+		'autoScale':false,
+		'transitionIn':'none', 
+		'transitionOut':'none', 
+		'type':'iframe'}); 
 		
     });
 </script>
@@ -249,12 +273,17 @@ $(document).ready(function()
 									id: customer.cusid,
                                     name: customer.cusname,
 									value: customer.cusname,
-									address: customer.cusaddress,
+									address: customer.address,
+									provinceid: customer.province_code,
+									provincename: customer.province_name,
+									zipcode: customer.zipcode,
 									saleprice: customer.saleprice,
 									discount: customer.discount,
 									contact: customer.contactName,
 									credit: customer.creditDay,
-									status: customer.status
+									status: customer.status,
+									telephone: customer.telephone,
+									fax: customer.fax
                                     };
                             }));
                         }
@@ -267,13 +296,16 @@ $(document).ready(function()
 			select: function (event, ui) {
             event.preventDefault();
 			$("#cusname").val(ui.item.name);
-			$("#cusaddress").val(ui.item.address);
+			if (ui.item.provinceid == 10) $("#cusaddress").val(ui.item.address+" "+ui.item.provincename+" "+ui.item.zipcode);
+			else $("#cusaddress").val(ui.item.address+" จ. "+ui.item.provincename+" "+ui.item.zipcode);
 			$("#cusid").val(ui.item.id);
 			$("#saleprice").val(ui.item.saleprice);
 			$("#discount").val(ui.item.discount);
 			$("#cuscontact").val(ui.item.contact);
 			$("#creditday").val(ui.item.credit);
 			$("#condition").val(ui.item.status);
+			$("#custelephone").val(ui.item.telephone);
+			$("#cusfax").val(ui.item.fax);
         }
 		});
 
@@ -284,6 +316,38 @@ $(document).ready(function()
 	
 	
 });
+
+function autonumber(obj,id) {
+	var _lastid = <?php echo json_encode($lastid); ?>;
+	var po=$(obj).val() + "-PO" + zeroPad(++_lastid,7);
+	$('#purchaseid').val(po);
+}
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+
+function get_datepicker(id)
+{
+
+	$(id).datepicker({ language:'th-th',format:'dd/mm/yyyy'
+		    });
+
+}
+
+function checklowest(id)
+{
+	var _lowestprice = (document.getElementById('lowestprice'+id).value);
+	var _price = (document.getElementById('price'+id).value);
+
+	if (_price < _lowestprice) {
+		alert("ราคาที่กำหนด ต่ำกว่าราคาต่ำสุด");
+		/*window.setTimeout(function () { 
+			document.getElementById('price'+id).focus(); 
+		}, 0); */
+	}
+}
 </script>
 </body>
 </html>

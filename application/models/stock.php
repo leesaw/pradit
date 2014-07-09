@@ -70,6 +70,19 @@ Class Stock extends CI_Model
  	return $query->result();
  }
  
+ function getOneStockReturn($id=NULL)
+ {
+ 	$this->db->select("stock_return.id as stockid, onDate, stock_return.billID as stockbillid, stock_return.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
+ 	$this->db->from("stock_return");
+ 	$this->db->join("product", "product.id = stock_return.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_return.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_return.userID",'left');
+	$this->db->where("stock_return.id", $id);
+ 	$query = $this->db->get();
+ 	return $query->result();
+ }
+ 
  function getOneStockOUT($id=NULL)
  {
  	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
@@ -141,6 +154,13 @@ Class Stock extends CI_Model
  {		
 	$this->db->set('onDate', 'NOW()', FALSE);
 	$this->db->insert('stock_product', $stock);
+	return $this->db->insert_id();			
+ }
+ 
+ function addStock_return($stock=NULL)
+ {		
+	$this->db->set('onDate', 'NOW()', FALSE);
+	$this->db->insert('stock_return', $stock);
 	return $this->db->insert_id();			
  }
  

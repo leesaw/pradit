@@ -227,6 +227,18 @@ class Manageproduct extends CI_Controller {
 		$this->load->view('viewproduct_view',$data);
 	}
 	
+	function viewproduct_iframe()
+	{
+		$id = $this->uri->segment(3);
+		$query = $this->product->getOneProduct($id);
+		if($query){
+			$data['product_array'] =  $query;
+		}
+		
+		$data['title'] = "Pradit and Friends - View Product";
+		$this->load->view('viewproduct_view_iframe',$data);
+	}
+	
 	function editproduct()
 	{
 		$this->load->helper(array('form'));
@@ -347,6 +359,8 @@ class Manageproduct extends CI_Controller {
     function jquerybarcode() 
     {
 		$data['barcodeid'] = $this->uri->segment(3);
+		$data['pname'] = $this->uri->segment(4);
+		$data['price'] = $this->uri->segment(5);
 		
 		$data['title'] = "Pradit and Friends - Barcode printing";
 		$this->load->view('barcode_view',$data);

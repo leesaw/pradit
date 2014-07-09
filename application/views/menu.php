@@ -44,7 +44,7 @@
                             <a href=""><i class="fa fa-usd fa-fw"></i> ซื้อขาย (Buy/Sell)<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="<?php echo site_url("managebill/addbill"); ?>">ออกบิล (Bill)</a>
+									<a href="<?php echo site_url("managebill/addbill"); ?>">ออกใบส่งของชั่วคราว</a>
 								</li>
 								<li>
 									<a href="<?php echo site_url("managebill/addquotation"); ?>">ออกใบเสนอราคา</a>
@@ -53,7 +53,7 @@
                                     <a href="<?php echo site_url("managepurchase/addpurchase"); ?>"> ออกใบสั่งซื้อ</a>
                                 </li>
 								<li>
-                                    <a href="<?php echo site_url("managebill/historybill"); ?>"> ประวัติบิล</a>
+                                    <a href="<?php echo site_url("managebill/historybill"); ?>"> ประวัติใบส่งของชั่วคราว</a>
                                 </li>
 								<li>
                                     <a href="<?php echo site_url("managebill/historyquotation"); ?>"> ประวัติใบเสนอราคา</a>
@@ -79,10 +79,16 @@
                                     <a href="<?php echo site_url("managestock/exportstock"); ?>">สินค้าออกจากสต็อก</a>
                                 </li>
 								<li>
+                                    <a href="<?php echo site_url("managestock/returnstock"); ?>">คืนสินค้า</a>
+                                </li>
+								<li>
                                     <a href="<?php echo site_url("managestock/historyimportstock"); ?>"> ประวัติสินค้าเข้าสต็อก</a>
                                 </li>
 								<li>
                                     <a href="<?php echo site_url("managestock/historyexportstock"); ?>">ประวัติสินค้าออกจากสต็อก</a>
+                                </li>
+								<li>
+                                    <a href="<?php echo site_url("managestock/historyreturnstock"); ?>">ประวัติคืนสินค้า</a>
                                 </li>
                             </ul>
 

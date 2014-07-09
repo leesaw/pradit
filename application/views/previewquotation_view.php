@@ -29,10 +29,10 @@
                     <div class="panel-body">
 					<?php echo form_open('managebill/saveCashQuotation'); ?>
 						<div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                        <label class="control-label" for="inputSuccess">เลขที่บิล</label>
+                                        <label class="control-label" for="inputSuccess">เลขที่ใบเสนอราคา</label>
 										
                                         <input type="text" class="form-control" name="cashid" id="cashid" value="<?php echo $cashid; ?>" readonly>
 
@@ -46,10 +46,10 @@
 						echo form_hidden('branchid', $loop->id);
 					?>
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-md-8">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                        <label class="control-label" for="inputSuccess">ที่อยู่สาขาที่ออกบิล</label>
+                                        <label class="control-label" for="inputSuccess">ที่อยู่สาขาที่ออก</label>
 										
                                         <input type="text" class="form-control" name="branchaddress" id="branchaddress" value="<?php echo $loop->address." จ.".$loop->province_name." ".$loop->zipcode; ?>" readonly>
 
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">เบอร์โทรศัพท์</label>
@@ -71,7 +71,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">Fax</label>
@@ -81,7 +81,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                         <label class="control-label" for="inputSuccess">เลขประจำตัวผู้เสียภาษี</label>
@@ -94,8 +94,9 @@
 							</div>
 						</div>
 						<?php } }?>
+						<hr/>
 						<div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-md-4">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ชื่อลูกค้า</label>
@@ -105,7 +106,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">วันที่</label>
@@ -116,7 +117,7 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-12">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ที่อยู่ลูกค้า</label>
@@ -127,7 +128,30 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group has-success">
+                                        <label class="control-label" for="inputSuccess">เบอร์โทรศัพท์</label>
+                                        <input type="text" class="form-control" name="custelephone" id="custelephone" value="<?php echo $custelephone; ?>" readonly>
+
+										</div>
+                                      
+                                    </div>
+
+							</div>
+							<div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group has-success">
+                                        <label class="control-label" for="inputSuccess">Fax</label>
+                                        <input type="text" class="form-control" name="cusfax" id="cusfax" value="<?php echo $cusfax; ?>" readonly>
+										
+										</div>
+                                    </div>
+
+							</div>
+						</div>
+						<div class="row">
+                            <div class="col-md-6">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ชื่อผู้ติดต่อ</label>
@@ -138,7 +162,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">เงื่อนไขการชำระเงิน</label>
@@ -146,13 +170,13 @@
 										<input type="text" class="form-control" name="condition1" id="condition1" value="<?php 
 										if ($condition==0) echo "-";
 										elseif ($condition==1) echo "สด";
-										elseif ($condition==2) echo "เชื่อ";  
+										elseif ($condition==2) echo "เครดิต";  
 										?>" readonly>
 										</div>
                                     </div>
 
 							</div>
-							<div class="col-lg-2">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนวันเครดิต</label>
@@ -161,9 +185,18 @@
                                     </div>
 
 							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ยื่นราคาถึงวันที่</label>
+										<input type="text" class="form-control" name="receivedate" id="receivedate" value="<?php if ($receivedate == "") echo date('d')."/".date('m')."/".(date('Y')+543); else echo $receivedate; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
 						</div>
 						<div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ราคาขาย</label>
@@ -177,11 +210,20 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ส่วนลด</label>
+                                    	<label class="control-label" for="inputSuccess">ส่วนลด (บาท) </label>
 										<input type="text" class="form-control" name="discount" id="discount" value="<?php echo $discount; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ส่วนลด (%) </label>
+										<input type="text" class="form-control" name="discount2" id="discount2" value="<?php echo $discount2; ?>" readonly>
 										</div>
                                     </div>
 
@@ -189,32 +231,35 @@
 						</div>
 						
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped row-border table-hover" id="tablebarcode" width="100%">
+                            <table class="table table-hover" id="tablebarcode" width="100%">
                                 <thead>
                                     <tr>
 										<th>NO.</th>
                                         <th>รหัสสินค้า/รายละเอียด</th>
 										<th>จำนวน</th>
 										<th>หน่วยละ</th>
-										<th>จำนวนเงิน</th>
+										<th style="width: 20%">จำนวนเงิน</th>
                                     </tr>
                                 </thead>
 								<tbody>
 								<?php 
 								$pricesum = 0;
+								$numindex = 0;
 								if(isset($temp_array)) { foreach($temp_array as $loop) { 
+									$numindex++;
 								?>
 									<tr>
-									<td></td>
+									<td><?php echo $numindex; ?></td>
 									<td><?php echo $loop->productname; ?></td>
-									<td><?php echo number_format($loop->amount, 2, '.', ',')." ".$loop->unit; ?></td>
-									<td><?php 	if ($saleprice==1 || $saleprice==2) { echo number_format($loop->priceNoVAT, 2, '.', ','); $priceperunit=$loop->priceNoVAT;  $price1 = $loop->amount*$loop->priceNoVAT; }
-												//elseif ($saleprice==2) { echo $loop->priceVAT; $priceperunit=$loop->priceVAT;  $price1 = $loop->amount*$loop->priceVAT; }
-												elseif ($saleprice==3) { echo number_format($loop->priceDiscount, 2, '.', ','); $priceperunit=$loop->priceDiscount;  $price1 = $loop->amount*$loop->priceDiscount; }
+									<td><?php echo number_format($loop->sumamount, 2, '.', ',')." ".$loop->unit; ?></td>
+									<td><?php 	echo number_format(ceil($loop->price/1.07), 2, '.', ','); $priceperunit=ceil($loop->price/1.07);  $price1 = $loop->sumamount*ceil($loop->price/1.07); 
+												/*}
+												elseif ($saleprice==2) { echo number_format(ceil($loop->price*0.93), 2, '.', ','); $priceperunit=$loop->price;  $price1 = $loop->sumamount*$loop->price; }
+												elseif ($saleprice==3) { echo number_format($loop->price, 2, '.', ','); $priceperunit=$loop->price;  $price1 = $loop->sumamount*$loop->price; } */
 									?>
 									</td>
 									<td><?php echo number_format($price1, 2, '.', ',');
@@ -224,7 +269,7 @@
 								<?php 
 									$productid_array[] = $loop->pid;
 									$price1_array[] = $priceperunit;
-									$amount_array[] = $loop->amount;
+									$amount_array[] = $loop->sumamount;
 									
 
 									
@@ -235,6 +280,49 @@
 								?>
 								</tbody>
 							</table>
+							<table class="table table-hover" id="dataTables-example">
+							<thead>
+								<tr>
+									<th style="width: 50%"></th>
+									<th style="width: 30%">รวมเป็นเงิน</th>
+									<?php echo form_hidden('totalprice', $pricesum); ?>
+									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum, 2, '.', ','); ?></th>
+								</tr>
+								<tr>
+									<th style="width: 50%"></th>
+									<th style="width: 30%">หักส่วนลด</th>
+									<?php 
+									$pricesum_discount = ($discount)+($pricesum*$discount2/100);
+									echo form_hidden('totaldiscount', $pricesum_discount); ?>
+									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum_discount, 2, '.', ','); ?></th>
+								</tr>
+								<tr>
+									<th style="width: 50%"></th>
+									<th style="width: 30%">ยอดหลังหักส่วนลด</th>
+									<?php 
+									$pricesum_after_discount = $pricesum - $pricesum_discount;
+									echo form_hidden('totalafterdiscount', $pricesum_after_discount); ?>
+									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum_after_discount, 2, '.', ','); ?></th>
+								</tr>
+								<tr>
+									<th style="width: 50%"></th>
+									<th style="width: 30%">จำนวนภาษีมูลค่าเพิ่ม 7%</th>
+									<?php 
+									if ($saleprice==1) $pricevat7 = 0;
+									else $pricevat7 = ($pricesum_after_discount*0.07);
+									echo form_hidden('totalvat', $pricevat7); ?>
+									<th style="text-align: right;width: 20%"><?php echo number_format($pricevat7, 2, '.', ','); ?></th>
+								</tr>
+								<tr>
+									<th style="width: 50%"></th>
+									<th style="width: 30%">จำนวนเงินรวมทั้งสิ้น</th>
+									<?php 
+									$finalprice = $pricesum_after_discount + $pricevat7;
+									echo form_hidden('finalprice', $finalprice); ?>
+									<th style="text-align: right;width: 20%"><?php echo number_format($finalprice, 2, '.', ','); ?></th>
+								</tr>
+							</thead>
+						</table>
 						</div>
 					</div>
 				</div>
@@ -250,8 +338,9 @@
 								echo form_hidden($data); 
 							}
 						?>
+						<!--
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">รวมเป็นเงิน</label>
@@ -260,7 +349,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ยอดหลังหักส่วนลด</label>
@@ -272,7 +361,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนภาษีมูลค่าเพิ่ม 7%</label>
@@ -284,7 +373,7 @@
                                     </div>
 
 							</div>
-							<div class="col-lg-3">
+							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">จำนวนเงินรวมทั้งสิ้น</label>
@@ -298,10 +387,11 @@
 
 							</div>
 						</div>
+						-->
 						<div class="row">
-							<div class="col-lg-6">
-									<button type="submit" class="btn btn-primary btn-lg">  ยืนยันข้อมูลลูกค้า  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
+							<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูลลูกค้า  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								
@@ -327,41 +417,7 @@
     {
 		$("#barcode").focus();
 	
-        var oTable = $('#tablebarcode').dataTable
-        ({
-            "bJQueryUI": false,
-            "bProcessing": true,
-            "sPaginationType": "simple_numbers",
-            'bServerSide'    : false,
-			'bFilter'  : false,
-			"bInfo": false,
-			"bLengthChange" : false,
-			"bPaginate" : false,
-			"iDisplayLength": 10000,
-            "bDeferRender": false,
-            "fnServerData": function ( sSource, aoData, fnCallback ) {
-                $.ajax( {
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": sSource,
-                    "data": aoData,
-                    "success":fnCallback
-                
-                });
-            },
-			
-			"fnDrawCallback": function ( oSettings ) {
-                /* Need to redo the counters if filtered or sorted */
-                if ( oSettings.bSorted || oSettings.bFiltered )
-                {
-                    for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-                    {
-                        $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
-                    }
-                }
-            }
-			
-        });
+       
 		
     });
 </script>

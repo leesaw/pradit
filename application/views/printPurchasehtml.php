@@ -10,16 +10,28 @@
 <?php if(isset($purchase_array)) { foreach($purchase_array as $loop) { 
 $signature = $loop->fname." ".$loop->lname;
 ?>
-<tr><td width="400">ถึง &nbsp;&nbsp;<?php echo $loop->supplierContact; ?></td><td width="10"> </td><td width="100">เลขที่บิล</td><td width="120"><?php echo $loop->purchaseID; ?></td></tr>
+<tr><td width="400">ผู้จำหน่าย &nbsp;&nbsp;<?php echo $loop->_supplierid; ?></td><td width="10"> </td><td width="100">เลขที่ใบสั่งซื้อ</td><td width="120"><?php echo $loop->purchaseID; ?></td></tr>
 <tr><td width="400"><?php echo $loop->title." ".$loop->supplierName; ?></td><td width="10"> </td><td width="100">วันที่</td><td width="120">
 <?php  
- $GGyear=substr($loop->date,0,4)+543; 
+ $GGyear=substr($loop->date,0,4); 
  $GGmonth=substr($loop->date,5,2); 
  $GGdate=substr($loop->date,8,2); 
  echo $GGdate."/".$GGmonth."/".$GGyear; ?>
  </td></tr>
- <tr><td width="350"><?php echo $loop->supplierAddress; ?></td><td width="10"> </td><td width="100">เงื่อนไขชำระเงิน</td><td width="120"><?php if ($loop->purstatus==1) echo "เงินสด"; elseif ($loop->purstatus==2) echo $loop->creditDay." วัน หลังส่งมอบ"; else $loop->purstatus;?></td></tr>
- <?php } }?>
+ 
+ <tr><td width="400"><?php echo $loop->supplierAddress; ?></td><td width="10"> </td><td width="100">วันที่รับของ</td><td width="120">
+ <?php 
+ $ryear = substr($loop->receiveDate,0,4);
+ $rmonth = substr($loop->receiveDate,5,2);
+ $rday = substr($loop->receiveDate,8,2);
+ echo $rday."/".$rmonth."/".$ryear;
+ ?>
+ </td></tr>
+ 
+ <tr><td width="400"><?php echo "โทร. ".$loop->supplierTel." FAX. ".$loop->supplierFax; ?></td><td width="10"> </td><?php if ($loop->purstatus==2) { ?><td width="100">เครดิต</td><td width="120"><?php echo $loop->creditDay." วัน "; }?></td></tr>
+ 
+ <tr><td width="400">หมายเหตุ &nbsp;&nbsp;<?php if ($loop->purstatus==1) { echo "ซื้อสินค้าเป็นเงินสด"; } ?></td><td width="10"> </td><td width="100">ขนส่งโดย</td><td width="120"><?php echo $loop->transport; ?></td></tr>
+ <?php $vat = $loop->vat; } }?>
 </tbody>
 </table>
 <br>
@@ -39,15 +51,14 @@ $signature = $loop->fname." ".$loop->lname;
 </tr>
 <?php $no++; $discount=$loop->discount; $tax=$loop->tax; } }
 
-if ($no<=18) { for($i=18-$no; $i>0; $i--) {?> 
+if ($no<=15) { for($i=15-$no; $i>0; $i--) {?> 
 <tr><td>&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td></tr>
 <?php } } ?>
 
 </tbody>
 <tbody>
-<!--
 <tr>
-<td align="right" colspan=4 scope="row" style="border-top:1px solid black;">รวมเป็นเงิน&nbsp;&nbsp;</td><td align="right" style="border-top:1px solid black; border-left:1px solid black;"><?php /* echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row" style="border-top:1px solid black;">รวมเป็นเงิน&nbsp;&nbsp;</td><td align="right" style="border-top:1px solid black; border-left:1px solid black;"><?php  echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="right" colspan=4 scope="row"><u>หัก</u>&nbsp;ส่วนลด&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
@@ -56,12 +67,11 @@ if ($no<=18) { for($i=18-$no; $i>0; $i--) {?>
 <td align="right" colspan=4 scope="row">จำนวนเงินหลังหักส่วนลด&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;7.00 %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; */ ?></td>
+<td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;7.00 %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php if ($vat >0) echo number_format(($sum-$discount)*0.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format(0, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
--->
 <tr>
 <td align="left" colspan=2 scope="row" style="border-top:1px solid black;">( <?php echo num2thai($sum); ?> )</td>
-<td align="right" colspan=2 scope="row" style="border-top:1px solid black;">จำนวนเงินรวมทั้งสิ้น&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black; border-top:1px solid black;"><?php echo number_format($sum-$discount+$tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=2 scope="row" style="border-top:1px solid black;">จำนวนเงินรวมทั้งสิ้น&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black; border-top:1px solid black;"><?php if ($vat >0) echo number_format(($sum-$discount)*1.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 </tbody>
 <?php
@@ -154,15 +164,12 @@ return $rstring;
 </table>
 <table style="border-bottom:1px solid black; border-left:1px solid black; border-right:1px solid black; border-spacing:0px 0px;">
 <tbody>
-<tr><td width="358" align="left">หมายเหตุ</td><td width="350" align="center">ขอแสดงความนับถือ</td>
+<tr><td width="200" align="left">&nbsp;</td><td width="500" align="center">ในนาม บริษัท ประดิษฐ์ แอนด์เฟรนด์ แมชีนเนอรี่ จำกัด</td>
 </tr>
-<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td align="center">&nbsp;</td><td align="center">..........................................................</td>
+<tr><td>..........................................................</td><td>&nbsp;</td></tr>
+<tr><td align="center">ผู้สั่งซื้อ</td><td align="center">ผู้รับมอบอำนาจ  &nbsp;&nbsp;&nbsp; ..........................................................</td>
 </tr>
-<tr><td align="center">&nbsp;</td><td align="center">( <?php echo $signature ?> )</td>
-</tr>
-<tr><td align="center">&nbsp;</td><td align="center">วันที่...............................................</td>
-</tr>
+<tr><td> &nbsp;</td><td> &nbsp;</td></tr>
 <tbody>
 </table>
 <script>

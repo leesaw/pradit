@@ -4,60 +4,65 @@
 <title>Bill Printing</title>
 </head>
 <body>
-<div style="text-align: right; font-weight: font-size: 16pt;">เลขประจำตัวผู้เสียภาษี 0715540000416<br><div style="text-align: right; font-weight: bold; font-size: 16pt;">ใบเสร็จรับเงิน</div></div><br>
 <table border="0">
 <tbody>
 <?php if(isset($bill_array)) { foreach($bill_array as $loop) { ?>
-<tr><td width="400">ลูกค้า</td><td width="10"> </td><td width="80">เลขที่บิล</td><td width="100"><?php echo $loop->billID; ?></td></tr>
-<tr><td width="400"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80">วันที่</td><td width="100">
+<tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<?php echo $loop->_customerID; ?></td><td width="10"> </td><td width="80"> </td><td width="100"><?php echo $loop->billID; ?></td></tr>
+<tr><td width="400"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80"> </td><td width="100"> </td></tr>
+<tr><td width="400"><?php echo $loop->customerAddress; ?></td><td width="10"> </td><td width="80"> </td><td width="150"> 
 <?php  
- $GGyear=substr($loop->date,0,4)+543; 
+ $GGyear=substr($loop->date,0,4); 
  $GGmonth=substr($loop->date,5,2); 
  $GGdate=substr($loop->date,8,2); 
  echo $GGdate."/".$GGmonth."/".$GGyear; ?>
  </td></tr>
- <tr><td width="400"><?php echo $loop->customerAddress; ?></td><td width="10"> </td><td width="80">พนักงานขาย</td><td width="150"><?php echo $loop->fname." ".$loop->lname; ?></td></tr>
+ <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <?php echo $loop->transport;?></td><td width="10"> </td><td width="80"> </td><td width="150"><?php echo $loop->fname." ".$loop->lname; ?></td></tr>
  <?php } }?>
 </tbody>
 </table>
 <br>
-<table style="border:1px solid black; border-spacing:0px 0px;">
+<table>
 <thead>
-	<tr bgcolor="#DCDCDC">
-		<th width="50">No.</th><th width="300" style="border-left:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;">จำนวนเงิน</th>
+	<tr>
+		<th width="50"> </th><th width="300"> </th><th width="120" > </th><th width="100"> </th><th width="120"> </th>
 	</tr>
 </thead>
 <tbody>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <?php $no=1; $sum=0; if(isset($billproduct_array)) { foreach($billproduct_array as $loop) { ?>
-<tr style="border:1px solid black;"><td align="center"><?php echo $no; ?></td>
-<td style="border-left:1px solid black;"><?php echo "&nbsp;&nbsp;".$loop->productname; ?></td>
-<td align="center" style="border-left:1px solid black;"><?php echo $loop->amount." &nbsp; ".$loop->unit; ?></td>
-<td align="right" style="border-left:1px solid black;"><?php echo number_format($loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
-<td align="right" style="border-left:1px solid black;"><?php echo number_format($loop->amount*$loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; $sum += $loop->amount*$loop->pricePerUnit; ?></td>
+<tr><td align="left"><?php echo $no; ?></td>
+<td align="left"><?php echo "&nbsp;&nbsp;".$loop->productname; ?></td>
+<td align="center" ><?php echo $loop->amount." &nbsp; ".$loop->unit; ?></td>
+<td align="right" ><?php echo number_format($loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" ><?php echo number_format($loop->amount*$loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; $sum += $loop->amount*$loop->pricePerUnit; ?></td>
 </tr>
-<?php $no++; $discount=$loop->discount; $tax=$loop->tax; } }
+<?php $no++; $discount=$loop->discount; $discount2=$loop->discountPercent; $tax=$loop->tax; } }
 
-if ($no<=18) { for($i=18-$no; $i>0; $i--) {?> 
-<tr><td>&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td></tr>
+if ($no<=15) { for($i=15-$no; $i>0; $i--) {?> 
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <?php } } ?>
 
 </tbody>
 <tbody>
 <tr>
-<td align="right" colspan=4 scope="row" style="border-top:1px solid black;">รวมเป็นเงิน&nbsp;&nbsp;</td><td align="right" style="border-top:1px solid black; border-left:1px solid black;"><?php echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row" >&nbsp;</td><td align="right"><?php echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row"><u>หัก</u>&nbsp;ส่วนลด&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">&nbsp;</td><td align="right" ><?php echo number_format(($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">จำนวนเงินหลังหักส่วนลด&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">&nbsp;</td><td align="right"><?php echo number_format($sum-($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;7.00 %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">7.00</td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="left" colspan=2 scope="row" style="border-right:1px solid black; border-top:1px solid black;">( <?php echo num2thai($sum-$discount+$tax); ?> )</td>
-<td align="right" colspan=2 scope="row">จำนวนเงินรวมทั้งสิ้น&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($sum-$discount+$tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="left" colspan=2 scope="row">( <?php echo num2thai($sum-($discount+($sum*$discount2/100))+$tax); ?> )</td>
+<td align="right" colspan=2 scope="row">&nbsp;</td><td align="right" ><?php echo number_format($sum-($discount+($sum*$discount2/100))+$tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 </tbody>
 <?php
@@ -147,19 +152,6 @@ return $rstring;
 }
 
 ?>
-</table>
-<table style="border-bottom:1px solid black; border-left:1px solid black; border-right:1px solid black; border-spacing:0px 0px;">
-<tbody>
-<tr><td width="358" align="center">ได้รับสินค้าตามรายการนี้ไว้ถูกต้องเรียบร้อยแล้ว</td><td width="350" align="center" style="border-left:1px solid black;">ในนาม บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</td>
-</tr>
-<tr><td>&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td></tr>
-<tr><td align="center">..........................................................</td><td align="center" style="border-left:1px solid black">..........................................................</td>
-</tr>
-<tr><td align="center">ผู้รับสินค้า</td><td align="center" style="border-left:1px solid black">พนักงานขาย</td>
-</tr>
-<tr><td align="center">วันที่...............................................</td><td align="center" style="border-left:1px solid black">วันที่...............................................</td>
-</tr>
-<tbody>
 </table>
 </body>
 </html>

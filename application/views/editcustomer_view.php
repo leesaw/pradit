@@ -40,7 +40,7 @@
                                     <div class="form-group">
 									<input type="hidden" name="id" id="id" value="<?php echo $loop->id; ?>">
                                             <label class="control-label">รหัสลูกค้า *</label>
-                                            <input type="text" class="form-control" name="customerid" id="customerid" value="<?php echo $loop->customerID; ?>">
+                                            <input type="text" class="form-control" name="customerid" id="customerid" value="<?php echo $loop->customerID; ?>" disabled>
 											<p class="help-block"><?php echo form_error('customerid'); ?></p>
                                     </div>
 							</div>

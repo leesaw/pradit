@@ -108,7 +108,7 @@
                                         <input type="text" class="form-control" name="status" id="status" value="<?php 
 										if($loop->status==0) echo "-";
 										elseif($loop->status==1) echo "สด";
-										elseif($loop->status==2) echo "เชื่อ";
+										elseif($loop->status==2) echo "เครดิต";
 										?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>

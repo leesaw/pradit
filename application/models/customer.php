@@ -45,7 +45,7 @@ Class Customer extends CI_Model
  function searchName($term)
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(address,' จ.  ', province_name,' ',zipcode) as cusaddress, customer.id as cusid, customer.name as cusname, saleprice, discount, contactName, status, creditDay");
+	$this->db->select("address, province_name,province_code, zipcode, customer.id as cusid, customer.name as cusname, saleprice, discount, contactName, status, creditDay, telephone, fax");
 	$this->db->from('customer');	
 	$this->db->join('province','province.province_code=customer.provinceID', 'left');
 	$this->db->like('customer.name', $term,'after');

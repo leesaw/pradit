@@ -150,7 +150,8 @@ class Managebill extends CI_Controller {
 				$barcode = array(
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
-					'status' => 1  // 1 = cash bill
+					'status' => 1,  // 1 = cash bill
+					'amount' => 1
 				);
 				$result2 = $this->bill->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -192,7 +193,8 @@ class Managebill extends CI_Controller {
 				$barcode = array(
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
-					'status' => 2  // 2 = quotation
+					'status' => 2,  // 2 = quotation
+					'amount' => 1
 				);
 				$result2 = $this->bill->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -238,7 +240,6 @@ class Managebill extends CI_Controller {
 		->select("billID, customerName, date, id")
 		->from('bill')
 		->where('branchID', $branchid)
-		->where('isQuotation',0)
 		->edit_column("id",'<div class="tooltip-demo">
 	<a href="'.site_url("managebill/printCashBill/$1").'" class="btn btn-primary btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-print"></span></a>
 	</div>',"id");
@@ -251,10 +252,9 @@ class Managebill extends CI_Controller {
 		$branchid = $this->uri->segment(3);
 		$this->load->library('Datatables');
 		$this->datatables
-		->select("billID, customerName, date, id")
-		->from('bill')
+		->select("quotationID, customerName, date, id")
+		->from('quotation')
 		->where('branchID', $branchid)
-		->where('isQuotation',1)
 		->edit_column("id",'<div class="tooltip-demo">
 	<a href="'.site_url("managebill/printCashQuotation/$1").'" class="btn btn-primary btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-print"></span></a>
 	</div>',"id");
@@ -292,6 +292,10 @@ class Managebill extends CI_Controller {
 		$this->load->model('branch','',TRUE);
 		
 		$data['count'] = $this->bill->getTempCount(1);
+		foreach($this->bill->getLastIDbill() as $loop) {
+			$data['lastid']=$loop->lastid;
+		}
+		if ($loop->lastid ==null) $data['lastid'] = 0;
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -319,6 +323,10 @@ class Managebill extends CI_Controller {
 		$this->load->model('branch','',TRUE);
 		
 		$data['count'] = $this->bill->getTempCount(2);
+		foreach($this->bill->getLastIDquotation() as $loop) {
+			$data['lastid']=$loop->lastid;
+		}
+		if ($loop->lastid ==null) $data['lastid'] = 0;
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -381,7 +389,7 @@ class Managebill extends CI_Controller {
 		$this->form_validation->set_rules('cashid', 'cashid', 'trim|xss_clean|required|callback_bill_is_exist');
 		$this->form_validation->set_rules('cusname', 'cusname', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cusaddress', 'cusaddress', 'trim|xss_clean|required');
-		$this->form_validation->set_rules('discount', 'discount', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('discount', 'discount', 'trim|xss_clean');
 		$this->form_validation->set_rules('saleprice', 'saleprice', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_error_delimiters('<code>', '</code>');
@@ -394,14 +402,28 @@ class Managebill extends CI_Controller {
 			$data['cusaddress']= ($this->input->post('cusaddress'));
 			$data['saleprice']= ($this->input->post('saleprice'));
 			$data['discount']= ($this->input->post('discount'));
+			$data['discount2']= ($this->input->post('discount2'));
+			$data['transport']= ($this->input->post('transport'));
+			
+			if (($this->input->post('discount2')) =="") $data['discount2'] = 0;
+			
+			if (($this->input->post('discount')) =="") $data['discount'] = 0;
 			
 			$query = $this->branch->getOneBranch($this->input->post('branchid'));
 			if($query){
 				$data['branch_array'] =  $query;
 			}
+			
+			$barcode = ($this->input->post('barcode'));
+			$price = ($this->input->post('price'));
+			for ($i=0; $i<count($barcode); $i++) {
+				$temp = array('barcode' =>$barcode[$i], 'price' => $price[$i] );
+				$this->bill->editPriceTemp($temp);
+			}
+			
 			$sale = $this->input->post('saleprice');
 			if ($sale==1 || $sale==2) $column = "priceNoVAT";
-			//elseif ($sale==2) $column = "priceVAT";
+			elseif ($sale==2) $column = "priceVAT";
 			elseif ($sale==3) $column = "priceDiscount";
 			else $column="";
 			
@@ -433,7 +455,8 @@ class Managebill extends CI_Controller {
 			
 			$data['cusid'] = ($this->input->post('cusid'));
 			$data['title'] = "Pradit and Friends - Add Barcode";
-			$this->load->view("adddetailtotemp_bill_view", $data);
+			redirect('managebill/showtemptobill', 'refresh');
+			//$this->load->view("adddetailtotemp_bill_view", $data);
 		}
 	}
 	
@@ -444,7 +467,7 @@ class Managebill extends CI_Controller {
 		$this->form_validation->set_rules('cashid', 'cashid', 'trim|xss_clean|required|callback_bill_is_exist');
 		$this->form_validation->set_rules('cusname', 'cusname', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cusaddress', 'cusaddress', 'trim|xss_clean|required');
-		$this->form_validation->set_rules('discount', 'discount', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('discount', 'discount', 'trim|xss_clean');
 		$this->form_validation->set_rules('saleprice', 'saleprice', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cuscontact', 'cuscontact', 'trim|xss_clean');
 		$this->form_validation->set_rules('condition', 'condition', 'trim|xss_clean');
@@ -458,19 +481,35 @@ class Managebill extends CI_Controller {
 			$data['cusid']= ($this->input->post('cusid'));
 			$data['cusname']= ($this->input->post('cusname'));
 			$data['cusaddress']= ($this->input->post('cusaddress'));
+			$data['custelephone']= ($this->input->post('custelephone'));
+			$data['cusfax']= ($this->input->post('cusfax'));
 			$data['saleprice']= ($this->input->post('saleprice'));
 			$data['discount']= ($this->input->post('discount'));
 			$data['cuscontact']= ($this->input->post('cuscontact'));
 			$data['condition']= ($this->input->post('condition'));
 			$data['creditday']= ($this->input->post('creditday'));
+			$data['receivedate']= ($this->input->post('receivedate'));
+			$data['discount2']= ($this->input->post('discount2'));
+			
+			if (($this->input->post('discount2')) =="") $data['discount2'] = 0;
+			
+			if (($this->input->post('discount')) =="") $data['discount'] = 0;
 			
 			$query = $this->branch->getOneBranch($this->input->post('branchid'));
 			if($query){
 				$data['branch_array'] =  $query;
 			}
+			
+			$barcode = ($this->input->post('barcode'));
+			$price = ($this->input->post('price'));
+			for ($i=0; $i<count($barcode); $i++) {
+				$temp = array('barcode' =>$barcode[$i], 'price' => $price[$i] );
+				$this->bill->editPriceTemp($temp);
+			}
+			
 			$sale = $this->input->post('saleprice');
-			if ($sale==1 || $sale==2) $column = "priceNoVAT";
-			//elseif ($sale==2) $column = "priceVAT";
+			if ($sale==1) $column = "priceVAT";
+			elseif ($sale==2) $column = "priceVAT";
 			elseif ($sale==3) $column = "priceDiscount";
 			else $column="";
 			
@@ -502,7 +541,8 @@ class Managebill extends CI_Controller {
 			
 			$data['cusid'] = ($this->input->post('cusid'));
 			$data['title'] = "Pradit and Friends - Add Barcode";
-			$this->load->view("adddetailtotemp_quotation_view", $data);
+			redirect('managebill/showtemptoquotation', 'refresh');
+			//$this->load->view("adddetailtotemp_quotation_view", $data);
 		}
 	}
 	
@@ -516,11 +556,15 @@ class Managebill extends CI_Controller {
 		$cusaddress = ($this->input->post('cusaddress'));
 		$saleprice = ($this->input->post('saleprice'));
 		$discount = ($this->input->post('discount'));
+		$discount2 = ($this->input->post('discount2'));
 		$userid = $this->session->userdata('sessid');
 		$totalprice = ($this->input->post('totalprice'));
+		$tax = ($this->input->post('totalvat'));
+		$transport = ($this->input->post('transport'));
 		
-		if ($saleprice == 1) $tax=0;
-		else $tax=$totalprice*0.07;
+		$currentdate= explode('/',date("d/m/Y"));
+		$currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0];
+		
 		
 		$bill = array(
 				'billID' => $billid,
@@ -532,7 +576,10 @@ class Managebill extends CI_Controller {
 				'discount' => $discount,
 				'saleprice' => $saleprice,
 				'tax' => $tax,
-				'date' => date("Y-m-d")
+				'date' => $currentdate,
+				'discountPercent' => $discount2,
+				'transport' => $transport
+				
 				
 			);
 		$resultBill = $this->bill->addCashBill($bill);
@@ -543,7 +590,9 @@ class Managebill extends CI_Controller {
 		$price1 = ($this->input->post('price1'));
 		$amount = ($this->input->post('amount'));
 		
-		$billproduct = array( 'billID' => $billid );
+		$bid = $this->db->insert_id();
+		
+		$billproduct = array( 'billID' => $bid );
 		
 		for($i=0; $i<count($productid); $i++) {
 			$billproduct['productID'] = $productid[$i];
@@ -570,19 +619,29 @@ class Managebill extends CI_Controller {
 		$cusid = ($this->input->post('cusid'));
 		$cusname = ($this->input->post('cusname'));
 		$cusaddress = ($this->input->post('cusaddress'));
+		$custelephone= ($this->input->post('custelephone'));
+		$cusfax= ($this->input->post('cusfax'));
 		$saleprice = ($this->input->post('saleprice'));
 		$discount = ($this->input->post('discount'));
+		$discount2 = ($this->input->post('discount2'));
 		$userid = $this->session->userdata('sessid');
 		$totalprice = ($this->input->post('totalprice'));
 		$cuscontact = ($this->input->post('cuscontact'));
 		$condition = ($this->input->post('condition'));
 		$creditday = ($this->input->post('creditday'));
+		$tax = ($this->input->post('totalvat'));
+		//$quotationDate = ($this->input->post('receivedate'));
+
+		if ($this->input->post('receivedate') != "") {
+			$quotationDate = explode('/', $this->input->post('receivedate'));
+			$quotationDate= $quotationDate[2]."-".$quotationDate[1]."-".$quotationDate[0];
+		}
 		
-		if ($saleprice == 1) $tax=0;
-		else $tax=$totalprice*0.07;
+		$currentdate= explode('/',date("d/m/Y"));
+		$currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0];
 		
 		$bill = array(
-				'billID' => $billid,
+				'quotationID' => $billid,
 				'branchID' => $branchid,
 				'customerID' => $cusid,
 				'userID' => $userid,
@@ -593,12 +652,15 @@ class Managebill extends CI_Controller {
 				'customerContact' => $cuscontact,
 				'status' => $condition,
 				'creditDay' => $creditday,
-				'isQuotation' => 1,
 				'tax' => $tax,
-				'date' => date("Y-m-d")
+				'date' => $currentdate,
+				'quotationDate' => $quotationDate,
+				'discountPercent' => $discount2,
+				'customerTel' => $custelephone,
+				'customerFax' => $cusfax
 				
 			);
-		$resultBill = $this->bill->addCashBill($bill);
+		$resultBill = $this->bill->addCashQuotation($bill);
 		
 		// insert into bill_product
 		// hidden array
@@ -606,14 +668,16 @@ class Managebill extends CI_Controller {
 		$price1 = ($this->input->post('price1'));
 		$amount = ($this->input->post('amount'));
 		
-		$billproduct = array( 'billID' => $billid );
+		$bid = $this->db->insert_id();
+		
+		$billproduct = array( 'quotationID' => $bid );
 		
 		for($i=0; $i<count($productid); $i++) {
 			$billproduct['productID'] = $productid[$i];
 			$billproduct['pricePerUnit'] = $price1[$i];
 			$billproduct['amount'] = $amount[$i];
 			
-			$resultBillProduct = $this->bill->addCashBillProduct($billproduct);
+			$resultBillProduct = $this->bill->addCashQuotationProduct($billproduct);
 		}
 		$this->bill->delAllBillTemp(2);
 		
@@ -630,10 +694,10 @@ class Managebill extends CI_Controller {
 		$id = $this->uri->segment(3);
 		
 		$this->load->library('mpdf/mpdf');                
-        $mpdf= new mPDF('th','A4','0', 'thsaraban');
+        $mpdf= new mPDF('th',array(220,279),'0', 'thsaraban');
 		$stylesheet = file_get_contents('application/libraries/mpdf/css/style.css');
 		
-		$mpdf->SetHTMLHeader('<div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130<br>โทรศัพท์ : (034) 561641 , 562895 FAX. : (034) 562896</div>'); 
+		//$mpdf->SetHTMLHeader('<div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130<br>โทรศัพท์ : (034) 561641 , 562895 FAX. : (034) 562896</div>'); 
 		//$html = "ทดสอบ<br>";
 		
 		$query = $this->bill->getOneBill($id);
@@ -643,10 +707,10 @@ class Managebill extends CI_Controller {
 			$data['bill_array'] = array();
 		}
 		foreach($query as $loop) { 
-			$billid = $loop->billID;  
+			$bid = $loop->bid;  
 		}
 		
-		$query = $this->bill->getOneBillProduct($billid);
+		$query = $this->bill->getOneBillProduct($bid);
 		if($query){
 			$data['billproduct_array'] =  $query;
 		}else{
@@ -672,17 +736,17 @@ class Managebill extends CI_Controller {
 		$mpdf->SetHTMLHeader('<div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130<br>โทรศัพท์ : (034) 561641 , 562895 FAX. : (034) 562896</div>'); 
 		//$html = "ทดสอบ<br>";
 		
-		$query = $this->bill->getOneBill($id);
+		$query = $this->bill->getOneQuotation($id);
 		if($query){
 			$data['bill_array'] =  $query;
 		}else{
 			$data['bill_array'] = array();
 		}
 		foreach($query as $loop) { 
-			$billid = $loop->billID;  
+			$bid = $loop->bid;  
 		}
 		
-		$query = $this->bill->getOneBillProduct($billid);
+		$query = $this->bill->getOneQuotationProduct($bid);
 		if($query){
 			$data['billproduct_array'] =  $query;
 		}else{
@@ -710,4 +774,28 @@ class Managebill extends CI_Controller {
         $mpdf->WriteHTML($html);
         $mpdf->Output();
     } 
+	
+	function edit_amount_quotation()
+	{
+		$tempid=$this->input->post('tempid');
+		$amount=$this->input->post('amount');
+		$purchasetemp = array(
+					'tempid' => $tempid,
+					'amount' => $amount
+				);
+		$query = $this->bill->editAmountTemp($purchasetemp);
+		
+	}
+	
+	function edit_amount_bill()
+	{
+		$tempid=$this->input->post('tempid');
+		$amount=$this->input->post('amount');
+		$purchasetemp = array(
+					'tempid' => $tempid,
+					'amount' => $amount
+				);
+		$query = $this->bill->editAmountTemp($purchasetemp);
+		
+	}
 }

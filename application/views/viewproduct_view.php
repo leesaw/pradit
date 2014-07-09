@@ -118,7 +118,7 @@
 						<div class="row">
 							<div class="col-md-6">
 									<div class="form-group has-success">
-                                            <label class="control-label" for="inputSuccess">ราคารวมส่วนลด</label>
+                                            <label class="control-label" for="inputSuccess">ชั้นเก็บ</label>
                                             <input type="text" class="form-control" name="shelf" id="shelf" value="<?php echo $loop->shelf; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
@@ -130,7 +130,7 @@
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("manageproduct/viewSelectedCat/".$loop->categoryID); ?>'"> กลับไปหน้าจัดการข้อมูลสินค้า </button>
 							</div>
 							<div class="col-md-3">
-								<a id="fancyboxview" href="<?php echo site_url("manageproduct/jquerybarcode/".$loop->barcode);  ?>"><button type="button" class="btn btn-info btn-md"> พิมพ์ Barcode </button></a>
+								<a id="fancyboxview" href="<?php echo site_url("manageproduct/jquerybarcode/".$loop->barcode."/".$loop->pname."/".$loop->priceVAT);  ?>"><button type="button" class="btn btn-info btn-md"> พิมพ์ Barcode </button></a>
 							</div>
 						</div>
 								
@@ -149,7 +149,7 @@
 <script type='text/javascript'> 
 $(document).ready(function() {
 $('#fancyboxview').fancybox({ 
-'width': '50%',
+'width': '40%',
 'height': '70%', 
 'autoScale':false,
 'transitionIn':'none', 

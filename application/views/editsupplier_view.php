@@ -40,7 +40,7 @@
                                     <div class="form-group">
 									<input type="hidden" name="id" id="id" value="<?php echo $loop->id; ?>">
                                             <label class="control-label">รหัสผู้จำหน่าย *</label>
-                                            <input type="text" class="form-control" name="supplierid" id="supplierid" value="<?php echo $loop->supplierID; ?>">
+                                            <input type="text" class="form-control" name="supplierid" id="supplierid" value="<?php echo $loop->supplierID; ?>" disabled>
 											<p class="help-block"><?php echo form_error('supplierid'); ?></p>
                                     </div>
 							</div>
@@ -143,7 +143,7 @@
                                         <select class="form-control" name="status" id="status">
 											<option value="0"<?php if ($loop->status==0) echo " selected"; ?>>-</option>
 											<option value="1"<?php if ($loop->status==1) echo " selected"; ?>>สด</option>
-											<option value="2"<?php if ($loop->status==2) echo " selected"; ?>>เชื่อ</option>
+											<option value="2"<?php if ($loop->status==2) echo " selected"; ?>>เครดิต</option>
                                         </select>
                                     </div>
 							</div>

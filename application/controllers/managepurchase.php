@@ -144,6 +144,7 @@ class Managepurchase extends CI_Controller {
 		->where('branchID', $branchid)
 		->edit_column("id",'<div class="tooltip-demo">
 	<a href="'.site_url("managepurchase/printCashPurchase/$1").'" class="btn btn-primary btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ปริ้น"><span class="glyphicon glyphicon-print"></span></a>
+	<a href="'.site_url("managepurchase/printCashBuy/$1").'" class="btn btn-success btn-xs" target="_blank" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ออกใบซื้อเงินสด"><span class="glyphicon glyphicon-send"></span></a>
 	</div>',"id");
 	
 		echo $this->datatables->generate(); 
@@ -236,7 +237,7 @@ class Managepurchase extends CI_Controller {
 		$this->form_validation->set_rules('purchaseid', 'purchaseid', 'trim|xss_clean|required|callback_purchase_is_exist');
 		$this->form_validation->set_rules('cusname', 'cusname', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('cusaddress', 'cusaddress', 'trim|xss_clean|required');
-		$this->form_validation->set_rules('cuscontact', 'cuscontact', 'trim|xss_clean|required');
+		//$this->form_validation->set_rules('cuscontact', 'cuscontact', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_error_delimiters('<code>', '</code>');
 		
@@ -246,9 +247,13 @@ class Managepurchase extends CI_Controller {
 			$data['cusid']= ($this->input->post('cusid'));
 			$data['cusname']= ($this->input->post('cusname'));
 			$data['cusaddress']= ($this->input->post('cusaddress'));
-			$data['cuscontact']= ($this->input->post('cuscontact'));
+			//$data['cuscontact']= ($this->input->post('cuscontact'));
+			$data['custelephone']= ($this->input->post('custelephone'));
+			$data['cusfax']= ($this->input->post('cusfax'));
 			$data['condition']= ($this->input->post('condition'));
 			$data['creditday']= ($this->input->post('creditday'));
+			$data['receivedate']= ($this->input->post('receivedate'));
+			$data['transport']= ($this->input->post('transport'));
 			$data['vat'] = ($this->input->post('vat'));
 			
 			$query = $this->branch->getOneBranch($this->input->post('branchid'));
@@ -304,12 +309,28 @@ class Managepurchase extends CI_Controller {
 		$cusid = ($this->input->post('cusid'));
 		$cusname = ($this->input->post('cusname'));
 		$cusaddress = ($this->input->post('cusaddress'));
-		$cuscontact = ($this->input->post('cuscontact'));
+		//$cuscontact = ($this->input->post('cuscontact'));
+		$custelephone= ($this->input->post('custelephone'));
+		$cusfax= ($this->input->post('cusfax'));
 		$condition = ($this->input->post('condition'));
 		$creditday = ($this->input->post('creditday'));
 		$userid = $this->session->userdata('sessid');
 		$totalprice = ($this->input->post('totalprice'));
 		
+		if ($this->input->post('receivedate') != "") {
+			$receivedate = explode('/', $this->input->post('receivedate'));
+			$receivedate= $receivedate[2]."-".$receivedate[1]."-".$receivedate[0];
+		}
+		
+		$currentdate= explode('/',date("d/m/Y"));
+		$currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0];
+		
+		if ($this->input->post('receivedate') == "") $receivedate = $currentdate;
+		
+		$transport= ($this->input->post('transport'));
+		
+		// vat: 0 = no vat , 1 = + vat
+		$vat= ($this->input->post('vat'));
 	
 		$purchase = array(
 				'purchaseID' => $purchaseid,
@@ -318,10 +339,15 @@ class Managepurchase extends CI_Controller {
 				'userID' => $userid,
 				'supplierName' => $cusname,
 				'supplierAddress' => $cusaddress,
-				'supplierContact' => $cuscontact,
+				//'supplierContact' => $cuscontact,
+				'supplierTel' => $custelephone,
+				'supplierFax' => $cusfax,
 				'status' => $condition,
 				'creditDay' => $creditday,
-				'date' => date("Y-m-d")
+				'receiveDate' => $receivedate,
+				'transport' => $transport,
+				'date' => $currentdate,
+				'vat' => $vat
 				
 			);
 		$resultPurchase = $this->purchase->addCashPurchase($purchase);
@@ -332,7 +358,8 @@ class Managepurchase extends CI_Controller {
 		$price1 = ($this->input->post('price1'));
 		$amount = ($this->input->post('amount'));
 		
-		$purchaseproduct = array( 'purchaseID' => $purchaseid );
+		$pid = $this->db->insert_id();
+		$purchaseproduct = array( 'purchaseID' => $pid );
 		
 		for($i=0; $i<count($productid); $i++) {
 			$purchaseproduct['productID'] = $productid[$i];
@@ -368,11 +395,8 @@ class Managepurchase extends CI_Controller {
 		}else{
 			$data['purchase_array'] = array();
 		}
-		foreach($query as $loop) { 
-			$purchaseid = $loop->purchaseID;  
-		}
 		
-		$query = $this->purchase->getOnePurchaseProduct($purchaseid);
+		$query = $this->purchase->getOnePurchaseProduct($id);
 		if($query){
 			$data['purchaseproduct_array'] =  $query;
 		}else{
@@ -383,6 +407,51 @@ class Managepurchase extends CI_Controller {
 		$mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printPurchasehtml", $data, TRUE));
+        $mpdf->Output();
+		
+		
+	}
+	
+	function printCashBuy()
+	{
+		$id = $this->uri->segment(3);
+		
+		$this->load->library('mpdf/mpdf');                
+        $mpdf= new mPDF('th','A4','0', 'thsaraban');
+		$stylesheet = file_get_contents('application/libraries/mpdf/css/style.css');
+		
+		$mpdf->SetHTMLHeader('<div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130<br>โทรศัพท์ : (034) 561641 , 562895 FAX. : (034) 562896</div>'); 
+		//$html = "ทดสอบ<br>";
+
+		$query = $this->purchase->getOnePurchase($id);
+		if($query){
+			$data['purchase_array'] =  $query;
+		}else{
+			$data['purchase_array'] = array();
+		}
+		
+		// insert buycash id 
+		foreach($query as $loop) {
+			$_purchaseid = $loop->purchaseID;
+		}
+		// replace PO with HS
+		$hs=substr($_purchaseid,0,2); 
+		$hs.="HS";
+		$hs.=substr($_purchaseid,4,7); 
+		
+		$data['buycashid'] = $hs;
+		
+		$query = $this->purchase->getOnePurchaseProduct($id);
+		if($query){
+			$data['purchaseproduct_array'] =  $query;
+		}else{
+			$data['purchaseproduct_array'] = array();
+		}
+		
+		//echo $html;
+		$mpdf->SetJS('this.print();');
+		$mpdf->WriteHTML($stylesheet,1);
+        $mpdf->WriteHTML($this->load->view("printPurchasehtml_cash", $data, TRUE));
         $mpdf->Output();
 		
 		
