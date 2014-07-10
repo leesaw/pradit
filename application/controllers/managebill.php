@@ -718,6 +718,7 @@ class Managebill extends CI_Controller {
 		}
 		
 		//echo $html;
+        $mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printBillhtml", $data, TRUE));
         $mpdf->Output();
@@ -754,6 +755,7 @@ class Managebill extends CI_Controller {
 		}
 		
 		//echo $html;
+        $mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printQuotationhtml", $data, TRUE));
         $mpdf->Output();
