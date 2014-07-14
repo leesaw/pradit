@@ -91,15 +91,13 @@
 							<div class="panel panel-info">
 							<div class="panel-heading"><b>ราคาขาย </b></div>
 							<div class="panel-body">
-							<!--
 							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคาไม่รวม VAT *</label>
-                                            <input type="text" class="form-control" name="pricenovat" id="pricenovat" value="<?php echo set_value('pricenovat'); ?>">
+                                            <input type="text" class="form-control" name="pricenovat" id="pricenovat" onChange="numberWithCommas(this);" value="<?php echo set_value('pricenovat'); ?>">
 											<p class="help-block"><?php echo form_error('pricenovat'); ?></p>
                                     </div>
 							</div>
-							-->
 							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคารวม VAT *</label>
@@ -114,6 +112,7 @@
 											<p class="help-block"><?php echo form_error('lowestprice'); ?></p>
                                     </div>
 							</div>
+							<!--
 							<div class="col-md-3">
 									<div class="form-group">
                                             <label>ราคารวมส่วนลด *</label>
@@ -121,6 +120,7 @@
 											<p class="help-block"><?php echo form_error('pricediscount'); ?></p>
                                     </div>
 							</div>
+							-->
 							</div>
 							</div>
 						</div>

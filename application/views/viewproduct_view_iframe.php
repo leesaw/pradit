@@ -69,14 +69,12 @@
 							<div class="panel-heading"><b>ราคาขาย </b></div>
 							<div class="panel-body">
                         <div class="row">
-							<!--
 							<div class="col-xs-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคาไม่รวม VAT</label>
                                             <input type="text" class="form-control" name="pricenovat" id="pricenovat" value="<?php echo number_format($loop->priceNoVAT, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
-							-->
 							<div class="col-xs-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคารวม VAT</label>
@@ -89,22 +87,14 @@
                                             <input type="text" class="form-control" name="lowestprice" id="lowestprice" value="<?php echo number_format($loop->lowestprice, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div> 
+							<!--
 							<div class="col-xs-3">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ราคารวมส่วนลด</label>
                                             <input type="text" class="form-control" name="pricediscount" id="pricediscount" value="<?php echo number_format($loop->priceDiscount, 2, '.', ','); ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
-                        </div>
-                                
-                           <?php // no vat = vat / 1.07 ?>
-                        <div class="row">
-                            <div class="col-xs-3">
-									<div class="form-group has-success">
-                                            <label class="control-label" for="inputSuccess">ราคาไม่รวม VAT</label>
-                                            <input type="text" class="form-control" name="pricevat" id="pricevat" value="<?php echo number_format(ceil($loop->priceVAT/1.07), 2, '.', ','); ?>" style="font-weight: bold;" readonly>
-                                    </div>
-							</div>
+							-->
                         </div>
 							</div>
 							</div>
