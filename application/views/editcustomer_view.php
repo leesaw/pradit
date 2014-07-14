@@ -182,7 +182,7 @@
                                             <select class="form-control" name="saleprice" id="saleprice">
 											<option value="1"<?php if ($loop->salePrice == 1) echo " selected"; ?>>ไม่มี VAT</option>
 											<option value="2"<?php if ($loop->salePrice == 2) echo " selected"; ?>>บวก VAT</option>
-											<option value="3"<?php if ($loop->salePrice == 3) echo " selected"; ?>>ลดราคา</option>
+											<!-- <option value="3"<?php if ($loop->salePrice == 3) echo " selected"; ?>>ลดราคา</option> -->
                                         </select>
                                     </div>
 							</div>

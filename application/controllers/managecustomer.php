@@ -214,7 +214,7 @@ class Managecustomer extends CI_Controller {
 	function update()
 	{
 		
-		$this->form_validation->set_rules('customerid', 'customerid', 'trim|xss_clean|required');
+		//$this->form_validation->set_rules('customerid', 'customerid', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('telephone', 'telephone', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('fax', 'fax', 'trim|xss_clean|required');

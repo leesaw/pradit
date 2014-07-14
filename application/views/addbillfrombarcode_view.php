@@ -83,7 +83,7 @@
 			</div>	
 		</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-10">
 									<a href="<?php echo site_url("managebill/showtemptobill");  ?>"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันรายการสินค้าทั้งหมด  </button></a>
 									<button type="button" class="btn btn-danger btn-lg" onClick="window.location.href='<?php echo site_url("managebill/cleartemp/1"); ?>'"><span class="glyphicon glyphicon-repeat"></span> เริ่มต้นใหม่ทั้งหมด </button>
 							</div>

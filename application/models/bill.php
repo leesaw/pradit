@@ -43,7 +43,7 @@ Class Bill extends CI_Model
  function getBillTemp2()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceNoVAT, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode');
 	$this->db->where('status', 1);
@@ -79,7 +79,7 @@ Class Bill extends CI_Model
  function getQuotationTemp2()
  {
 	$this->db->_protect_identifiers=false;
-	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
+	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceNoVAT, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode','left');
 	$this->db->where('status', 2);

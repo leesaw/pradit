@@ -146,11 +146,10 @@
                             <div class="col-md-3">
                                     <div class="form-group">
                                     	<label>ราคาขาย *</label>
-                                            <select class="form-control" name="saleprice" id="saleprice">
+                                            <select class="form-control" name="saleprice" id="saleprice" onchange="changePrice(this);">
 											<option value="0"></option>
 											<option value="1" <?php echo set_select('saleprice', '1'); ?>>ไม่มี VAT</option>
 											<option value="2" <?php echo set_select('saleprice', '2'); ?>>บวก VAT</option>
-											<option value="3" <?php echo set_select('saleprice', '3'); ?>>ลดราคา</option>
                                         </select>
                                     </div>
 
@@ -198,8 +197,10 @@
 									<td><?php echo $loop->sumamount." ".$loop->unit; ?></td>
 									<td>
 									<input type="hidden" name="barcode[]" value="<?php echo $loop->_barcode; ?>">
-									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $loop->tid; ?>" value="<?php echo $loop->lowestPrice; ?>">
-									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $loop->tid; ?>);" id="price<?php echo $loop->tid; ?>" value="<?php echo $loop->priceVAT; ?>"</td>
+									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $numIndex; ?>" value="<?php echo $loop->lowestPrice; ?>">
+									<input type="hidden" name="pricevat[]" id="pricevat<?php echo $numIndex; ?>" value="<?php echo $loop->priceVAT; ?>">
+									<input type="hidden" name="pricenovat[]" id="pricenovat<?php echo $numIndex; ?>" value="<?php echo $loop->priceNoVAT; ?>">
+									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $numIndex; ?>);" id="price<?php echo $numIndex; ?>" value="0.00"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -211,7 +212,7 @@
 		</div>
 		
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-10">
 									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูลลูกค้า  </button></a>
 									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
@@ -347,6 +348,14 @@ function checklowest(id)
 			document.getElementById('price'+id).focus(); 
 		}, 0); */
 	}
+}
+
+function changePrice(obj)
+{
+	var _pricestatus = $(obj).val();
+	var $num = <?php echo json_encode($numIndex); ?>;
+	alert($num);
+	var _pricevat = (document.getElementById('pricevat').value);
 }
 </script>
 </body>

@@ -166,7 +166,7 @@
                                             <select class="form-control" name="saleprice" id="saleprice">
 											<option value="1">ไม่มี VAT</option>
 											<option value="2">บวก VAT</option>
-											<option value="3">ลดราคา</option>
+											<!-- <option value="3">ลดราคา</option> -->
                                         </select>
                                     </div>
 							</div>
