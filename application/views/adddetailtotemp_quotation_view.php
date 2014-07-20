@@ -68,18 +68,8 @@
                             <div class="col-md-12">
                                     <div class="form-group">
                                     	<label>ที่อยู่ลูกค้า *</label>
-										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="3"><?php echo set_value('cusaddress'); ?></textarea>
+										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="2"><?php echo set_value('cusaddress'); ?></textarea>
 										<p class="help-block"><?php echo form_error('cusaddress'); ?></p>
-                                    </div>
-
-							</div>
-						</div>
-						<div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                    	<label>ชื่อผู้ติดต่อ *</label>
-										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo set_value('cuscontact'); ?>">
-										<p class="help-block"><?php echo form_error('cuscontact'); ?></p>
                                     </div>
 
 							</div>
@@ -100,6 +90,16 @@
                                             <input type="text" class="form-control" name="cusfax" id="cusfax" value="<?php echo set_value('cusfax'); ?>">
 											<p class="help-block"><?php echo form_error('cusfax'); ?></p>
                                     </div>
+							</div>
+						</div>
+						<div class="row">
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                    	<label>ชื่อผู้ติดต่อ *</label>
+										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo set_value('cuscontact'); ?>">
+										<p class="help-block"><?php echo form_error('cuscontact'); ?></p>
+                                    </div>
+
 							</div>
 						</div>
 						<div class="row">
@@ -169,6 +169,19 @@
 										<p class="help-block"><?php echo form_error('discount2'); ?></p>
                                     </div>
 
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-9">
+								<div class="form-group">
+								<label>ราคา *</label>
+                                <div class="form-group">
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="1">ไม่รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="2">รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="3">แยก VAT</label>
+									<label class="radio-inline"><input class="form-control" type="text" style="width: 40px" name="percentvat" id="percentvat" value="7"></label> % vat</label>
+								</div>
+								</div>
 							</div>
 						</div>
 						
@@ -307,6 +320,7 @@ $(document).ready(function()
 			$("#condition").val(ui.item.status);
 			$("#custelephone").val(ui.item.telephone);
 			$("#cusfax").val(ui.item.fax);
+			changePrice();
         }
 		});
 
@@ -350,12 +364,23 @@ function checklowest(id)
 	}
 }
 
-function changePrice(obj)
+function changePrice()
 {
-	var _pricestatus = $(obj).val();
-	var $num = <?php echo json_encode($numIndex); ?>;
-	alert($num);
-	var _pricevat = (document.getElementById('pricevat').value);
+	var _pricestatus = document.getElementById('saleprice').value;
+	var num = <?php echo json_encode($numIndex); ?>;
+	var price;
+	if (_pricestatus == 1 ) {
+		for (var i=1; i<=num; i++) {
+			price = (document.getElementById('pricenovat'+i).value);
+			$('#price'+i).val(price);
+		}
+	}else{
+		for (var i=1; i<=num; i++) {
+			price = (document.getElementById('pricevat'+i).value);
+			$('#price'+i).val(price);
+		}
+	}
+	
 }
 </script>
 </body>

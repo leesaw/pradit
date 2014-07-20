@@ -490,6 +490,9 @@ class Managebill extends CI_Controller {
 			$data['creditday']= ($this->input->post('creditday'));
 			$data['receivedate']= ($this->input->post('receivedate'));
 			$data['discount2']= ($this->input->post('discount2'));
+			// vat
+			$data['vat'] = ($this->input->post('vat'));
+			$data['percentvat'] = ($this->input->post('percentvat'));
 			
 			if (($this->input->post('discount2')) =="") $data['discount2'] = 0;
 			
