@@ -27,7 +27,7 @@ $signature = $loop->fname." ".$loop->lname;
  ?></td></tr>
  
  <tr><td width="400"><?php echo "โทร. ".$loop->customerTel." FAX. ".$loop->customerFax; ?></td><td width="10"> </td><td width="100">เงื่อนไขชำระเงิน</td><td width="120"><?php if ($loop->bstatus==1) echo "เงินสด"; elseif ($loop->bstatus==2) echo $loop->bcreditDay." วัน หลังส่งมอบ"; else $loop->bstatus;?></td></tr>
- <?php } }?>
+ <?php $percentvat=$loop->percentvat; } }?>
 </tbody>
 </table>
 <br>
@@ -64,7 +64,7 @@ if ($no<=15) { for($i=15-$no; $i>0; $i--) {?>
 <td align="right" colspan=4 scope="row">จำนวนเงินหลังหักส่วนลด&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($sum-($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;7.00 %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;<?php echo $percentvat; ?> %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="left" colspan=2 scope="row" style="border-top:1px solid black;">( <?php echo num2thai($sum-($discount+($sum*$discount2/100))+$tax); ?> )</td>

@@ -404,6 +404,9 @@ class Managebill extends CI_Controller {
 			$data['discount']= ($this->input->post('discount'));
 			$data['discount2']= ($this->input->post('discount2'));
 			$data['transport']= ($this->input->post('transport'));
+			// vat
+			$data['vat'] = ($this->input->post('vat'));
+			$data['percentvat'] = ($this->input->post('percentvat'));
 			
 			if (($this->input->post('discount2')) =="") $data['discount2'] = 0;
 			
@@ -523,7 +526,7 @@ class Managebill extends CI_Controller {
 				$data['temp_array'] = array();
 			}
 			
-			$data['title'] = "Pradit and Friends - Preview Bill";
+			$data['title'] = "Pradit and Friends - Preview Quotation";
 			$this->load->view("previewquotation_view", $data);
 		}else{
 		
@@ -564,6 +567,7 @@ class Managebill extends CI_Controller {
 		$totalprice = ($this->input->post('totalprice'));
 		$tax = ($this->input->post('totalvat'));
 		$transport = ($this->input->post('transport'));
+		$percentvat = ($this->input->post('percentvat'));
 		
 		$currentdate= explode('/',date("d/m/Y"));
 		$currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0];
@@ -579,6 +583,7 @@ class Managebill extends CI_Controller {
 				'discount' => $discount,
 				'saleprice' => $saleprice,
 				'tax' => $tax,
+				'percentvat' => $percentvat,
 				'date' => $currentdate,
 				'discountPercent' => $discount2,
 				'transport' => $transport
@@ -634,6 +639,7 @@ class Managebill extends CI_Controller {
 		$creditday = ($this->input->post('creditday'));
 		$tax = ($this->input->post('totalvat'));
 		//$quotationDate = ($this->input->post('receivedate'));
+		$percentvat = ($this->input->post('percentvat'));
 
 		if ($this->input->post('receivedate') != "") {
 			$quotationDate = explode('/', $this->input->post('receivedate'));
@@ -656,6 +662,7 @@ class Managebill extends CI_Controller {
 				'status' => $condition,
 				'creditDay' => $creditday,
 				'tax' => $tax,
+				'percentvat' => $percentvat,
 				'date' => $currentdate,
 				'quotationDate' => $quotationDate,
 				'discountPercent' => $discount2,

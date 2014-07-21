@@ -76,11 +76,10 @@
                             <div class="col-md-3">
                                     <div class="form-group">
                                     	<label>ราคาขาย *</label>
-                                            <select class="form-control" name="saleprice" id="saleprice">
+                                            <select class="form-control" name="saleprice" id="saleprice" onchange="changePrice();">
 											<option value="0"></option>
 											<option value="1" <?php echo set_select('saleprice', '1'); ?>>ไม่มี VAT</option>
 											<option value="2" <?php echo set_select('saleprice', '2'); ?>>บวก VAT</option>
-											<option value="3" <?php echo set_select('saleprice', '3'); ?>>ลดราคา</option>
                                         </select>
                                     </div>
 
@@ -111,6 +110,19 @@
                                     </div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-9">
+								<div class="form-group">
+								<label>ราคา *</label>
+                                <div class="form-group">
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="1">ไม่รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="2">รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="3">แยก VAT</label>
+									<label class="radio-inline"><input class="form-control" type="text" style="width: 40px" name="percentvat" id="percentvat" value="7"></label> % vat</label>
+								</div>
+								</div>
+							</div>
+						</div>
 						
 		<div class="row">
 			<div class="col-md-12">
@@ -137,8 +149,10 @@
 									<td><?php echo $loop->sumamount." ".$loop->unit; ?></td>
 									<td>
 									<input type="hidden" name="barcode[]" value="<?php echo $loop->_barcode; ?>">
-									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $loop->tid; ?>" value="<?php echo $loop->lowestPrice; ?>">
-									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $loop->tid; ?>);" id="price<?php echo $loop->tid; ?>" value="<?php echo $loop->priceVAT; ?>"</td>
+									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $numIndex; ?>" value="<?php echo $loop->lowestPrice; ?>">
+									<input type="hidden" name="pricevat[]" id="pricevat<?php echo $numIndex; ?>" value="<?php echo $loop->priceVAT; ?>">
+									<input type="hidden" name="pricenovat[]" id="pricenovat<?php echo $numIndex; ?>" value="<?php echo $loop->priceNoVAT; ?>">
+									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $loop->tid; ?>);" id="price<?php echo $numIndex; ?>" value="0.00"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -230,6 +244,7 @@ $(document).ready(function()
 			$("#cusid").val(ui.item.id);
 			$("#saleprice").val(ui.item.saleprice);
 			$("#discount").val(ui.item.discount);
+			changePrice();
         }
 		});
 
@@ -272,6 +287,25 @@ function checklowest(id)
 			document.getElementById('price'+id).focus(); 
 		}, 0); */
 	}
+}
+
+function changePrice()
+{
+	var _pricestatus = document.getElementById('saleprice').value;
+	var num = <?php echo json_encode($numIndex); ?>;
+	var price;
+	if (_pricestatus == 1 ) {
+		for (var i=1; i<=num; i++) {
+			price = (document.getElementById('pricenovat'+i).value);
+			$('#price'+i).val(price);
+		}
+	}else{
+		for (var i=1; i<=num; i++) {
+			price = (document.getElementById('pricevat'+i).value);
+			$('#price'+i).val(price);
+		}
+	}
+	
 }
 </script>
 </body>

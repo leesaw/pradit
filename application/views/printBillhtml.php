@@ -21,7 +21,7 @@
  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  <?php echo $loop->transport;?></td><td width="10"> </td><td width="80"> </td><td width="150"><?php echo $loop->fname." ".$loop->lname; ?></td></tr>
- <?php } }?>
+ <?php $percentvat=$loop->percentvat; } }?>
 </tbody>
 </table>
 <br>
@@ -58,7 +58,7 @@ if ($no<=15) { for($i=15-$no; $i>0; $i--) {?>
 <td align="right" colspan=4 scope="row">&nbsp;</td><td align="right"><?php echo number_format($sum-($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">7.00</td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row"><?php echo $percentvat; ?></td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="left" colspan=2 scope="row">( <?php echo num2thai($sum-($discount+($sum*$discount2/100))+$tax); ?> )</td>

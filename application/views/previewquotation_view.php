@@ -258,7 +258,7 @@
 									<td><?php echo $numindex; ?></td>
 									<td><?php echo $loop->productname; ?></td>
 									<td><?php echo number_format($loop->sumamount, 2, '.', ',')." ".$loop->unit; ?></td>
-									<td><?php 	echo number_format($price, 2, '.', ','); $priceperunit=$price;  $price1 = $loop->sumamount*$price; 
+									<td><?php echo number_format($price, 2, '.', ','); $priceperunit=$price;  $price1 = $loop->sumamount*$price; 
 												/*}
 												elseif ($saleprice==2) { echo number_format(ceil($loop->price*0.93), 2, '.', ','); $priceperunit=$loop->price;  $price1 = $loop->sumamount*$loop->price; }
 												elseif ($saleprice==3) { echo number_format($loop->price, 2, '.', ','); $priceperunit=$loop->price;  $price1 = $loop->sumamount*$loop->price; } */
@@ -285,40 +285,42 @@
 							<table class="table" id="dataTables-example">
 							<thead>
 								<tr>
-									<th style="width: 50%"></th>
-									<th style="width: 30%">รวมเป็นเงิน</th>
+									<th style="width: 45%"></th>
+									<th style="width: 35%">รวมเป็นเงิน</th>
 									<?php echo form_hidden('totalprice', $pricesum); ?>
 									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum, 2, '.', ','); ?></th>
 								</tr>
 								<tr>
-									<th style="width: 50%"></th>
-									<th style="width: 30%">หักส่วนลด</th>
+									<th style="width: 45%"></th>
+									<th style="width: 35%">หักส่วนลด</th>
 									<?php 
 									$pricesum_discount = ($discount)+(($pricesum-$discount)*$discount2/100);
 									echo form_hidden('totaldiscount', $pricesum_discount); ?>
 									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum_discount, 2, '.', ','); ?></th>
 								</tr>
 								<tr>
-									<th style="width: 50%"></th>
-									<th style="width: 30%">ยอดหลังหักส่วนลด</th>
+									<th style="width: 45%"></th>
+									<th style="width: 35%">ยอดหลังหักส่วนลด</th>
 									<?php 
 									$pricesum_after_discount = $pricesum - $pricesum_discount;
 									echo form_hidden('totalafterdiscount', $pricesum_after_discount); ?>
 									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum_after_discount, 2, '.', ','); ?></th>
 								</tr>
 								<tr>
-									<th style="width: 50%"></th>
-									<th style="width: 30%">จำนวนภาษีมูลค่าเพิ่ม <?php echo $percentvat."% "; if ($vat==2) echo "(รวม vat)"; elseif ($vat==3) echo "(แยก vat)";?></th>
+									<th style="width: 45%"></th>
+									<th style="width: 35%">จำนวนภาษีมูลค่าเพิ่ม <?php $percentvat=number_format($percentvat, 2, '.', ','); echo $percentvat."% "; if ($vat==2) echo "(รวม vat)"; elseif ($vat==3) echo "(แยก vat)";?></th>
 									<?php 
 									if ($vat==3) $pricevat7 = ($pricesum_after_discount*$percentvat/100);
 									elseif ($vat==2) $pricevat7 = ($pricesum_after_discount*$percentvat/100);
 									else $pricevat7 = 0;
-									echo form_hidden('totalvat', $pricevat7); ?>
+									echo form_hidden('totalvat', $pricevat7); 
+									echo form_hidden('percentvat', $percentvat); 
+									?>
 									<th style="text-align: right;width: 20%"><?php echo number_format($pricevat7, 2, '.', ','); ?></th>
 								</tr>
 								<tr>
-									<th style="width: 50%"></th>
-									<th style="width: 30%">จำนวนเงินรวมทั้งสิ้น</th>
+									<th style="width: 45%"></th>
+									<th style="width: 35%">จำนวนเงินรวมทั้งสิ้น</th>
 									<?php 
 									$finalprice = $pricesum_after_discount + $pricevat7;
 									echo form_hidden('finalprice', $finalprice); ?>

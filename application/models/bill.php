@@ -130,7 +130,7 @@ Class Bill extends CI_Model
  
  function getOneBill($id=NULL)
  {
-	$this->db->select("bill.id as bid, billID, date, customer.customerID as _customerID, customerName, customerAddress, customerTel, customerFax, customerContact, bill.discount as bdiscount, tax, title, users.firstname as fname, users.lastname as lname, bill.creditDay as bcreditDay, bill.status as bstatus, transport");
+	$this->db->select("bill.id as bid, billID, date, customer.customerID as _customerID, customerName, customerAddress, customerTel, customerFax, customerContact, bill.discount as bdiscount, tax, title, users.firstname as fname, users.lastname as lname, bill.creditDay as bcreditDay, bill.status as bstatus, transport, percentvat");
 	$this->db->from('bill');	
 	$this->db->join('customer','customer.id=bill.customerID','left');
 	$this->db->join('users','users.id=bill.userID');
@@ -141,7 +141,7 @@ Class Bill extends CI_Model
  
  function getOneQuotation($id=NULL)
  {
-	$this->db->select("quotation.id as bid, quotationID, date, customerName, customerAddress, customerTel, customerFax, customerContact, quotation.discount as bdiscount, tax, title, users.firstname as fname, users.lastname as lname, quotation.creditDay as bcreditDay, quotation.status as bstatus, quotationDate");
+	$this->db->select("quotation.id as bid, quotationID, date, customerName, customerAddress, customerTel, customerFax, customerContact, quotation.discount as bdiscount, tax, title, users.firstname as fname, users.lastname as lname, quotation.creditDay as bcreditDay, quotation.status as bstatus, quotationDate, percentvat");
 	$this->db->from('quotation');	
 	$this->db->join('customer','customer.id=quotation.customerID','left');
 	$this->db->join('users','users.id=quotation.userID');
