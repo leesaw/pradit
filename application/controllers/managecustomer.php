@@ -71,6 +71,7 @@ class Managecustomer extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('telephone', 'telephone', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('fax', 'fax', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('mobile', 'mobile', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('contactname', 'contactname', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('taxid', 'taxid', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|xss_clean|required');
@@ -88,6 +89,7 @@ class Managecustomer extends CI_Controller {
 			$name= ($this->input->post('name'));
 			$telephone= ($this->input->post('telephone'));
 			$fax= ($this->input->post('fax'));
+			$mobile= ($this->input->post('mobile'));
 			$contactname= ($this->input->post('contactname'));
 			$taxid= ($this->input->post('taxid'));
 			$address= ($this->input->post('address'));
@@ -108,6 +110,7 @@ class Managecustomer extends CI_Controller {
 				'name' => $name,
 				'telephone' => $telephone,
 				'fax' => $fax,
+				'mobile' => $mobile,
 				'contactName' => $contactname,
 				'taxID' => $taxid,
 				'address' => $address,
@@ -218,6 +221,7 @@ class Managecustomer extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('telephone', 'telephone', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('fax', 'fax', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('mobile', 'mobile', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('contactname', 'contactname', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('taxid', 'taxid', 'trim|xss_clean|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|xss_clean|required');
@@ -231,11 +235,12 @@ class Managecustomer extends CI_Controller {
 		$id= ($this->input->post('id'));
 		
 		if($this->form_validation->run() == TRUE) {
-			$customerid= ($this->input->post('customerid'));
+			//$customerid= ($this->input->post('customerid'));
 			$title= ($this->input->post('title'));
 			$name= ($this->input->post('name'));
 			$telephone= ($this->input->post('telephone'));
 			$fax= ($this->input->post('fax'));
+			$mobile= ($this->input->post('mobile'));
 			$contactname= ($this->input->post('contactname'));
 			$taxid= ($this->input->post('taxid'));
 			$address= ($this->input->post('address'));
@@ -253,11 +258,12 @@ class Managecustomer extends CI_Controller {
 
 			$customer = array(
 				'id' => $id,
-				'customerID' => $customerid,
+				//'customerID' => $customerid,
 				'title' => $title,
 				'name' => $name,
 				'telephone' => $telephone,
 				'fax' => $fax,
+				'mobile' => $mobile,
 				'contactName' => $contactname,
 				'taxID' => $taxid,
 				'address' => $address,

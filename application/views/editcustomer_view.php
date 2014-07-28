@@ -115,7 +115,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label class="control-label">เบอร์โทรศัพท์ *</label>
@@ -123,13 +123,22 @@
 											<p class="help-block"><?php echo form_error('telephone'); ?></p>
                                     </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label class="control-label">FAX *</label>
 											
                                             <input type="text" class="form-control" name="fax" id="fax" value="<?php echo $loop->fax; ?>">
 											<p class="help-block"><?php echo form_error('fax'); ?></p>
+                                    </div>
+							</div>
+							<div class="col-md-4">
+									
+									<div class="form-group">
+                                            <label class="control-label">มือถือ *</label>
+											
+                                            <input type="text" class="form-control" name="mobile" id="mobile" value="<?php echo $loop->mobile; ?>">
+											<p class="help-block"><?php echo form_error('mobile'); ?></p>
                                     </div>
 							</div>
 						</div>

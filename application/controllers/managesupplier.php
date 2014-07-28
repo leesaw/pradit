@@ -216,7 +216,7 @@ class Managesupplier extends CI_Controller {
 		$id= ($this->input->post('id'));
 		
 		if($this->form_validation->run() == TRUE) {
-			$supplierid= ($this->input->post('supplierid'));
+			//$supplierid= ($this->input->post('supplierid'));
 			$title= ($this->input->post('title'));
 			$name= ($this->input->post('name'));
 			$telephone= ($this->input->post('telephone'));
@@ -231,7 +231,7 @@ class Managesupplier extends CI_Controller {
 
 			$supplier = array(
 				'id' => $id,
-				'supplierID' => $supplierid,
+				//'supplierID' => $supplierid,
 				'title' => $title,
 				'name' => $name,
 				'telephone' => $telephone,

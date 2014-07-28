@@ -89,18 +89,18 @@
 									<div class="form-group">
                                             <label>ภาค *</label>
                                             <select class="form-control" name="part" id="part">
-											<option value="ภาคเหนือ">ภาคเหนือ</option>
-											<option value="ภาคตะวันออกเฉียงเหนือ">ภาคตะวันออกเฉียงเหนือ</option>
-											<option value="ภาคกลาง">ภาคกลาง</option>
-											<option value="ภาคตะวันออก">ภาคตะวันออก</option>
-											<option value="ภาคตะวันตก">ภาคตะวันตก</option>
-											<option value="ภาคใต้">ภาคใต้</option>
+											<option value="ภาคเหนือ">เหนือ</option>
+											<option value="ภาคตะวันออกเฉียงเหนือ">ตะวันออกเฉียงเหนือ</option>
+											<option value="ภาคกลาง">กลาง</option>
+											<option value="ภาคตะวันออก">ตะวันออก</option>
+											<option value="ภาคตะวันตก">ตะวันตก</option>
+											<option value="ภาคใต้">ใต้</option>
 											</select>
                                     </div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label>เบอร์โทรศัพท์ *</label>
@@ -108,12 +108,20 @@
 											<p class="help-block"><?php echo form_error('telephone'); ?></p>
                                     </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group">
                                             <label>FAX *</label>
                                             <input type="text" class="form-control" name="fax" id="fax" value="<?php echo set_value('fax'); ?>">
 											<p class="help-block"><?php echo form_error('fax'); ?></p>
+                                    </div>
+							</div>
+							<div class="col-md-4">
+									
+									<div class="form-group">
+                                            <label>มือถือ *</label>
+                                            <input type="text" class="form-control" name="mobile" id="mobile" value="<?php echo set_value('mobile'); ?>">
+											<p class="help-block"><?php echo form_error('mobile'); ?></p>
                                     </div>
 							</div>
 						</div>
@@ -147,7 +155,7 @@
                                         <select class="form-control" name="status" id="status">
 											<option value="0">-</option>
 											<option value="1">สด</option>
-											<option value="2">เชื่อ</option>
+											<option value="2">เครดิต</option>
                                         </select>
                                     </div>
 							</div>

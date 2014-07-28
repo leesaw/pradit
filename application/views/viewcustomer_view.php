@@ -77,19 +77,27 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">เบอร์โทรศัพท์</label>
 											<input type="text" class="form-control" name="telephone" id="telephone" value="<?php echo $loop->telephone; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 									
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">FAX</label>
 											
                                             <input type="text" class="form-control" name="fax" id="fax" value="<?php echo $loop->fax; ?>" style="font-weight: bold;" readonly>
+                                    </div>
+							</div>
+							<div class="col-md-4">
+									
+									<div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">มือถือ</label>
+											
+                                            <input type="text" class="form-control" name="mobile" id="mobile" value="<?php echo $loop->mobile; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 						</div>
