@@ -17,14 +17,14 @@
             </div>
         </div>
 	<div class="row">
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
 					<strong>ระบบจัดการสต๊อกสินค้า</strong>
                 </div>
                         <!-- /.panel-heading -->
                 <div class="panel-body">
-					<div class="row"><div class="col-lg-6">
+					<div class="row"><div class="col-md-8">
 						บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด
 					</div></div>
                 </div>

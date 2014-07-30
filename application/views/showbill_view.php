@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                     <div class="form-group">
-                                    	<a href="<?php echo site_url("managebill/printCashBill/".$billid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์บิล</a>
+                                    	<a href="<?php echo site_url("managebill/printCashBill/".$billid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบส่งของชั่วคราว</a>
                                     </div>
 							</div>
 						</div>

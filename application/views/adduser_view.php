@@ -12,13 +12,13 @@
 	
 	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-8">
+            <div class="col-md-10">
                 <h3 class="page-header">เพิ่มผู้ใช้งาน</h3>
             </div>
         </div>
 		
 		<div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-10">
                 <div class="panel panel-default">
 					<div class="panel-heading"><strong>กรุณาใส่ข้อมูลให้ครบทุกช่อง</strong></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 
@@ -27,7 +27,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <?php echo form_open('manageuser/save'); ?>
                                     <div class="form-group">
                                             <label>Username *</label>

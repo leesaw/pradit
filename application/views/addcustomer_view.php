@@ -170,10 +170,10 @@
 						<div class="row">
 							<div class="col-md-4">
 									<div class="form-group">
-                                            <label>ราคาขาย *</label>
+                                            <label>ราคาสินค้า *</label>
                                             <select class="form-control" name="saleprice" id="saleprice">
 											<option value="1">ไม่มี VAT</option>
-											<option value="2">บวก VAT</option>
+											<option value="2">รวม VAT</option>
 											<!-- <option value="3">ลดราคา</option> -->
                                         </select>
                                     </div>

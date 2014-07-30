@@ -131,7 +131,7 @@
                             <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ราคาขาย</label>
+                                    	<label class="control-label" for="inputSuccess">ราคาสินค้า</label>
 										<?php echo form_hidden('saleprice', $saleprice); ?>
 										<input type="text" class="form-control" name="saleshow" id="saleshow" value="<?php 
 										if ($saleprice==1) echo "ไม่มี VAT";

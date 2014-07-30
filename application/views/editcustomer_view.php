@@ -187,7 +187,7 @@
 						<div class="row">
 							<div class="col-md-4">
 									<div class="form-group">
-                                            <label>ราคาขาย *</label>
+                                            <label>ราคาสินค้า *</label>
                                             <select class="form-control" name="saleprice" id="saleprice">
 											<option value="1"<?php if ($loop->salePrice == 1) echo " selected"; ?>>ไม่มี VAT</option>
 											<option value="2"<?php if ($loop->salePrice == 2) echo " selected"; ?>>บวก VAT</option>
@@ -215,7 +215,7 @@
 						<?php } } ?>
 						<div class="row">
 							<div class="col-md-6">
-									<button type="submit" class="btn btn-primary">  แก้ไขข้อมูลผู้จำหน่าย  </button>
+									<button type="submit" class="btn btn-primary">  แก้ไขข้อมูลลูกค้า  </button>
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("managecustomer"); ?>'"> ยกเลิก </button>
 							</div>
 						</div>

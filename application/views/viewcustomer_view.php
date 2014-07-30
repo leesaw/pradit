@@ -143,7 +143,7 @@
 						<div class="row">
 							<div class="col-md-4">
 									<div class="form-group has-success">
-                                            <label class="control-label" for="inputSuccess">ราคาขาย</label>
+                                            <label class="control-label" for="inputSuccess">ราคาสินค้า</label>
                                             <input type="text" class="form-control" name="saleprice" id="saleprice"
 											<?php if ($loop->salePrice == 1) echo 'value="ไม่มี VAT"';
 												  else if ($loop->salePrice == 2) echo 'value="รวม VAT"';

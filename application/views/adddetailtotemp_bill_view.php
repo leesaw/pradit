@@ -75,7 +75,7 @@
 						<div class="row">
                             <div class="col-md-3">
                                     <div class="form-group">
-                                    	<label>ราคาขาย *</label>
+                                    	<label>ราคาสินค้า *</label>
                                             <select class="form-control" name="saleprice" id="saleprice" onchange="changePrice();">
 											<option value="0"></option>
 											<option value="1" <?php echo set_select('saleprice', '1'); ?>>ไม่มี VAT</option>
