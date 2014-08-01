@@ -714,4 +714,15 @@ class Managestock extends CI_Controller {
 		$query = $this->stock->editAmountTemp($stocktemp);
 		
 	}
+    
+    function historystockexcel_in()
+    {
+        $this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+        $result = $this->db->query("select * from stock_product");
+             
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+        
+    }
 }

@@ -56,6 +56,23 @@ Class Stock extends CI_Model
  	//$query = $this->db->get();
  	return $query->result();
  }
+    
+ function getAllStockIN()
+ {
+    return $this->db->query("select * from stock_product");
+    /*
+ 	$this->db->select("stock_product.id as stockid, onDate, stock_product.status as stockstatus, stock_product.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
+ 	$this->db->from("stock_product");
+ 	$this->db->join("product", "product.id = stock_product.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_product.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_product.userID",'left');
+	$this->db->where("stock_product.id", $id);
+ 	$query = $this->db->get();
+ 	return $query;
+    */
+
+ }
  
  function getOneStockIN($id=NULL)
  {
@@ -152,21 +169,27 @@ Class Stock extends CI_Model
 
  function addStock($stock=NULL)
  {		
-	$this->db->set('onDate', 'NOW()', FALSE);
+    $currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+	$this->db->set('onDate', $currentdate);
 	$this->db->insert('stock_product', $stock);
 	return $this->db->insert_id();			
  }
  
  function addStock_return($stock=NULL)
  {		
-	$this->db->set('onDate', 'NOW()', FALSE);
+	$currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+	$this->db->set('onDate', $currentdate);
 	$this->db->insert('stock_return', $stock);
 	return $this->db->insert_id();			
  }
  
  function addStockOut($stock=NULL)
  {		
-	$this->db->set('onDate', 'NOW()', FALSE);
+	$currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+	$this->db->set('onDate', $currentdate);
 	$this->db->insert('stock_out', $stock);
 	return $this->db->insert_id();			
  }

@@ -18,7 +18,7 @@
 			<form method="post">
 				<div class="col-md-4">
 					<div class="form-group">
-						<a href="<?php echo site_url("managebill/historystockexcel_in"); ?>" class="btn btn-success btn-md">Export Excel</a>
+						<a href="<?php echo site_url("managestock/historystockexcel_in"); ?>" class="btn btn-success btn-md">Export Excel</a>
                     </div>
 				</div>
 			</form>
