@@ -20,7 +20,13 @@ class Managestock extends CI_Controller {
 			$data['branch_array'] = array();
 		}
 		
-		$data['cat_array'] = array();
+		$this->load->model('category','',TRUE);
+		$query = $this->category->getCat();
+		if($query){
+			$data['cat_array'] =  $query;
+		}else{
+			$data['cat_array'] = array();
+		}
 
 		$data['branchid'] = 0;
 		$data['page'] = 0;
@@ -788,7 +794,7 @@ class Managestock extends CI_Controller {
 		$sql .= " left join branch on branch.id = stock_product.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_product.userID";
-		$sql .= " where onDate between '".$start."' and '".$end."'";
+		$sql .= " where onDate between '".$start."' and '".$end." 23:59:59.999'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -816,7 +822,7 @@ class Managestock extends CI_Controller {
 		$sql .= " left join branch on branch.id = stock_out.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
-		$sql .= " where onDate between '".$start."' and '".$end."'";
+		$sql .= " where onDate between '".$start."' and '".$end." 23:59:59.999'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -844,7 +850,7 @@ class Managestock extends CI_Controller {
 		$sql .= " left join branch on branch.id = stock_return.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_return.userID";
-		$sql .= " where onDate between '".$start."' and '".$end."'";
+		$sql .= " where onDate between '".$start."' and '".$end." 23:59:59.999'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -873,7 +879,7 @@ class Managestock extends CI_Controller {
 		$sql .= " left join bill_product on bill_product.billID = bill.id";
 		$sql .= " left join customer on customer.id = bill.customerID";
 		$sql .= " left join product on product.id = bill_product.productID";
-		$sql .= " where bill.date between '".$start."' and '".$end."' and bill.customerID =".$id;
+		$sql .= " where bill.date between '".$start."' and '".$end." 23:59:59.999' and bill.customerID =".$id;
 		
         $result = $this->db->query($sql);
 
@@ -912,7 +918,7 @@ class Managestock extends CI_Controller {
 		$sql .= " left join product on product.id = stock.productID";
 		$sql .= " left join stock_product on product.id = stock_product.productID";
 		$sql .= " left join stock_out on product.id = stock_product.productID";
-		$sql .= " where stock.branchID =".$id.";
+		$sql .= " where stock.branchID =".$id;
 		
         $result = $this->db->query($sql);
 

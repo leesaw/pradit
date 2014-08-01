@@ -40,10 +40,10 @@
                             <table class="table table-striped row-border table-hover" id="dataTables-example" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>เลขที่ใบซื้อเงินสด</th>
+                                        <th>เลขที่ใบเสนอราคา</th>
 										<th>ชื่อลูกค้า</th>
 										<th>วันที่</th>
-										<th>พิมพ์ใบซื้อเงินสด</th>
+										<th>พิมพ์ใบเสนอราคา</th>
                                     </tr>
                                 </thead>
 								

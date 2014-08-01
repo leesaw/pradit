@@ -28,7 +28,7 @@
 <table>
 <thead>
 	<tr>
-		<th width="50"> </th><th width="300"> </th><th width="120" > </th><th width="100"> </th><th width="120"> </th>
+		<th width="50"> </th><th width="300"> </th><th width="200" > </th><th width="80"> </th><th width="80"> </th>
 	</tr>
 </thead>
 <tbody>

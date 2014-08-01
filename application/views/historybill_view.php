@@ -11,7 +11,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-10">
-                <h3 class="page-header">ประวัติใบบิลทั้งหมด</h3>
+                <h3 class="page-header">ประวัติใบส่งของชั่วคราวทั้งหมด</h3>
             </div>
         </div>
 		<div class="row">
@@ -40,10 +40,10 @@
                             <table class="table table-striped row-border table-hover" id="dataTables-example" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>เลขที่ใบซื้อเงินสด</th>
+                                        <th>เลขที่ใบส่งของชั่วคราว</th>
 										<th>ชื่อลูกค้า</th>
 										<th>วันที่</th>
-										<th>พิมพ์ใบซื้อเงินสด</th>
+										<th>พิมพ์ใบส่งของชั่วคราว</th>
                                     </tr>
                                 </thead>
 								

@@ -3,6 +3,9 @@
 <head>
 <?php $this->load->view('header_view'); ?>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css" >
+<style type="text/css">
+.datepicker {z-index: 1151 !important;}
+</style>
 </head>
 
 <body>
