@@ -223,6 +223,22 @@ class Manageproduct extends CI_Controller {
 			$data['product_array'] =  $query;
 		}
 		
+		$this->load->model('branch','',TRUE);
+		$query = $this->branch->getBranch();
+		if($query){
+			$data['branch_array'] =  $query;
+		}else{
+			$data['branch_array'] = array();
+		}
+		
+		$this->load->model('category','',TRUE);
+		$query = $this->category->getCat();
+		if($query){
+			$data['cat_array'] =  $query;
+		}else{
+			$data['cat_array'] = array();
+		}
+		
 		$data['title'] = "Pradit and Friends - View Product";
 		$this->load->view('viewproduct_view',$data);
 	}

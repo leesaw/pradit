@@ -129,12 +129,56 @@
                         
 						
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-4">
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("manageproduct/viewSelectedCat/".$loop->categoryID); ?>'"> กลับไปหน้าจัดการข้อมูลสินค้า </button>
 							</div>
 							<div class="col-md-3">
 								<a id="fancyboxview" href="<?php echo site_url("manageproduct/jquerybarcode/".$loop->barcode."/".$loop->pname."/".$loop->priceVAT);  ?>"><button type="button" class="btn btn-info btn-md"> พิมพ์ Barcode </button></a>
 							</div>
+							<!--
+							<div class="col-md-3">
+								<div class="form-group">
+									<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="การเคลื่อนไหวสินค้า" data-backdrop="static" data-keyboard="false">Export Excel การเคลื่อนไหวสินค้า</a>
+									
+									
+									<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									
+									  <div class="modal-dialog modal-md">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title">	                 	
+													<strong>เลือกสาขาที่ต้องการ</strong> 
+												</h4>
+											</div>            
+											<div class="modal-body">
+												<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelproduct"); ?>" method="POST" >
+												<div class="form-group">
+													<label for="">สาขา: </label>
+													<select class="form-control" name="bid" id="bid"> 
+														<option value=""></option>
+													<?php 	if(is_array($branch_array)) {
+															foreach($branch_array as $loop){
+																echo "<option value='".$loop->id."'";
+																echo ">".$loop->name."</option>";
+													 } } ?>
+													</select>
+												</div>
+													
+											</div>            
+										
+											<div class="modal-footer">
+													<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+													<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+											</div> 	
+											</form>								
+										</div>
+									</div>
+								</div>
+									
+								</div>
+							</div>  
+							-->
 						</div>
 								
 						<?php } } ?>			

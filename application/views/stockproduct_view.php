@@ -16,10 +16,13 @@
                 <h3 class="page-header">ตรวจสอบจำนวนสินค้า</h3>
             </div>
         </div>
-
+		<div class="row">
+				
+			
+		</div>
 						<div class="row">
-							<form method="post">
 							<div class="col-md-3">
+							<form method='post'>
 									<div class="form-group">
                                         <label>เลือก สาขา</label>
 										<select class="form-control" name="branchid" id="branchid" onChange="this.form.action='<?php echo site_url('managestock/viewStockByBranch')?>/'+this.value;this.form.submit()"> 
@@ -34,6 +37,62 @@
                                     </div>
 							</div>
 							</form>
+							<div class="col-md-4">
+							<div class="form-group">
+								<br>
+								<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="Export Excel" data-backdrop="static" data-keyboard="false">Export Excel</a>
+								
+								<!-- datepicker modal-->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								
+								  <div class="modal-dialog modal-md">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											<h4 class="modal-title">	                 	
+												<strong>เลือกสาขาและประเภทสินค้า</strong> 
+											</h4>
+										</div>            <!-- /modal-header -->
+										<div class="modal-body">
+											<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelstock"); ?>" method="POST" >
+											<div class="form-group">
+												<label for="">สาขา: </label>
+												<select class="form-control" name="bid" id="bid"> 
+													<option value=""></option>
+												<?php 	if(is_array($branch_array)) {
+														foreach($branch_array as $loop){
+															echo "<option value='".$loop->id."'";
+															if ($branchid==$loop->id) echo " selected";
+															echo ">".$loop->name."</option>";
+												 } } ?>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="">ประเภทสินค้า: </label>
+												<select class="form-control" name="catid" id="catid"> 
+													<option value=""></option>
+												<?php 	if(is_array($cat_array)) {
+														foreach($cat_array as $loop){
+															echo "<option value='".$loop->id."'";
+															if ($branchid==$loop->id) echo " selected";
+															echo ">".$loop->name."</option>";
+												 } } ?>
+												</select>
+											</div>
+												
+										</div>            <!-- /modal-body -->
+									
+										<div class="modal-footer">
+												<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+												<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+										</div> 	
+										</form>								
+									</div>
+								</div>
+							</div>
+								
+							</div>
+						</div>
 						</div>
 		<div class="row">
             <div class="col-md-3">

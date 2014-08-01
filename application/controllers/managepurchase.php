@@ -255,6 +255,7 @@ class Managepurchase extends CI_Controller {
 			$data['receivedate']= ($this->input->post('receivedate'));
 			$data['transport']= ($this->input->post('transport'));
 			$data['vat'] = ($this->input->post('vat'));
+			$data['percentvat'] = ($this->input->post('percentvat'));
 			
 			$query = $this->branch->getOneBranch($this->input->post('branchid'));
 			if($query){
@@ -316,6 +317,8 @@ class Managepurchase extends CI_Controller {
 		$creditday = ($this->input->post('creditday'));
 		$userid = $this->session->userdata('sessid');
 		$totalprice = ($this->input->post('totalprice'));
+		$tax = ($this->input->post('totalvat'));
+		
 		
 		if ($this->input->post('receivedate') != "") {
 			$receivedate = explode('/', $this->input->post('receivedate'));
@@ -329,8 +332,9 @@ class Managepurchase extends CI_Controller {
 		
 		$transport= ($this->input->post('transport'));
 		
-		// vat: 0 = no vat , 1 = + vat
+		// vat: 1 = no vat , 2 = + vat 3 = แยก
 		$vat= ($this->input->post('vat'));
+		$percentvat = ($this->input->post('percentvat'));
 	
 		$purchase = array(
 				'purchaseID' => $purchaseid,
@@ -347,7 +351,9 @@ class Managepurchase extends CI_Controller {
 				'receiveDate' => $receivedate,
 				'transport' => $transport,
 				'date' => $currentdate,
-				'vat' => $vat
+				'vat' => $vat,
+				'percentvat' => $percentvat,
+				'tax' => $tax
 				
 			);
 		$resultPurchase = $this->purchase->addCashPurchase($purchase);

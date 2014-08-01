@@ -206,7 +206,7 @@ class Managestock extends CI_Controller {
 		
 		$data['count'] = $this->stock->getTempCount(1);
 		$data['title'] = "Pradit and Friends - Add Barcode";
-		$this->load->view("addstockfrombarcode_view", $data);
+		$this->load->view("returnstockfrombarcode_view", $data);
 	}
 	
 	function saveBarcodeTemp_out()
@@ -720,9 +720,202 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-        $result = $this->db->query("select * from stock_product");
-             
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_product";
+		$sql .= " left join product on product.id = stock_product.productID";
+		$sql .= " left join branch on branch.id = stock_product.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_product.userID";
+        $result = $this->db->query($sql);
+
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
         
     }
+	
+	function historystockexcel_out()
+    {
+        $this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_out";
+		$sql .= " left join product on product.id = stock_out.productID";
+		$sql .= " left join branch on branch.id = stock_out.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_out.userID";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+        
+    }
+	
+	function historystockexcel_return()
+    {
+        $this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_return";
+		$sql .= " left join product on product.id = stock_return.productID";
+		$sql .= " left join branch on branch.id = stock_return.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_return.userID";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+        
+    }
+	
+	function excelbetweendate_in()
+	{
+		$start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+		
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_product";
+		$sql .= " left join product on product.id = stock_product.productID";
+		$sql .= " left join branch on branch.id = stock_product.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_product.userID";
+		$sql .= " where onDate between '".$start."' and '".$end."'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+	
+	function excelbetweendate_out()
+	{
+		$start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+		
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_out";
+		$sql .= " left join product on product.id = stock_out.productID";
+		$sql .= " left join branch on branch.id = stock_out.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_out.userID";
+		$sql .= " where onDate between '".$start."' and '".$end."'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+	
+	function excelbetweendate_return()
+	{
+		$start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+		
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_return";
+		$sql .= " left join product on product.id = stock_return.productID";
+		$sql .= " left join branch on branch.id = stock_return.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_return.userID";
+		$sql .= " where onDate between '".$start."' and '".$end."'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+	
+	function excelbetweendate_customer()
+	{
+		$id = $this->input->post("cusid");
+		$start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+		
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, bill_product.amount as จำนวน, pricePerUnit as ราคา, product.unit as หน่วย, bill_product.amount*pricePerUnit as รวมราคาที่ขาย";
+		$sql .= " from bill";
+		$sql .= " left join bill_product on bill_product.billID = bill.id";
+		$sql .= " left join customer on customer.id = bill.customerID";
+		$sql .= " left join product on product.id = bill_product.productID";
+		$sql .= " where bill.date between '".$start."' and '".$end."' and bill.customerID =".$id;
+		
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+	
+	function excelstock()
+	{
+		$id = $this->input->post("bid");
+		$catid = $this->input->post("catid");
+
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, stock.amount as จำนวน, product.unit as หน่วย, costPrice as ราคา,  stock.amount*costPrice as จำนวนเงิน";
+		$sql .= " from stock";
+		$sql .= " left join product on product.id = stock.productID";
+		$sql .= " where stock.branchID =".$id." and categoryID=".$catid;
+		
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+	
+	function excelproduct()
+	{
+		$id = $this->input->post("bid");
+
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		
+		$sql = "select onDate as ปี-เดือน-วัน, product.name as ชื่อสินค้า, stock.amount as จำนวน, product.unit as หน่วย, costPrice as ราคา,  stock.amount*costPrice as จำนวนเงิน";
+		$sql .= " from stock";
+		$sql .= " left join product on product.id = stock.productID";
+		$sql .= " left join stock_product on product.id = stock_product.productID";
+		$sql .= " left join stock_out on product.id = stock_product.productID";
+		$sql .= " where stock.branchID =".$id.";
+		
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
 }

@@ -139,12 +139,14 @@
 											<p class="help-block"><?php echo form_error('transport'); ?></p>
                                     </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-9">
 								<div class="form-group">
 								<label>ราคา *</label>
                                 <div class="form-group">
-									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="0">ไม่รวม VAT</label>
-									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="1" checked>รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="1">ไม่รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="2">รวม VAT</label>
+									<label class="radio-inline"><input type="radio" name="vat" id="vat" value="3">แยก VAT</label>
+									<label class="radio-inline"><input class="form-control" type="text" style="width: 40px" name="percentvat" id="percentvat" value="7"></label> % vat</label>
 								</div>
 								</div>
 							</div>

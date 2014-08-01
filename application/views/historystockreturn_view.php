@@ -2,6 +2,7 @@
 <html>
 <head>
 <?php $this->load->view('header_view'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css" >
 </head>
 
 <body>
@@ -15,13 +16,46 @@
             </div>
         </div>
 		<div class="row">
-			<form method="post">
-				<div class="col-md-4">
+			<div class="col-md-8">
 					<div class="form-group">
-						<a href="<?php echo site_url("managebill/historystockexcel_in"); ?>" class="btn btn-success btn-md">Export Excel</a>
+						<a href="<?php echo site_url("managestock/historystockexcel_return"); ?>" class="btn btn-success btn-md">Export Excel ทั้งหมด</a>
+						<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Export Excel เลือกช่วงวันที่</a>
+						
+						<!-- datepicker modal-->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						
+						  <div class="modal-dialog modal-md">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">	                 	
+										<strong>เลือกช่วงวันที่ต้องการ</strong> 
+									</h4>
+								</div>            <!-- /modal-header -->
+								<div class="modal-body">
+									<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelbetweendate_return"); ?>" method="POST" >
+									<div class="form-group">
+										<label for="">เริ่ม: </label>
+										<input type="text" class="form-control" id="startdate" name="startdate" />
+									</div>
+									<div class="form-group">
+										<label for=""> สิ้นสุด :</label>
+										<input type="text" class="form-control" id="enddate" name="enddate" />
+									</div>
+										
+								</div>            <!-- /modal-body -->
+							
+								<div class="modal-footer">
+										<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+										<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+								</div> 	
+								</form>								
+							</div>
+						</div>
+					</div>
+						
                     </div>
 				</div>
-			</form>
 		</div>
 		
 		<div class="row">
@@ -79,10 +113,15 @@
 <script src="<?php echo base_url(); ?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url(); ?>/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script src="<?php echo base_url(); ?>/js/bootbox.min.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker-thai.js"></script>
+<script src="<?php echo base_url(); ?>js/locales/bootstrap-datepicker.th.js"></script>
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function()
     {
+		get_datepicker("#startdate");
+		get_datepicker("#enddate");
         var oTable = $('#dataTables-example').dataTable
         ({
             "bJQueryUI": false,
@@ -103,6 +142,13 @@
             }
         });
     });
+function get_datepicker(id)
+{
+
+	$(id).datepicker({ language:'th-th',format:'dd/mm/yyyy'
+		    });
+
+}
 </script>
 <script>
     // tooltip demo

@@ -2,6 +2,7 @@
 <html>
 <head>
 <?php $this->load->view('header_view'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css" >
 </head>
 
 <body>
@@ -26,6 +27,7 @@
                             <div class="col-md-3">
 								<?php if(is_array($cus_array)) {
 									foreach($cus_array as $loop){
+										$cusid = $loop->id;
 								?>
                                     <div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">รหัสลูกค้า</label>
@@ -172,6 +174,43 @@
 							<div class="col-md-6">
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("managecustomer"); ?>'"> กลับไปหน้าจัดการข้อมูลลูกค้า </button>
 							</div>
+							<div class="col-md-6">
+							<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Export Excel สินค้าที่ซื้อ</a>
+						
+									<!-- datepicker modal-->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									
+									<div class="modal-dialog modal-md">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title">	                 	
+													<strong>เลือกช่วงวันที่ต้องการ</strong> 
+												</h4>
+											</div>            <!-- /modal-header -->
+											<div class="modal-body">
+												<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelbetweendate_customer"); ?>" method="POST" >
+												<div class="form-group">
+													<label for="">เริ่ม: </label>
+													<input type="hidden" name="cusid" value="<?php echo $cusid; ?>">
+													<input type="text" class="form-control" id="startdate" name="startdate" />
+												</div>
+												<div class="form-group">
+													<label for=""> สิ้นสุด :</label>
+													<input type="text" class="form-control" id="enddate" name="enddate" />
+												</div>
+													
+											</div>            <!-- /modal-body -->
+										
+											<div class="modal-footer">
+													<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+													<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+											</div> 	
+											</form>								
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 								
 									
@@ -185,6 +224,24 @@
 </div>
 
 <?php $this->load->view('js_footer'); ?>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datepicker-thai.js"></script>
+<script src="<?php echo base_url(); ?>js/locales/bootstrap-datepicker.th.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function()
+    {
+		get_datepicker("#startdate");
+		get_datepicker("#enddate");
+    });
+	
+function get_datepicker(id)
+{
+
+	$(id).datepicker({ language:'th-th',format:'dd/mm/yyyy'
+		    });
+
+}
+</script>
 <script>
 $(".alert-message").alert();
 window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);

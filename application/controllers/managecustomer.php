@@ -308,4 +308,57 @@ class Managecustomer extends CI_Controller {
 			
 			$this->load->view('editcustomer_view',$data);
 	}
+	
+	function historystockexcel_in()
+    {
+        $this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_product";
+		$sql .= " left join product on product.id = stock_product.productID";
+		$sql .= " left join branch on branch.id = stock_product.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_product.userID";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+        
+    }
+	
+	function excelbetweendate()
+	{
+		//$id = $this->input->post("cusid");
+		$start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+		
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_product";
+		$sql .= " left join product on product.id = stock_product.productID";
+		$sql .= " left join branch on branch.id = stock_product.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_product.userID";
+		/*
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, bill_product.amount as จำนวน, pricePerUnit as ราคา, product.unit as หน่วย, bill_product.amount*pricePerUnit as รวมราคาที่ขาย";
+		$sql .= " from bill";
+		$sql .= " left join bill_product on bill_product.billID = bill.id";
+		$sql .= " left join customer on customer.id = bill.customerID";
+		$sql .= " left join product on product.id = bill_product.productID";
+		$sql .= " where bill.date between '".$start."' and '".$end."' and bill.customerID =".$id;
+		*/
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
 }
