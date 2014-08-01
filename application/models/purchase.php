@@ -76,7 +76,7 @@ Class Purchase extends CI_Model
  
  function getOnePurchase($id=NULL)
  {
-	$this->db->select("purchase.id as bid, purchaseID, date, supplier.supplierID as _supplierid, supplierName, supplierAddress, supplierTel, supplierFax, purchase.creditDay as creditDay, purchase.status as purstatus, title, users.firstname as fname, users.lastname as lname, receiveDate, transport, vat");
+	$this->db->select("purchase.id as bid, purchaseID, date, supplier.supplierID as _supplierid, supplierName, supplierAddress, supplierTel, supplierFax, purchase.creditDay as creditDay, purchase.status as purstatus, title, users.firstname as fname, users.lastname as lname, receiveDate, transport, vat, percentvat, tax");
 	$this->db->from('purchase');	
 	$this->db->join('supplier','supplier.id=purchase.supplierID','left');
 	$this->db->join('users','users.id=purchase.userID','left');
