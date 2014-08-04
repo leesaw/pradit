@@ -90,6 +90,9 @@
 								<li>
                                     <a href="<?php echo site_url("managestock/historyreturnstock"); ?>">ประวัติคืนสินค้า</a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo site_url("managestock/historyrepair"); ?>">ประวัติรถซ่อม</a>
+                                </li>
                             </ul>
 
                         </li>

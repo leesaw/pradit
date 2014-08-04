@@ -160,7 +160,7 @@
 							<div class="col-md-4">
 									<div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">ส่วนลด</label>
-                                            <input type="text" class="form-control" name="discount" id="discount" value="<?php echo $loop->discount; ?>" style="font-weight: bold;" readonly>
+                                            <input type="text" class="form-control" name="discount" id="discount" value="<?php echo $loop->discount." %"; ?>" style="font-weight: bold;" readonly>
                                     </div>
 							</div>
 						</div>

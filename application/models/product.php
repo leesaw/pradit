@@ -17,7 +17,7 @@ Class Product extends CI_Model
 	$this->db->order_by("product.id", "asc");
 	$this->db->from('product');	
 	$this->db->join('category', 'category.id = product.categoryID','left');	
-	$this->db->where('category.id', $cid);
+    if ($cid>0) { $this->db->where('category.id', $cid); }
 	$query = $this->db->get();		
 	return $query->result();
  }

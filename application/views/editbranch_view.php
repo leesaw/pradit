@@ -13,7 +13,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">แก้ไขประเภทสินค้า</h3>
+                <h3 class="page-header">แก้ไขข้อมูลสาขา</h3>
             </div>
         </div>
 		

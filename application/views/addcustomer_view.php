@@ -180,7 +180,7 @@
 							</div>
 							<div class="col-md-4">
 									<div class="form-group">
-                                            <label>ส่วนลด *</label>
+                                            <label>ส่วนลด(%) *</label>
                                             <input type="text" class="form-control" name="discount" id="discount" value="<?php echo set_value('discount'); ?>">
 											<p class="help-block"><?php echo form_error('discount'); ?></p>
                                     </div>

@@ -12,17 +12,19 @@ Class Stock extends CI_Model
  
  function getTemp($in=NULL)
  {
-	$this->db->select("barcode, amount");
+	$this->db->select("barcode, sum(amount) as amount");
 	$this->db->from('stock_product_temp');	
 	$this->db->where('in', $in);
+    $this->db->group_by('barcode');
 	$query = $this->db->get();			
 	return $query->result();
  }
  
  function getProductID($barcode=NULL)
  {
-	$this->db->select("id");
-	$this->db->from('product');		
+	$this->db->select("product.id, amount");
+	$this->db->from('product');	
+    $this->db->join('stock','stock.productID = product.id');
 	$this->db->where('barcode', $barcode);
 	$query = $this->db->get();	
 	return $query->result();
@@ -85,13 +87,27 @@ Class Stock extends CI_Model
  
  function getOneStockOUT($id=NULL)
  {
- 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount");
+ 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, amount, priceVAT");
  	$this->db->from("stock_out");
  	$this->db->join("product", "product.id = stock_out.productID",'left');
  	$this->db->join("branch", "branch.id = stock_out.branchID",'left');
  	$this->db->join("category", "category.id = product.categoryID",'left');
  	$this->db->join("users", "users.id = stock_out.userID",'left');
 	$this->db->where("stock_out.id", $id);
+ 	$query = $this->db->get();
+ 	return $query->result();
+ }
+    
+ function getOneStockOUTprint($id=null)
+ {
+ 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, stock_out.amount, priceVAT, stock_out.stock as stockamount");
+ 	$this->db->from("stock_out");
+ 	$this->db->join("product", "product.id = stock_out.productID",'left');
+ 	$this->db->join("branch", "branch.id = stock_out.branchID",'left');
+ 	$this->db->join("category", "category.id = product.categoryID",'left');
+ 	$this->db->join("users", "users.id = stock_out.userID",'left');
+    $this->db->join("stock", "stock.productID = stock_out.productID");
+	$this->db->where("stock_out.listid", $id);
  	$query = $this->db->get();
  	return $query->result();
  }
@@ -104,6 +120,14 @@ Class Stock extends CI_Model
 	$this->db->where('barcode', $barcode);
 	$query = $this->db->get();		
 	return $query->num_rows();
+ }
+    
+ function getMaxlist()
+ {
+	$this->db->select("MAX(listid) as max");
+	$this->db->from('stock_out');		
+	$query = $this->db->get();		
+	return $query->result_array();
  }
  
  function getTempID()

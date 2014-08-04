@@ -294,7 +294,7 @@
 									<th style="width: 45%"></th>
 									<th style="width: 35%">หักส่วนลด</th>
 									<?php 
-									$pricesum_discount = ($discount)+(($pricesum-$discount)*$discount2/100);
+									$pricesum_discount = ($pricesum*$discount2/100) + $discount;
 									echo form_hidden('totaldiscount', $pricesum_discount); ?>
 									<th style="text-align: right;width: 20%"><?php echo number_format($pricesum_discount, 2, '.', ','); ?></th>
 								</tr>

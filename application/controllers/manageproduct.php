@@ -57,7 +57,8 @@ class Manageproduct extends CI_Controller {
 	public function getdatabyajax()
 	{
 		$catid = $this->uri->segment(3);
-		$this->load->library('Datatables');
+        $this->load->library('Datatables');
+        if ($catid>0) {
 		$this->datatables
 		->select("standardID, supplierID, product.name as pname, category.name as cname, product.id as pid")
 		->from('product')
@@ -70,7 +71,22 @@ class Manageproduct extends CI_Controller {
 	<a href="'.site_url("manageproduct/editproduct/$1").'" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="tooltip" data-target="#edit" data-placement="top" rel="tooltip" title="แก้ไข"><span class="glyphicon glyphicon-pencil"></span></a>
 	<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-trash"></span></button>
 	</div>',"pid");
+        
+        }else{
+            
+        $this->datatables
+		->select("standardID, supplierID, product.name as pname, category.name as cname, product.id as pid")
+		->from('product')
+		->join('category', 'product.categoryID = category.id')
+		//->where('category.id', $catid)
+		//->edit_column("pid","$1","pid");
 		
+		->edit_column("pid",'<div class="tooltip-demo">
+	<a href="'.site_url("manageproduct/viewproduct/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
+	<a href="'.site_url("manageproduct/editproduct/$1").'" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="tooltip" data-target="#edit" data-placement="top" rel="tooltip" title="แก้ไข"><span class="glyphicon glyphicon-pencil"></span></a>
+	<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-trash"></span></button>
+	</div>',"pid");
+        }
 		echo $this->datatables->generate(); 
 	}
 

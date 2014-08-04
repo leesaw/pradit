@@ -55,8 +55,8 @@
 										<th></th>
                                         <th>Barcode</th>
 										<th>ชื่อ</th>
+										<th>จำนวน</th>
 										<th>หน่วย</th>
-										<th>ประเภท</th>
 										<th>จัดการ</th>
                                     </tr>
                                 </thead>

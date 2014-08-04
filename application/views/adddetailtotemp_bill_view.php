@@ -243,7 +243,7 @@ $(document).ready(function()
 			else $("#cusaddress").val(ui.item.address+" จ. "+ui.item.provincename+" "+ui.item.zipcode);
 			$("#cusid").val(ui.item.id);
 			$("#saleprice").val(ui.item.saleprice);
-			$("#discount").val(ui.item.discount);
+			$("#discount2").val(ui.item.discount);
 			changePrice();
         }
 		});

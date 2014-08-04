@@ -705,7 +705,7 @@ class Managebill extends CI_Controller {
 		
 		$this->load->library('mpdf/mpdf');                
         $mpdf= new mPDF('th',array(203,279),'0', 'thsaraban');
-		$stylesheet = file_get_contents('application/libraries/mpdf/css/style.css');
+		$stylesheet = file_get_contents('application/libraries/mpdf/css/styleDotMatrix.css');
 		
 		//$mpdf->SetHTMLHeader('<div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130<br>โทรศัพท์ : (034) 561641 , 562895 FAX. : (034) 562896</div>'); 
 		//$html = "ทดสอบ<br>";

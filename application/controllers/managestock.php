@@ -257,6 +257,7 @@ class Managestock extends CI_Controller {
 		$catid = $this->uri->segment(3);
 		$branchid = $this->uri->segment(4);
 		$this->load->library('Datatables');
+        if ($catid>0) {
 		$this->datatables
 		->select("product.standardID as pstandardid, product.barcode as pbarcode, product.name as pname, category.name as cname, amount")
 		->from("stock")
@@ -264,6 +265,16 @@ class Managestock extends CI_Controller {
 		->join("category","product.categoryID=category.id")
 		->where("product.categoryID",$catid)
 		->where("stock.branchID",$branchid);
+        
+        }else{
+            $this->datatables
+		->select("product.standardID as pstandardid, product.barcode as pbarcode, product.name as pname, category.name as cname, amount")
+		->from("stock")
+		->join("product","product.id=stock.productID")
+		->join("category","product.categoryID=category.id")
+		//->where("product.categoryID",$catid)
+		->where("stock.branchID",$branchid);
+        }
 	
 		echo $this->datatables->generate(); 
 	}
@@ -291,6 +302,7 @@ class Managestock extends CI_Controller {
 		$catid = $this->uri->segment(3);
 		$this->load->helper('date');
 		$this->load->library('Datatables');
+        if ($catid>0) {
 		$this->datatables
 		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_product.id as stockid")
 		->from('stock_product')
@@ -303,6 +315,23 @@ class Managestock extends CI_Controller {
 		->edit_column("stockid",'<div class="tooltip-demo">
 	<a href="'.site_url("managestock/viewproductstockin/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
 	</div>',"stockid");
+            
+        }else{
+            
+        $this->datatables
+		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_product.id as stockid")
+		->from('stock_product')
+		->join('product', 'product.id = stock_product.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_product.branchID','left')
+		//->where('category.id', $catid)
+		//->edit_column("pid","$1","pid");
+		
+		->edit_column("stockid",'<div class="tooltip-demo">
+	<a href="'.site_url("managestock/viewproductstockin/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
+	</div>',"stockid");
+            
+        }
 		
 		echo $this->datatables->generate(); 
 	}
@@ -312,6 +341,7 @@ class Managestock extends CI_Controller {
 		$catid = $this->uri->segment(3);
 		$this->load->helper('date');
 		$this->load->library('Datatables');
+        if ($catid>0) {
 		$this->datatables
 		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_return.id as stockid")
 		->from('stock_return')
@@ -324,6 +354,21 @@ class Managestock extends CI_Controller {
 		->edit_column("stockid",'<div class="tooltip-demo">
 	<a href="'.site_url("managestock/viewproductstockreturn/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
 	</div>',"stockid");
+            
+        }else{
+            $this->datatables
+		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_return.id as stockid")
+		->from('stock_return')
+		->join('product', 'product.id = stock_return.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_return.branchID','left')
+		//->where('category.id', $catid)
+		//->edit_column("pid","$1","pid");
+		
+		->edit_column("stockid",'<div class="tooltip-demo">
+	<a href="'.site_url("managestock/viewproductstockreturn/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
+	</div>',"stockid");
+        }
 		
 		echo $this->datatables->generate(); 
 	}
@@ -333,6 +378,7 @@ class Managestock extends CI_Controller {
 		$catid = $this->uri->segment(3);
 		$this->load->helper('date');
 		$this->load->library('Datatables');
+        if ($catid>0) {
 		$this->datatables
 		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_out.id as stockid")
 		->from('stock_out')
@@ -345,6 +391,22 @@ class Managestock extends CI_Controller {
 		->edit_column("stockid",'<div class="tooltip-demo">
 	<a href="'.site_url("managestock/viewproductstockout/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
 	</div>',"stockid");
+            
+        }else{
+            $this->datatables
+		->select("standardID, product.name as pname, category.name as cname, branch.name as bname, onDate, stock_out.id as stockid")
+		->from('stock_out')
+		->join('product', 'product.id = stock_out.productID','left')
+		->join('category', 'product.categoryID = category.id','left')
+		->join('branch', 'branch.id = stock_out.branchID','left')
+		//->where('category.id', $catid)
+		//->edit_column("pid","$1","pid");
+		
+		->edit_column("stockid",'<div class="tooltip-demo">
+	<a href="'.site_url("managestock/viewproductstockout/$1").'" class="btn btn-success btn-xs" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="ดูรายละเอียด"><span class="glyphicon glyphicon-fullscreen"></span></a>
+	</div>',"stockid");
+            
+        }
 		
 		echo $this->datatables->generate(); 
 	}
@@ -471,12 +533,16 @@ class Managestock extends CI_Controller {
 		$status = ($this->input->post('status'));
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
+        
+        $listid = $this->stock->getMaxlist()[0]['max'];
+        $listid++;
 		
 		$barcode = array(
 			'branchID' => $branchid,
 			'status' => $status,
 			'userID' => $userid,
-			'detail' => $detail
+			'detail' => $detail,
+            'listid' => $listid
 		);
 		
 		$query = $this->stock->getTemp(0);
@@ -490,19 +556,26 @@ class Managestock extends CI_Controller {
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
+                $barcode['stock'] = $loop2->amount;
 			}
+            
 			$this->stock->addStockOut($barcode);
 			// decrement amount in stock table
 			if ($this->stock->checkStock($productid,$branchid)<1) {
 				$pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
 				$this->stock->addNewStockTable($pid);
 			}
+            
+            
+            
 			$this->stock->decrementStock($productid,$branchid,$amount);
 		}
 		
 		$this->stock->delAllStockTemp(0);
 		
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+        
+        redirect('managestock/printStockOut/'.$listid, 'location');
 		
 	}
 	
@@ -726,7 +799,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -743,7 +816,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -788,7 +861,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ, stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -816,7 +889,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -924,4 +997,72 @@ class Managestock extends CI_Controller {
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
 	}
+    
+    function excelrepair()
+	{
+		$repair = $this->input->post("repair");
+
+        $this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_out";
+		$sql .= " left join product on product.id = stock_out.productID";
+		$sql .= " left join branch on branch.id = stock_out.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_out.userID";
+        $sql .= " where stock_out.detail like '%".$repair."%'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+    
+    function printStockOut()
+    {
+
+		$id = $this->uri->segment(3);
+		
+		$this->load->library('mpdf/mpdf');                
+        $mpdf= new mPDF('th',array(203,279),'0', 'thsaraban');
+		$stylesheet = file_get_contents('application/libraries/mpdf/css/styleStockout.css');
+
+		$query = $this->stock->getOneStockOUTprint($id);
+		if($query){
+			$data['stock_array'] =  $query;
+		}else{
+            $data['stock_array'] = array();
+        }
+        
+		//$html = "ทดสอบ<br>";
+		/*
+		$query = $this->bill->getOneQuotation($id);
+		if($query){
+			$data['bill_array'] =  $query;
+		}else{
+			$data['bill_array'] = array();
+		}
+		foreach($query as $loop) { 
+			$bid = $loop->bid;  
+		}
+		
+		$query = $this->bill->getOneQuotationProduct($bid);
+		if($query){
+			$data['billproduct_array'] =  $query;
+		}else{
+			$data['billproduct_array'] = array();
+		}
+		*/
+		//echo $html;
+        $mpdf->SetJS('this.print();');
+		$mpdf->WriteHTML($stylesheet,1);
+        $mpdf->WriteHTML($this->load->view("printStockOuthtml", $data, TRUE));
+        $mpdf->Output();
+
+    }
+    
+    function historyrepair()
+    {
+        $data['title'] = "Pradit and Friends -Repair History";
+		$this->load->view("repair_view", $data);
+    }
 }
