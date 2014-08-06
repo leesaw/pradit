@@ -115,7 +115,7 @@ class Managestock extends CI_Controller {
 	{
 		$this->load->helper(array('form'));
 		
-		$data['count'] = $this->stock->getTempCount();
+		$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
 		
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("addstockfrombarcode_view", $data);
@@ -125,7 +125,7 @@ class Managestock extends CI_Controller {
 	{
 		$this->load->helper(array('form'));
 		
-		$data['count'] = $this->stock->getTempCount();
+		$data['count'] = $this->stock->getTempCount(2,$this->session->userdata('sessid'));
 		
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("returnstockfrombarcode_view", $data);
@@ -135,7 +135,7 @@ class Managestock extends CI_Controller {
 	{
 		$this->load->helper(array('form'));
 		
-		$data['count'] = $this->stock->getTempCount();
+		$data['count'] = $this->stock->getTempCount(3,$this->session->userdata('sessid'));
 		
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("addstockfrombarcode_out_view", $data);
@@ -146,6 +146,8 @@ class Managestock extends CI_Controller {
 		$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_error_delimiters('<code>', '</code>');
+        
+        $userid = $this->session->userdata("sessid");
 		
 		if($this->form_validation->run() == TRUE) {
 			
@@ -163,7 +165,9 @@ class Managestock extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'in' => 1,
-					'amount' => 1
+					'amount' => 1,
+                    'userid' => $userid
+                    
 				);
 				$result2 = $this->stock->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -173,7 +177,7 @@ class Managestock extends CI_Controller {
 			}
 		}
 		
-		$data['count'] = $this->stock->getTempCount(1);
+		$data['count'] = $this->stock->getTempCount(1,$userid);
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("addstockfrombarcode_view", $data);
 	}
@@ -183,6 +187,8 @@ class Managestock extends CI_Controller {
 		$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_error_delimiters('<code>', '</code>');
+        
+        $userid = $this->session->userdata("sessid");
 		
 		if($this->form_validation->run() == TRUE) {
 			
@@ -200,7 +206,8 @@ class Managestock extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'in' => 2,
-					'amount' => 1
+					'amount' => 1,
+                    'userid' => $userid
 				);
 				$result2 = $this->stock->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -210,7 +217,7 @@ class Managestock extends CI_Controller {
 			}
 		}
 		
-		$data['count'] = $this->stock->getTempCount(1);
+		$data['count'] = $this->stock->getTempCount(1,$userid);
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("returnstockfrombarcode_view", $data);
 	}
@@ -220,6 +227,8 @@ class Managestock extends CI_Controller {
 		$this->form_validation->set_rules('barcode', 'barcode', 'trim|xss_clean|required');
 		$this->form_validation->set_message('required', 'กรุณาใส่ข้อมูล');
 		$this->form_validation->set_error_delimiters('<code>', '</code>');
+        
+        $userid = $this->session->userdata("sessid");
 		
 		if($this->form_validation->run() == TRUE) {
 			
@@ -237,7 +246,8 @@ class Managestock extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'in' => 0,
-					'amount' => 1
+					'amount' => 1,
+                    'userid' => $userid
 				);
 				$result2 = $this->stock->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -247,7 +257,7 @@ class Managestock extends CI_Controller {
 			}
 		}
 		
-		$data['count'] = $this->stock->getTempCount(0);
+		$data['count'] = $this->stock->getTempCount(0,$userid);
 		$data['title'] = "Pradit and Friends - Add Barcode";
 		$this->load->view("addstockfrombarcode_out_view", $data);
 	}
@@ -282,6 +292,7 @@ class Managestock extends CI_Controller {
 	function ajaxGetStockTemp()
 	{
 		$in = $this->uri->segment(3);
+        $userid = $this->session->userdata('sessid');
 		$this->load->library('Datatables');
 		$this->datatables
 		->select("stock_product_temp.barcode, product.barcode as pbarcode, product.name as pname, stock_product_temp.amount as samount, unit, stock_product_temp.tempid as tempid")
@@ -289,6 +300,7 @@ class Managestock extends CI_Controller {
 		->join('product', 'product.barcode = stock_product_temp.barcode','left')
 		->join('category', 'product.categoryID = category.id','left')
 		->where('in', $in)
+        ->where('stock_product_temp.userid', $userid)
 		->edit_column("tempid",
 		'<button class="btnAmount btn btn-success btn-xs" onclick="edit_amount($1)" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip" title="แก้ไขจำนวน"><span class="glyphicon glyphicon-plus"></span></button>
 		<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-remove"></span></button>
@@ -435,7 +447,8 @@ class Managestock extends CI_Controller {
 	function cleartemp()
 	{
 		$in = $this->uri->segment(3);
-		$result = $this->stock->delAllStockTemp($in);
+        $userid = $this->session->userdata('sessid');
+		$result = $this->stock->delAllStockTemp($in,$userid);
 		if ($in>0)	redirect('managestock/addstockfrombarcode', 'refresh');
 		else redirect('managestock/addstockfrombarcode_out', 'refresh');
 	}
@@ -455,14 +468,14 @@ class Managestock extends CI_Controller {
 			'detail' => $detail
 		);
 		
-		$query = $this->stock->getTemp(1);
+		$query = $this->stock->getTemp(1,$userid);
 		
 		foreach($query as $loop) {
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
 			
-			$query2 = $this->stock->getProductID($barcodeid);
+			$query2 = $this->stock->getProductIDfromBarcode($barcodeid);
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
@@ -476,7 +489,7 @@ class Managestock extends CI_Controller {
 			$this->stock->incrementStock($productid,$branchid,$amount);
 		}
 		
-		$this->stock->delAllStockTemp(1);
+		$this->stock->delAllStockTemp(1,$userid);
 		
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
@@ -498,14 +511,14 @@ class Managestock extends CI_Controller {
 			'detail' => $detail
 		);
 		
-		$query = $this->stock->getTemp(2);
+		$query = $this->stock->getTemp(2,$userid);
 		
 		foreach($query as $loop) {
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
 			
-			$query2 = $this->stock->getProductID($barcodeid);
+			$query2 = $this->stock->getProductIDfromBarcode($barcodeid);
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
@@ -520,7 +533,7 @@ class Managestock extends CI_Controller {
 			$this->stock->incrementStock($productid,$branchid,$amount);
 		}
 		
-		$this->stock->delAllStockTemp(2);
+		$this->stock->delAllStockTemp(2,$userid);
 		
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
@@ -545,17 +558,22 @@ class Managestock extends CI_Controller {
             'listid' => $listid
 		);
 		
-		$query = $this->stock->getTemp(0);
+		$query = $this->stock->getTemp(0,$userid);
 		
 		foreach($query as $loop) {
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
 			
-			$query2 = $this->stock->getProductID($barcodeid);
+			$query2 = $this->stock->getProductIDfromBarcode($barcodeid);
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
+                //$barcode['stock'] = $loop2->amount;
+			}
+            
+			$query2 = $this->stock->getProductID($barcodeid);
+            foreach($query2 as $loop2) {
                 $barcode['stock'] = $loop2->amount;
 			}
             
@@ -571,7 +589,7 @@ class Managestock extends CI_Controller {
 			$this->stock->decrementStock($productid,$branchid,$amount);
 		}
 		
-		$this->stock->delAllStockTemp(0);
+		$this->stock->delAllStockTemp(0,$userid);
 		
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
         
@@ -585,7 +603,7 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount();
+		$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -605,7 +623,7 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount();
+		$data['count'] = $this->stock->getTempCount(2,$this->session->userdata('sessid'));
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -625,7 +643,7 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount(0);
+		$data['count'] = $this->stock->getTempCount(0,$this->session->userdata('sessid'));
 		
 		$query = $this->branch->getBranch();
 		if($query){

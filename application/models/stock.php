@@ -10,11 +10,12 @@ Class Stock extends CI_Model
 	return $query->result();
  }
  
- function getTemp($in=NULL)
+ function getTemp($in=NULL,$userid=null)
  {
 	$this->db->select("barcode, sum(amount) as amount");
 	$this->db->from('stock_product_temp');	
 	$this->db->where('in', $in);
+    $this->db->where('userid',$userid);
     $this->db->group_by('barcode');
 	$query = $this->db->get();			
 	return $query->result();
@@ -30,12 +31,22 @@ Class Stock extends CI_Model
 	return $query->result();
 	
  }
+    
+ function getProductIDfromBarcode($barcode=null)
+ {
+    $this->db->select("product.id");
+	$this->db->from('product');	
+	$this->db->where('barcode', $barcode);
+	$query = $this->db->get();	
+	return $query->result();
+ }
  
- function getTempCount($in=NULL)
+ function getTempCount($in=NULL,$userid=null)
  {
 	$this->db->select("tempid");
 	$this->db->from('stock_product_temp');		
 	$this->db->where('in', $in);
+    $this->db->where('userid',$userid);
 	$query = $this->db->get();		
 	return $query->num_rows();
  }
@@ -213,9 +224,10 @@ Class Stock extends CI_Model
 	$this->db->delete('stock_product_temp'); 
  }
  
- function delAllStockTemp($in=NULL)
+ function delAllStockTemp($in=NULL,$userid=NULL)
  {
 	$this->db->where('in', $in);
+    $this->db->where('userid',$userid);
 	$this->db->delete('stock_product_temp'); 
  }
  
