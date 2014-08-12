@@ -15,7 +15,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">ใบเสนอราคา</h3>
+                <h3 class="page-header">ใบซื้อเงินสด</h3>
             </div>
         </div>
 		
@@ -31,10 +31,10 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <?php 
-									echo form_open('managebill/previewCashQuotation'); ?>
+									echo form_open('managepurchase/previewCashPurchase_cash'); ?>
                                     <div class="form-group">
-                                    	<label>สาขาที่ออก *</label>
-                                        <select class="form-control" name="branchid" id="branchid">
+                                    	<label>สาขาที่ออกใบซื้อเงินสด *</label>
+                                        <select class="form-control" name="branchid" id="branchid" onchange="autonumber(this);">
 										<?php 	if(is_array($branch_array)) {
 												foreach($branch_array as $loop){
 													echo "<option value='".$loop->id."'>".$loop->name."</option>";
@@ -43,20 +43,19 @@
                                     </div>
 
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-5">
                                     <div class="form-group">
-                                    	<label>เลขที่ใบเสนอราคา *</label>
-                                        <input type="text" class="form-control" name="cashid" id="cashid" value="<?php echo set_value('cashid'); ?>">
-										<p class="help-block"><?php echo form_error('cashid'); ?></p>
+                                    	<label>เลขที่ใบซื้อเงินสด *</label>
+                                        <input type="text" class="form-control" name="purchaseid" id="purchaseid" value="<?php echo set_value('purchaseid'); ?>">
+										<p class="help-block"><?php echo form_error('purchaseid'); ?></p>
                                     </div>
 
 							</div>
 						</div>
-						
 						<div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                     <div class="form-group">
-                                    	<label>ชื่อลูกค้า *</label>
+                                    	<label>ชื่อผู้จำหน่าย *</label>
 										<input type="hidden" name="cusid" id="cusid" value="<?php echo $cusid; ?>">
                                         <input type="text" class="form-control" name="cusname" id="cusname" value="<?php echo set_value('cusname'); ?>">
 										<p class="help-block"><?php echo form_error('cusname'); ?></p>
@@ -65,10 +64,10 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                     <div class="form-group">
-                                    	<label>ที่อยู่ลูกค้า *</label>
-										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="2"><?php echo set_value('cusaddress'); ?></textarea>
+                                    	<label>ที่อยู่ผู้จำหน่าย *</label>
+										<textarea class="form-control" name="cusaddress" id="cusaddress" rows="3"><?php echo set_value('cusaddress'); ?></textarea>
 										<p class="help-block"><?php echo form_error('cusaddress'); ?></p>
                                     </div>
 
@@ -93,16 +92,6 @@
 							</div>
 						</div>
 						<div class="row">
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                    	<label>ชื่อผู้ติดต่อ *</label>
-										<input type="text" class="form-control" name="cuscontact" id="cuscontact" value="<?php echo set_value('cuscontact'); ?>">
-										<p class="help-block"><?php echo form_error('cuscontact'); ?></p>
-                                    </div>
-
-							</div>
-						</div>
-						<div class="row">
 						<!--
                             <div class="col-md-3">
                                     <div class="form-group">
@@ -115,7 +104,7 @@
                                     </div>
 
 							</div>
-						-->
+						
 							<div class="col-md-3">
                                     <div class="form-group">
                                     	<label>เงื่อนไขการชำระเงิน *</label>
@@ -128,50 +117,48 @@
 									
 
 							</div>
+                            -->
 							<div class="col-md-3">
 									<div class="form-group">
-                                            <label>จำนวนวันเครดิต </label>
-                                            <input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo set_value('creditday'); ?>">
-											<p class="help-block"><?php echo form_error('creditday'); ?></p>
+                                            <label>ใบสั่งซื้อเลขที่ </label>
+                                            <input type="text" class="form-control" name="poid" id="poid" value="<?php echo set_value('poid'); ?>">
+											<p class="help-block"><?php echo form_error('poid'); ?></p>
                                     </div>
 							</div>
+                            
 							<div class="col-md-3">
 									<div class="form-group">
-										<label>ยื่นราคาถึงวันที่ </label>
-										<input type="text" class="form-control" id="receivedate" name="receivedate" />
+										<label>ลงวันที่ใบสั่งซื้อ </label>
+										<input type="text" class="form-control" id="podate" name="podate" />
 									</div>
 							</div>
-						</div>
-						<div class="row">
                             <div class="col-md-3">
-                                    <div class="form-group">
-                                    	<label>ราคาสินค้า *</label>
-                                            <select class="form-control" name="saleprice" id="saleprice" onchange="changePrice();">
-											<option value="0"></option>
-											<option value="1" <?php echo set_select('saleprice', '1'); ?>>ไม่มี VAT</option>
-											<option value="2" <?php echo set_select('saleprice', '2'); ?>>บวก VAT</option>
-                                        </select>
+									<div class="form-group">
+                                            <label>ขนส่งโดย </label>
+                                            <input type="text" class="form-control" name="transport" id="transport" value="<?php echo set_value('transport'); ?>">
+											<p class="help-block"><?php echo form_error('transport'); ?></p>
                                     </div>
-
 							</div>
-							<div class="col-md-3">
-                                    <div class="form-group">
-                                    	<label>ส่วนลด (บาท) *</label>
-                                        <input type="text" class="form-control" name="discount" id="discount" value="<?php echo set_value('discount'); ?>">
-										<p class="help-block"><?php echo form_error('discount'); ?></p>
-                                    </div>
-
-							</div>
-							<div class="col-md-3">
-                                    <div class="form-group">
-                                    	<label>ส่วนลด (%) *</label>
-                                        <input type="text" class="form-control" name="discount2" id="discount2" value="<?php echo set_value('discount2'); ?>">
-										<p class="help-block"><?php echo form_error('discount2'); ?></p>
-                                    </div>
-
-							</div>
+                            
 						</div>
+                        <div class="row">
+                            <div class="col-md-3">
+									<div class="form-group">
+                                            <label>เลขที่บิล</label>
+                                            <input type="text" class="form-control" name="billid" id="billid" value="<?php echo set_value('billid'); ?>">
+											<p class="help-block"><?php echo form_error('billid'); ?></p>
+                                    </div>
+							</div>
+                            
+							<div class="col-md-3">
+									<div class="form-group">
+										<label>ลงวันที่บิล </label>
+										<input type="text" class="form-control" id="billdate" name="billdate" />
+									</div>
+							</div>
+                        </div>
 						<div class="row">
+							
 							<div class="col-md-9">
 								<div class="form-group">
 								<label>ราคา *</label>
@@ -200,7 +187,8 @@
                                     </tr>
                                 </thead>
 								<tbody>
-								<?php $numIndex = 0; 
+								<?php 
+									$numIndex = 0;
 									if(isset($temp_array)) { foreach($temp_array as $loop) { 
 										$numIndex++;
 									?>
@@ -210,10 +198,8 @@
 									<td><?php echo $loop->sumamount." ".$loop->unit; ?></td>
 									<td>
 									<input type="hidden" name="barcode[]" value="<?php echo $loop->_barcode; ?>">
-									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $numIndex; ?>" value="<?php echo $loop->lowestPrice; ?>">
-									<input type="hidden" name="pricevat[]" id="pricevat<?php echo $numIndex; ?>" value="<?php echo $loop->priceVAT; ?>">
-									<input type="hidden" name="pricenovat[]" id="pricenovat<?php echo $numIndex; ?>" value="<?php echo $loop->priceNoVAT; ?>">
-									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $numIndex; ?>);" id="price<?php echo $numIndex; ?>" value="0.00"</td>
+									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $loop->tid; ?>" value="<?php echo $loop->lowestPrice; ?>">
+									<input type="text" class="form-control" name="price[]" id="price<?php echo $loop->tid; ?>" value="<?php echo $loop->costPrice; ?>"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -225,9 +211,9 @@
 		</div>
 		
 						<div class="row">
-							<div class="col-md-10">
-									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูลลูกค้า  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managebill/addquotationfrombarcode"); ?>'">  ยกเลิก  </button></a>
+							<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันข้อมูล  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode_cash"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								
@@ -241,9 +227,9 @@
 
 <br><br><br><br><br><br>
 <?php $this->load->view('js_footer'); ?>
-<script src="<?php echo base_url(); ?>/js/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="<?php echo base_url(); ?>/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script src="<?php echo base_url(); ?>/js/bootbox.min.js"></script>
+<script src="<?php echo base_url(); ?>js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="<?php echo base_url(); ?>js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="<?php echo base_url(); ?>js/bootbox.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery.fancybox.js"></script>
 <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.4.min.js"></script>
 <script src="<?php echo base_url(); ?>js/bootstrap-datepicker.js"></script>
@@ -253,13 +239,21 @@
     $(document).ready(function()
     {
 		$("#barcode").focus();
-	
 		// auto insert po id
 		var _lastid = <?php echo json_encode($lastid); ?>;
-		var mytextbox = document.getElementById('branchid').value  + "-QT" + zeroPad(++_lastid,7);;
-		$('#cashid').val(mytextbox);
+		var mytextbox = document.getElementById('branchid').value  + "-HS" + zeroPad(++_lastid,7);;
+		$('#purchaseid').val(mytextbox);
 		
-		get_datepicker("#receivedate");
+		get_datepicker("#podate");
+        get_datepicker("#billdate");
+		/*
+        $( "#receivedate").each(function() {
+             $(this).datepicker({
+				format: 'dd-mm-yyyy',
+                todayBtn: 'linked'
+			});
+		});
+		*/
 		
 		$('#fancyboxview').fancybox({ 
 		'width': '70%',
@@ -268,36 +262,35 @@
 		'transitionIn':'none', 
 		'transitionOut':'none', 
 		'type':'iframe'}); 
-		
     });
 </script>
 <script type="text/javascript">
 $(document).ready(function()
 {
+	
+
 	$(function(){
 		$('#cusname').autocomplete({
 			source: function(request, response){
 				 $.ajax({
-                    url: "<?php echo site_url('managebill/autocompleteResponse'); ?>",
+                    url: "<?php echo site_url('managepurchase/autocompleteResponse'); ?>",
                     dataType: "json",
                     data: {term: request.term},
                     success: function(data) {
-                                response($.map(data, function(customer) {
+                                response($.map(data, function(supplier) {
                                 return {
-									id: customer.cusid,
-                                    name: customer.cusname,
-									value: customer.cusname,
-									address: customer.address,
-									provinceid: customer.province_code,
-									provincename: customer.province_name,
-									zipcode: customer.zipcode,
-									saleprice: customer.saleprice,
-									discount: customer.discount,
-									contact: customer.contactName,
-									credit: customer.creditDay,
-									status: customer.status,
-									telephone: customer.telephone,
-									fax: customer.fax
+									id: supplier.supid,
+                                    name: supplier.supname,
+									value: supplier.supname,
+									address: supplier.address,
+									provinceid: supplier.province_code,
+									provincename: supplier.province_name,
+									zipcode: supplier.zipcode,
+									contact: supplier.contactName,
+									credit: supplier.creditDay,
+									status: supplier.supstatus,
+									telephone: supplier.telephone,
+									fax: supplier.fax
                                     };
                             }));
                         }
@@ -313,14 +306,12 @@ $(document).ready(function()
 			if (ui.item.provinceid == 10) $("#cusaddress").val(ui.item.address+" "+ui.item.provincename+" "+ui.item.zipcode);
 			else $("#cusaddress").val(ui.item.address+" จ."+ui.item.provincename+" "+ui.item.zipcode);
 			$("#cusid").val(ui.item.id);
-			$("#saleprice").val(ui.item.saleprice);
-			$("#discount2").val(ui.item.discount);
-			$("#cuscontact").val(ui.item.contact);
-			$("#creditday").val(ui.item.credit);
-			$("#condition").val(ui.item.status);
+			//$("#cuscontact").val(ui.item.contact);
 			$("#custelephone").val(ui.item.telephone);
 			$("#cusfax").val(ui.item.fax);
-			changePrice();
+			$("#creditday").val(ui.item.credit);
+			$("#condition").val(ui.item.status);
+			
         }
 		});
 
@@ -334,7 +325,7 @@ $(document).ready(function()
 
 function autonumber(obj,id) {
 	var _lastid = <?php echo json_encode($lastid); ?>;
-	var po=$(obj).val() + "-PO" + zeroPad(++_lastid,7);
+	var po=$(obj).val() + "-HS" + zeroPad(++_lastid,7);
 	$('#purchaseid').val(po);
 }
 
@@ -353,34 +344,13 @@ function get_datepicker(id)
 
 function checklowest(id)
 {
-	var _lowestprice = parseFloat(document.getElementById('lowestprice'+id).value);
-	var _price = parseFloat(document.getElementById('price'+id).value);
+	var _lowestprice = (document.getElementById('lowestprice'+id).value);
+	var _price = (document.getElementById('price'+id).value);
 
 	if (_price < _lowestprice) {
 		alert("ราคาที่กำหนด ต่ำกว่าราคาต่ำสุด");
-		/*window.setTimeout(function () { 
-			document.getElementById('price'+id).focus(); 
-		}, 0); */
+		$("input[name='price']").focus();
 	}
-}
-
-function changePrice()
-{
-	var _pricestatus = document.getElementById('saleprice').value;
-	var num = <?php echo json_encode($numIndex); ?>;
-	var price;
-	if (_pricestatus == 1 ) {
-		for (var i=1; i<=num; i++) {
-			price = (document.getElementById('pricenovat'+i).value);
-			$('#price'+i).val(price);
-		}
-	}else{
-		for (var i=1; i<=num; i++) {
-			price = (document.getElementById('pricevat'+i).value);
-			$('#price'+i).val(price);
-		}
-	}
-	
 }
 </script>
 </body>

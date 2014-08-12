@@ -34,8 +34,8 @@ $signature = $loop->fname." ".$loop->lname;
 บริษัทฯ มีความยินดีที่จะเสนอราคาสินค้า ดังต่อไปนี้ : 
 <table style="border:1px solid black; border-spacing:0px 0px;">
 <thead>
-	<tr bgcolor="#DCDCDC">
-		<th width="50">No.</th><th width="300" style="border-left:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;">จำนวนเงิน</th>
+	<tr>
+		<th width="50" style="border-bottom:1px solid black;">No.</th><th width="300" style="border-left:1px solid black;border-bottom:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;border-bottom:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวนเงิน</th>
 	</tr>
 </thead>
 <tbody>
@@ -48,7 +48,7 @@ $signature = $loop->fname." ".$loop->lname;
 </tr>
 <?php $no++; $discount=$loop->discount; $discount2=$loop->discountPercent; $tax=$loop->tax; } }
 
-if ($no<=15) { for($i=15-$no; $i>0; $i--) {?> 
+if ($no<=20) { for($i=20-$no; $i>0; $i--) {?> 
 <tr><td>&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td></tr>
 <?php } } ?>
 

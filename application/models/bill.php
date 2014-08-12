@@ -2,11 +2,12 @@
 Class Bill extends CI_Model
 {
 
- function getTempCount($status=NULL)
+ function getTempCount($status=NULL,$userid=null)
  {
 	$this->db->select("tempid");
 	$this->db->from('bill_product_temp');		
 	$this->db->where('status', $status);
+    $this->db->where('userid',$userid);
 	$query = $this->db->get();		
 	return $query->num_rows();
  }
@@ -27,7 +28,7 @@ Class Bill extends CI_Model
 	return $result;
  }
  
- function getBillTemp()
+ function getBillTemp($userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, unit, category.name as cname, bill_product_temp.tempid as tid, stock.amount as sum, bill_product_temp.amount as _amount");
@@ -36,35 +37,38 @@ Class Bill extends CI_Model
 	$this->db->join('stock', 'stock.productID = product.id', 'left');
 	$this->db->join('category', 'product.categoryID = category.id', 'left');
 	$this->db->where('status', 1);
+    $this->db->where('userid',$userid);
 	$query = $this->db->get();		
 	return $query->result();
  }
  
- function getBillTemp2()
+ function getBillTemp2($userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceNoVAT, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode');
 	$this->db->where('status', 1);
+    $this->db->where('userid',$userid);
 	$this->db->group_by('bill_product_temp.barcode');
 	$query = $this->db->get();		
 	return $query->result();
  }
  
- function getBillTemp3($column=NULL)
+ function getBillTemp3($column=NULL,$userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit,".$column.", bill_product_temp.tempid as tid, product.id as pid, price");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode');
 	$this->db->where('status', 1);
+    $this->db->where('userid',$userid);
 	$this->db->group_by('bill_product_temp.barcode');
 	$query = $this->db->get();		
 	return $query->result();
  }
  
- function getQuotationTemp()
+ function getQuotationTemp($userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, unit, category.name as cname, bill_product_temp.tempid as tid, amount");
@@ -72,29 +76,32 @@ Class Bill extends CI_Model
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode');
 	$this->db->join('category', 'product.categoryID = category.id');
 	$this->db->where('status', 2);
+    $this->db->where('userid',$userid);
 	$query = $this->db->get();		
 	return $query->result();
  }
  
- function getQuotationTemp2()
+ function getQuotationTemp2($userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit, bill_product_temp.tempid as tid, priceNoVAT, priceVAT, bill_product_temp.barcode as _barcode, product.id as _productid, lowestPrice");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode','left');
 	$this->db->where('status', 2);
+    $this->db->where('userid',$userid);
 	$this->db->group_by('bill_product_temp.barcode');
 	$query = $this->db->get();		
 	return $query->result();
  }
  
- function getQuotationTemp3($column=NULL)
+ function getQuotationTemp3($column=NULL,$userid=null)
  {
 	$this->db->_protect_identifiers=false;
 	$this->db->select("CONCAT(product.standardID,' ', product.name) as productname, sum(amount) as sumamount,unit,".$column.", bill_product_temp.tempid as tid, product.id as pid, price");
 	$this->db->from('bill_product_temp');
 	$this->db->join('product', 'product.barcode = bill_product_temp.barcode', 'left');
 	$this->db->where('status', 2);
+    $this->db->where('userid',$userid);
 	$this->db->group_by('bill_product_temp.barcode');
 	$query = $this->db->get();		
 	return $query->result();
@@ -204,9 +211,10 @@ Class Bill extends CI_Model
 	return $this->db->insert_id();
  }
 
- function delAllBillTemp($status=NULL)
+ function delAllBillTemp($status=NULL,$userid=null)
  {
 	$this->db->where('status', $status);
+    $this->db->where('userid',$userid);
 	$this->db->delete('bill_product_temp'); 
  }
  
@@ -224,9 +232,11 @@ Class Bill extends CI_Model
 	return $query;
  }
  
- function editPriceTemp($temp=NULL)
+ function editPriceTemp($temp=NULL,$userid=null,$status=null)
  {
 	$this->db->where('barcode', $temp['barcode']);
+    $this->db->where('userid',$userid);
+    $this->db->where('status',$status);
 	unset($temp['barcode']);
 	$query = $this->db->update('bill_product_temp', $temp); 	
 	return $query;

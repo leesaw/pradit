@@ -52,6 +52,9 @@
 								<li>
                                     <a href="<?php echo site_url("managepurchase/addpurchase"); ?>"> ออกใบสั่งซื้อ</a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo site_url("managepurchase/addpurchase_cash"); ?>"> ออกใบซื้อเงินสด</a>
+                                </li>
 								<li>
                                     <a href="<?php echo site_url("managebill/historybill"); ?>"> ประวัติใบส่งของชั่วคราว</a>
                                 </li>
@@ -60,6 +63,9 @@
                                 </li>
 								<li>
                                     <a href="<?php echo site_url("managepurchase/historypurchase"); ?>">ประวัติใบสั่งซื้อ</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url("managepurchase/historypurchase_cash"); ?>">ประวัติใบซื้อเงินสด</a>
                                 </li>
                             </ul>
 

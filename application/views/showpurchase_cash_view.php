@@ -13,7 +13,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">ออกใบสั่งซื้อ</h3>
+                <h3 class="page-header">ออกใบซื้อเงินสด</h3>
             </div>
         </div>
 		
@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                     <div class="form-group">
-                                    	<a href="<?php echo site_url("managepurchase/printCashPurchase/".$purchaseid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบสั่งซื้อ</a>
+                                    	<a href="<?php echo site_url("managepurchase/printCashPurchase_cash/".$purchaseid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบซื้อเงินสด</a>
                                     </div>
 							</div>
 						</div>

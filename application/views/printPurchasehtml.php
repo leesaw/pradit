@@ -37,8 +37,8 @@ $signature = $loop->fname." ".$loop->lname;
 <br>
 <table style="border:1px solid black; border-spacing:0px 0px;">
 <thead>
-	<tr bgcolor="#DCDCDC">
-		<th width="50">No.</th><th width="300" style="border-left:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;">จำนวนเงิน</th>
+	<tr>
+		<th width="50" style="border-bottom:1px solid black;">No.</th><th width="300" style="border-left:1px solid black;border-bottom:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;border-bottom:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวนเงิน</th>
 	</tr>
 </thead>
 <tbody>

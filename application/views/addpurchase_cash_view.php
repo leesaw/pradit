@@ -13,23 +13,18 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">ออกใบสั่งซื้อ</h3>
+                <h3 class="page-header">ออกใบซื้อเงินสด</h3>
             </div>
         </div>
 		
 		<div class="row">
             <div class="col-lg-8">
                 <div class="panel panel-default">
-				<?php if ($showresult == 'success') {
-						echo '<div class="panel-heading"><div class="alert alert-success"> ระบบทำรายการเรียบร้อยแล้ว</div>'; 
-						
-					  } 
-				?>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
                                     <div class="form-group">
-                                    	<a href="<?php echo site_url("managepurchase/printCashPurchase/".$purchaseid); ?>" class="btn btn-success btn-lg btn-block" target="_blank">พิมพ์ใบสั่งซื้อ</a>
+                                    	<a href="<?php echo site_url("managepurchase/addpurchasefrombarcode_cash"); ?>" class="btn btn-success btn-lg btn-block">เริ่มสแกน Barcode สินค้า</a>
                                     </div>
 							</div>
 						</div>

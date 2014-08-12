@@ -283,7 +283,7 @@ $(document).ready(function()
             event.preventDefault();
 			$("#cusname").val(ui.item.name);
 			if (ui.item.provinceid == 10) $("#cusaddress").val(ui.item.address+" "+ui.item.provincename+" "+ui.item.zipcode);
-			else $("#cusaddress").val(ui.item.address+" จ. "+ui.item.provincename+" "+ui.item.zipcode);
+			else $("#cusaddress").val(ui.item.address+" จ."+ui.item.provincename+" "+ui.item.zipcode);
 			$("#cusid").val(ui.item.id);
 			//$("#cuscontact").val(ui.item.contact);
 			$("#custelephone").val(ui.item.telephone);

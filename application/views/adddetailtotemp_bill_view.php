@@ -152,7 +152,7 @@
 									<input type="hidden" name="lowestprice[]" id="lowestprice<?php echo $numIndex; ?>" value="<?php echo $loop->lowestPrice; ?>">
 									<input type="hidden" name="pricevat[]" id="pricevat<?php echo $numIndex; ?>" value="<?php echo $loop->priceVAT; ?>">
 									<input type="hidden" name="pricenovat[]" id="pricenovat<?php echo $numIndex; ?>" value="<?php echo $loop->priceNoVAT; ?>">
-									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $loop->tid; ?>);" id="price<?php echo $numIndex; ?>" value="0.00"</td>
+									<input type="text" class="form-control" name="price[]" onchange="checklowest(<?php echo $numIndex; ?>);" id="price<?php echo $numIndex; ?>" value="0.00"</td>
 									</tr>
 								<?php } }?>
 								</tbody>
@@ -240,7 +240,7 @@ $(document).ready(function()
             event.preventDefault();
 			$("#cusname").val(ui.item.name);
 			if (ui.item.provinceid == 10) $("#cusaddress").val(ui.item.address+" "+ui.item.provincename+" "+ui.item.zipcode);
-			else $("#cusaddress").val(ui.item.address+" จ. "+ui.item.provincename+" "+ui.item.zipcode);
+			else $("#cusaddress").val(ui.item.address+" จ."+ui.item.provincename+" "+ui.item.zipcode);
 			$("#cusid").val(ui.item.id);
 			$("#saleprice").val(ui.item.saleprice);
 			$("#discount2").val(ui.item.discount);
@@ -278,9 +278,9 @@ function get_datepicker(id)
 
 function checklowest(id)
 {
-	var _lowestprice = (document.getElementById('lowestprice'+id).value);
-	var _price = (document.getElementById('price'+id).value);
-
+	var _lowestprice = parseFloat(document.getElementById('lowestprice'+id).value);
+	var _price = parseFloat(document.getElementById('price'+id).value);
+    //alert(_lowestprice+"/"+_price);
 	if (_price < _lowestprice) {
 		alert("ราคาที่กำหนด ต่ำกว่าราคาต่ำสุด");
 		/*window.setTimeout(function () { 

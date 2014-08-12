@@ -14,7 +14,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">ใบสั่งซื้อ</h3>
+                <h3 class="page-header">ใบซื้อเงินสด</h3>
             </div>
         </div>
 		
@@ -27,12 +27,12 @@
 					
 					?>
                     <div class="panel-body">
-					<?php echo form_open('managepurchase/saveCashPurchase'); ?>
+					<?php echo form_open('managepurchase/saveCashPurchase_cash'); ?>
 						<div class="row">
                             <div class="col-md-3">
                                     <div class="form-group">
                                         <div class="form-group has-success">
-                                        <label class="control-label" for="inputSuccess">เลขที่ใบสั่งซื้อ</label>
+                                        <label class="control-label" for="inputSuccess">เลขที่ใบซื้อเงินสด</label>
 										
                                         <input type="text" class="form-control" name="purchaseid" id="purchaseid" value="<?php echo $purchaseid; ?>" readonly>
 
@@ -152,58 +152,26 @@
 							</div>
 						</div>
 						<div class="row">
-						<!--
+                            
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ใบสั่งซื้อเลขที่</label>
+										<input type="text" class="form-control" name="poid" id="poid" value="<?php echo $poid; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ลงวันที่ใบสั่งซื้อ</label>
+										<input type="text" class="form-control" name="podate" id="podate" value="<?php echo $podate; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
                             <div class="col-md-3">
-                                    <div class="form-group">
-                                        <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">ราคาขาย</label>
-										<?php /*echo form_hidden('saleprice', $saleprice); ?>
-										<input type="text" class="form-control" name="saleshow" id="saleshow" value="<?php 
-										if ($saleprice==1) echo "ไม่มี VAT";
-										elseif ($saleprice==2) echo "บวก VAT";
-										elseif ($saleprice==3) echo "ลดราคา";  */
-										?>" readonly>
-										</div>
-                                    </div>
-
-							</div>
-						-->
-							<div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">เงื่อนไขการชำระเงิน</label>
-										<?php echo form_hidden('condition', $condition); ?>
-										<input type="text" class="form-control" name="condition1" id="condition1" value="<?php 
-										if ($condition==0) echo "-";
-										elseif ($condition==1) echo "สด";
-										elseif ($condition==2) echo "เชื่อ";  
-										?>" readonly>
-										</div>
-                                    </div>
-
-							</div>
-							<div class="col-md-3">
-									<div class="form-group">
-                                        <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">จำนวนวันเครดิต</label>
-										<input type="text" class="form-control" name="creditday" id="creditday" value="<?php echo $creditday; ?>" readonly>
-										</div>
-                                    </div>
-
-							</div>
-							<div class="col-md-3">
-									<div class="form-group">
-                                        <div class="form-group has-success">
-                                    	<label class="control-label" for="inputSuccess">วันที่รับของ</label>
-										<input type="text" class="form-control" name="receivedate" id="receivedate" value="<?php if ($receivedate == "") echo date('d')."/".date('m')."/".(date('Y')+543); else echo $receivedate; ?>" readonly>
-										</div>
-                                    </div>
-
-							</div>
-						</div>
-						
-						<div class="row">
-							<div class="col-md-3">
 									<div class="form-group">
                                         <div class="form-group has-success">
                                     	<label class="control-label" for="inputSuccess">ขนส่งโดย</label>
@@ -212,6 +180,30 @@
                                     </div>
 
 							</div>
+						</div>
+						<div class="row">
+                            
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">เลขที่บิล</label>
+										<input type="text" class="form-control" name="billid" id="billid" value="<?php echo $billid; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
+							<div class="col-md-3">
+									<div class="form-group">
+                                        <div class="form-group has-success">
+                                    	<label class="control-label" for="inputSuccess">ลงวันที่บิล</label>
+										<input type="text" class="form-control" name="billdate" id="billdate" value="<?php echo $billdate; ?>" readonly>
+										</div>
+                                    </div>
+
+							</div>
+						</div>
+						<div class="row">
+							
 							<div class="col-md-3">
 								<div class="form-group">
 								<label class="control-label" for="inputSuccess">ราคา</label>
@@ -388,7 +380,7 @@
 						<div class="row">
 							<div class="col-md-6">
 									<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-thumbs-up"></span>  ยืนยันใบสั่งซื้อ  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode"); ?>'">  ยกเลิก  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-md" onClick="window.location.href='<?php echo site_url("managepurchase/addpurchasefrombarcode_cash"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								

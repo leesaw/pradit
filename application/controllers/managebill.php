@@ -97,9 +97,9 @@ class Managebill extends CI_Controller {
 	{
 		$this->load->helper(array('form'));
 		
-		$data['count'] = $this->bill->getTempCount(1);
+		$data['count'] = $this->bill->getTempCount(1,$this->session->userdata('sessid'));
 		
-		$query = $this->bill->getBillTemp();
+		$query = $this->bill->getBillTemp($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -115,9 +115,9 @@ class Managebill extends CI_Controller {
 	{
 		$this->load->helper(array('form'));
 		
-		$data['count'] = $this->bill->getTempCount(2);
+		$data['count'] = $this->bill->getTempCount(2,$this->session->userdata('sessid'));
 		
-		$query = $this->bill->getQuotationTemp();
+		$query = $this->bill->getQuotationTemp($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -151,7 +151,8 @@ class Managebill extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'status' => 1,  // 1 = cash bill
-					'amount' => 1
+					'amount' => 1,
+                    'userid' => $this->session->userdata('sessid')
 				);
 				$result2 = $this->bill->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -161,8 +162,8 @@ class Managebill extends CI_Controller {
 			}
 		}
 		
-		$data['count'] = $this->bill->getTempCount(1);
-		$query = $this->bill->getBillTemp();
+		$data['count'] = $this->bill->getTempCount(1,$this->session->userdata('sessid'));
+		$query = $this->bill->getBillTemp($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -194,7 +195,8 @@ class Managebill extends CI_Controller {
 					'barcode' => $barcodeid,
 					'tempid' => $tempid,
 					'status' => 2,  // 2 = quotation
-					'amount' => 1
+					'amount' => 1,
+                    'userid' => $this->session->userdata('sessid')
 				);
 				$result2 = $this->bill->addBarcodeTemp($barcode);
 				redirect(current_url());
@@ -204,8 +206,8 @@ class Managebill extends CI_Controller {
 			}
 		}
 		
-		$data['count'] = $this->bill->getTempCount(2);
-		$query = $this->bill->getQuotationTemp();
+		$data['count'] = $this->bill->getTempCount(2,$this->session->userdata('sessid'));
+		$query = $this->bill->getQuotationTemp($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -218,6 +220,7 @@ class Managebill extends CI_Controller {
 	function ajaxGetBillTemp()
 	{
 		$status = $this->uri->segment(3);
+        $userid = $this->session->userdata('sessid');
 		$this->load->library('Datatables');
 		$this->datatables
 		->select("CONCAT(product.standardID,' ', product.name) as pname, unit, category.name as cname, bill_product_temp.tempid as tempid")
@@ -225,6 +228,7 @@ class Managebill extends CI_Controller {
 		->join('product', 'product.barcode = bill_product_temp.barcode')
 		->join('category', 'product.categoryID = category.id')
 		->where('status', $status)
+        ->where('userid',$userid)
 		->edit_column("tempid",
 		'<button class="btnDelete btn btn-danger btn-xs" onclick="del_confirm($1)" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip" title="ลบข้อมูล"><span class="glyphicon glyphicon-remove"></span></button>
 		',"tempid");
@@ -265,7 +269,7 @@ class Managebill extends CI_Controller {
 	function cleartemp()
 	{
 		$status = $this->uri->segment(3);
-		$result = $this->bill->delAllBillTemp($status);
+		$result = $this->bill->delAllBillTemp($status,$this->session->userdata('sessid'));
 		if ($status==1)	redirect('managebill/addbillfrombarcode', 'refresh');
 		if ($status==2)	redirect('managebill/addquotationfrombarcode', 'refresh');
 
@@ -291,7 +295,7 @@ class Managebill extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->bill->getTempCount(1);
+		$data['count'] = $this->bill->getTempCount(1,$this->session->userdata('sessid'));
 		foreach($this->bill->getLastIDbill() as $loop) {
 			$data['lastid']=$loop->lastid;
 		}
@@ -304,7 +308,7 @@ class Managebill extends CI_Controller {
 			$data['branch_array'] = array();
 		}
 		
-		$query = $this->bill->getBillTemp2();
+		$query = $this->bill->getBillTemp2($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -322,7 +326,7 @@ class Managebill extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->bill->getTempCount(2);
+		$data['count'] = $this->bill->getTempCount(2,$this->session->userdata('sessid'));
 		foreach($this->bill->getLastIDquotation() as $loop) {
 			$data['lastid']=$loop->lastid;
 		}
@@ -335,7 +339,7 @@ class Managebill extends CI_Controller {
 			$data['branch_array'] = array();
 		}
 		
-		$query = $this->bill->getQuotationTemp2();
+		$query = $this->bill->getQuotationTemp2($this->session->userdata('sessid'));
 		if($query){
 			$data['temp_array'] =  $query;
 		}else{
@@ -421,7 +425,7 @@ class Managebill extends CI_Controller {
 			$price = ($this->input->post('price'));
 			for ($i=0; $i<count($barcode); $i++) {
 				$temp = array('barcode' =>$barcode[$i], 'price' => $price[$i] );
-				$this->bill->editPriceTemp($temp);
+				$this->bill->editPriceTemp($temp,$this->session->userdata('sessid'),1);
 			}
 			
 			$sale = $this->input->post('saleprice');
@@ -430,7 +434,7 @@ class Managebill extends CI_Controller {
 			elseif ($sale==3) $column = "priceDiscount";
 			else $column="";
 			
-			$query = $this->bill->getBillTemp3($column);
+			$query = $this->bill->getBillTemp3($column,$this->session->userdata('sessid'));
 			if($query){
 				$data['temp_array'] =  $query;
 			}else{
@@ -449,7 +453,7 @@ class Managebill extends CI_Controller {
 				$data['branch_array'] = array();
 			}
 			
-			$query = $this->bill->getBillTemp2();
+			$query = $this->bill->getBillTemp2($this->session->userdata('sessid'));
 			if($query){
 				$data['temp_array'] =  $query;
 			}else{
@@ -510,7 +514,7 @@ class Managebill extends CI_Controller {
 			$price = ($this->input->post('price'));
 			for ($i=0; $i<count($barcode); $i++) {
 				$temp = array('barcode' =>$barcode[$i], 'price' => $price[$i] );
-				$this->bill->editPriceTemp($temp);
+				$this->bill->editPriceTemp($temp,$this->session->userdata('sessid'),2);
 			}
 			
 			$sale = $this->input->post('saleprice');
@@ -519,7 +523,7 @@ class Managebill extends CI_Controller {
 			elseif ($sale==3) $column = "priceDiscount";
 			else $column="";
 			
-			$query = $this->bill->getQuotationTemp3($column);
+			$query = $this->bill->getQuotationTemp3($column,$this->session->userdata('sessid'));
 			if($query){
 				$data['temp_array'] =  $query;
 			}else{
@@ -538,7 +542,7 @@ class Managebill extends CI_Controller {
 				$data['branch_array'] = array();
 			}
 			
-			$query = $this->bill->getQuotationTemp2();
+			$query = $this->bill->getQuotationTemp2($this->session->userdata('sessid'));
 			if($query){
 				$data['temp_array'] =  $query;
 			}else{
@@ -609,7 +613,7 @@ class Managebill extends CI_Controller {
 			
 			$resultBillProduct = $this->bill->addCashBillProduct($billproduct);
 		}
-		$this->bill->delAllBillTemp(1);
+		$this->bill->delAllBillTemp(1,$this->session->userdata('sessid'));
 		
 		$data['showresult'] = 'success';
 		$data['billid'] = $resultBill;
@@ -689,7 +693,7 @@ class Managebill extends CI_Controller {
 			
 			$resultBillProduct = $this->bill->addCashQuotationProduct($billproduct);
 		}
-		$this->bill->delAllBillTemp(2);
+		$this->bill->delAllBillTemp(2,$this->session->userdata('sessid'));
 		
 		$data['showresult'] = 'success';
 		$data['billid'] = $resultBill;

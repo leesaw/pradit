@@ -10,8 +10,8 @@
 <?php if(isset($purchase_array)) { foreach($purchase_array as $loop) { 
 $signature = $loop->fname." ".$loop->lname;
 ?>
-<tr><td width="400">ผู้จำหน่าย &nbsp;&nbsp;<?php echo $loop->_supplierid; ?></td><td width="10"> </td><td width="100">เลขที่ใบซื้อสด</td><td width="120"><?php echo $buycashid; ?></td></tr>
-<tr><td width="400"><?php echo $loop->title." ".$loop->supplierName; ?></td><td width="10"> </td><td width="100">วันที่</td><td width="120">
+<tr><td width="350">ผู้จำหน่าย &nbsp;&nbsp;<?php echo $loop->_supplierid; ?></td><td width="10"> </td><td width="100">เลขที่ใบซื้อสด</td><td width="120"><?php echo $buycashid; ?></td></tr>
+<tr><td width="350"><?php echo $loop->title." ".$loop->supplierName; ?></td><td width="10"> </td><td width="100">วันที่</td><td width="120">
 <?php  
  $GGyear=substr($loop->date,0,4); 
  $GGmonth=substr($loop->date,5,2); 
@@ -19,20 +19,36 @@ $signature = $loop->fname." ".$loop->lname;
  echo $GGdate."/".$GGmonth."/".$GGyear; ?>
  </td></tr>
  
- <tr><td width="400"><?php echo $loop->supplierAddress; ?></td><td width="10"> </td><td width="100">ใบซื้อเงินสดเลขที่</td><td width="120"><?php echo $loop->purchaseID; ?>
- </td></tr>
+ <tr><td width="350"><?php echo $loop->supplierAddress; ?></td><td width="10"> </td><td width="100">ใบซื้อเงินสดเลขที่</td><td width="180"><?php if($loop->poid!="") echo $loop->poid; else echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";?> วันที่
+<?php  
+ if ($loop->podate !='0000-00-00') {
+ $GGyear=substr($loop->podate,0,4); 
+ $GGmonth=substr($loop->podate,5,2); 
+ $GGdate=substr($loop->podate,8,2); 
+ echo $GGdate."/".$GGmonth."/".$GGyear; } else echo "&nbsp;&nbsp;";?>
+ </td>
+    </tr>
  
- <tr><td width="400"><?php echo "โทร. ".$loop->supplierTel." FAX. ".$loop->supplierFax; ?></td><td width="10"> </td><td width="100"></td><td width="120"></td></tr>
+ <tr><td width="350"><?php echo "เลขที่บิล. &nbsp;&nbsp;&nbsp;";
+if ($loop->billid!="") echo $loop->billid."&nbsp;&nbsp;&nbsp;&nbsp; ลงวันที่ "; 
+else echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ลงวันที่ "; 
+if ($loop->billdate !='0000-00-00') {
+ $GGyear=substr($loop->billdate,0,4); 
+ $GGmonth=substr($loop->billdate,5,2); 
+ $GGdate=substr($loop->billdate,8,2); 
+ echo $GGdate."/".$GGmonth."/".$GGyear; } else echo "&nbsp;&nbsp;";
+     
+?></td><td width="10"> </td><td width="100"></td><td width="120"></td></tr>
  
- <tr><td width="400">หมายเหตุ &nbsp;&nbsp;<?php if ($loop->purstatus==1) { echo "ซื้อสินค้าเป็นเงินสด"; } ?></td><td width="10"> </td><td width="100">ขนส่งโดย</td><td width="120"><?php echo $loop->transport; ?></td></tr>
+ <tr><td width="350">หมายเหตุ &nbsp;&nbsp;ซื้อสินค้าเป็นเงินสด</td><td width="10"> </td><td width="100">ขนส่งโดย</td><td width="120"><?php echo $loop->transport; ?></td></tr>
  <?php $vat = $loop->vat; } }?>
 </tbody>
 </table>
 <br>
 <table style="border:1px solid black; border-spacing:0px 0px;">
 <thead>
-	<tr bgcolor="#DCDCDC">
-		<th width="50">No.</th><th width="300" style="border-left:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;">จำนวนเงิน</th>
+	<tr>
+		<th width="50" style="border-bottom:1px solid black;">No.</th><th width="300" style="border-left:1px solid black;border-bottom:1px solid black;">รหัสสินค้า/รายละเอียดสินค้า</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวน</th><th width="100" style="border-left:1px solid black;border-bottom:1px solid black;">หน่วยละ</th><th width="120" style="border-left:1px solid black;border-bottom:1px solid black;">จำนวนเงิน</th>
 	</tr>
 </thead>
 <tbody>
@@ -45,7 +61,7 @@ $signature = $loop->fname." ".$loop->lname;
 </tr>
 <?php $no++; $discount=$loop->discount; $tax=$loop->tax; } }
 
-if ($no<=10) { for($i=10-$no; $i>0; $i--) {?> 
+if ($no<=20) { for($i=20-$no; $i>0; $i--) {?> 
 <tr><td>&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td><td style="border-left:1px solid black;">&nbsp;</td></tr>
 <?php   } } ?>
 
@@ -64,7 +80,7 @@ if ($no<=10) { for($i=10-$no; $i>0; $i--) {?>
 <td align="right" colspan=4 scope="row">จำนวนภาษีมูลค่าเพิ่ม&nbsp;&nbsp;7.00 %&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black;"><?php if ($vat >0) echo number_format(($sum-$discount)*0.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format(0, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="left" colspan=2 scope="row" style="border-top:1px solid black;">( <?php echo num2thai($sum); ?> )</td>
+<td align="left" colspan=2 scope="row" style="border-top:1px solid black;">( <?php if ($vat >0) echo num2thai(($sum-$discount)*1.07); else echo num2thai($sum-$discount); ?> )</td>
 <td align="right" colspan=2 scope="row" style="border-top:1px solid black;">จำนวนเงินรวมทั้งสิ้น&nbsp;&nbsp;</td><td align="right" style="border-left:1px solid black; border-top:1px solid black;"><?php if ($vat >0) echo number_format(($sum-$discount)*1.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 </tbody>
@@ -159,21 +175,21 @@ return $rstring;
 <table style="border-bottom:1px solid black; border-left:1px solid black; border-right:1px solid black; border-spacing:0px 0px;">
 <tbody>
 <tr>
-<td align="center" width="116">เงินสด<br/><?php echo number_format($sum-$discount+$tax, 2, '.', ','); ?></td>
+<td align="center" width="116">เงินสด<br/><?php if ($vat >0) echo number_format(($sum-$discount)*1.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 <td align="center" width="116" style="border-left:1px solid black;">ชำระโดยอื่น ๆ<br/>0.00</td>
 <td align="center" width="116" style="border-left:1px solid black;">ภาษี ณ ที่จ่าย<br/>0.00</td>
 <td align="center" width="220" style="border-left:1px solid black;"> </td>
-<td align="center" width="120" style="border-left:1px solid black;">ยอดจ่ายสุทธิ<br/><?php echo number_format($sum-$discount+$tax, 2, '.', ','); ?></td>
+<td align="center" width="120" style="border-left:1px solid black;">ยอดจ่ายสุทธิ<br/><?php if ($vat >0) echo number_format(($sum-$discount)*1.07, 2, '.', ',')."&nbsp;&nbsp;"; else echo number_format($sum-$discount, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 </tbody>
 </table>
 <table style="border-bottom:1px solid black; border-left:1px solid black; border-right:1px solid black; border-spacing:0px 0px;">
 <tbody>
 <tr><td> &nbsp;</td><td> &nbsp;</td></tr>
-<tr><td width="350" align="left">&nbsp;&nbsp;ชื่อผู้รับสินค้า ..........................................................</td><td width="350" align="left">ชื่อผู้ตรวจสอบ ..........................................................</td>
+<tr><td width="400" align="left">&nbsp;&nbsp;ชื่อผู้รับสินค้า ..........................................................</td><td width="300" align="left">ชื่อผู้ตรวจสอบ ..........................................................</td>
 </tr>
-<tr><td width="350" align="left">&nbsp;&nbsp;วันที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...... / ...... / ......</td>
-<td width="350" align="left">วันที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...... / ...... / ......</td></tr>
+<tr><td width="400" align="left">&nbsp;&nbsp;วันที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...... / ...... / ......</td>
+<td width="300" align="left">วันที่&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...... / ...... / ......</td></tr>
 <tr><td> &nbsp;</td><td> &nbsp;</td></tr>
 <tbody>
 </table>
