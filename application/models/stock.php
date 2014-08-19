@@ -37,6 +37,7 @@ Class Stock extends CI_Model
     $this->db->select("product.id");
 	$this->db->from('product');	
 	$this->db->where('barcode', $barcode);
+    $this->db->limit(1); 
 	$query = $this->db->get();	
 	return $query->result();
  }

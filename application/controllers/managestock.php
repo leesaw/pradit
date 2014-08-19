@@ -461,16 +461,19 @@ class Managestock extends CI_Controller {
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
 		
-		$barcode = array(
-			'branchID' => $branchid,
-			'status' => $status,
-			'userID' => $userid,
-			'detail' => $detail
-		);
+		
 		
 		$query = $this->stock->getTemp(1,$userid);
 		
 		foreach($query as $loop) {
+            
+            $barcode = array(
+                'branchID' => $branchid,
+                'status' => $status,
+                'userID' => $userid,
+                'detail' => $detail
+		    );
+            
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
@@ -479,6 +482,7 @@ class Managestock extends CI_Controller {
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
+                break;
 			}
 			$this->stock->addStock($barcode);
 			// increment amount in stock table
@@ -487,6 +491,7 @@ class Managestock extends CI_Controller {
 				$this->stock->addNewStockTable($pid);
 			}
 			$this->stock->incrementStock($productid,$branchid,$amount);
+            unset($barcode);
 		}
 		
 		$this->stock->delAllStockTemp(1,$userid);
@@ -503,17 +508,16 @@ class Managestock extends CI_Controller {
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
 		
-			
-		$barcode = array(
-			'branchID' => $branchid,
-			'billID' => $billid,
-			'userID' => $userid,
-			'detail' => $detail
-		);
-		
 		$query = $this->stock->getTemp(2,$userid);
 		
 		foreach($query as $loop) {
+            $barcode = array(
+                'branchID' => $branchid,
+                'billID' => $billid,
+                'userID' => $userid,
+                'detail' => $detail
+            );
+            
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
@@ -522,6 +526,7 @@ class Managestock extends CI_Controller {
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
+                break;
 			}
 			
 			$this->stock->addStock_return($barcode);
@@ -531,6 +536,7 @@ class Managestock extends CI_Controller {
 				$this->stock->addNewStockTable($pid);
 			}
 			$this->stock->incrementStock($productid,$branchid,$amount);
+            unset($barcode);
 		}
 		
 		$this->stock->delAllStockTemp(2,$userid);
@@ -550,17 +556,17 @@ class Managestock extends CI_Controller {
         $listid = $this->stock->getMaxlist()[0]['max'];
         $listid++;
 		
-		$barcode = array(
-			'branchID' => $branchid,
-			'status' => $status,
-			'userID' => $userid,
-			'detail' => $detail,
-            'listid' => $listid
-		);
 		
 		$query = $this->stock->getTemp(0,$userid);
 		
 		foreach($query as $loop) {
+            $barcode = array(
+                'branchID' => $branchid,
+                'status' => $status,
+                'userID' => $userid,
+                'detail' => $detail,
+                'listid' => $listid
+            );
 			$barcodeid = $loop->barcode;
 			$amount = $loop->amount;
 			$barcode['amount'] = $amount;
@@ -569,6 +575,7 @@ class Managestock extends CI_Controller {
 			foreach($query2 as $loop2) {
 				$productid = $loop2->id;
 				$barcode['productID'] = $productid;
+                break;
                 //$barcode['stock'] = $loop2->amount;
 			}
             
@@ -587,6 +594,7 @@ class Managestock extends CI_Controller {
             
             
 			$this->stock->decrementStock($productid,$branchid,$amount);
+            unset($barcode);
 		}
 		
 		$this->stock->delAllStockTemp(0,$userid);
