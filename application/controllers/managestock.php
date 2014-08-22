@@ -461,8 +461,8 @@ class Managestock extends CI_Controller {
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
 		
-		
-		
+		$this->stock->copyTemptoStock_in($userid,$branchid,$status,$detail);
+		/*
 		$query = $this->stock->getTemp(1,$userid);
 		
 		foreach($query as $loop) {
@@ -493,10 +493,10 @@ class Managestock extends CI_Controller {
 			$this->stock->incrementStock($productid,$branchid,$amount);
             unset($barcode);
 		}
-		
-		$this->stock->delAllStockTemp(1,$userid);
-		
-		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+		*/
+		//$this->stock->delAllStockTemp(1,$userid);
+        $this->session->set_flashdata('showresult', 'success');
+        echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
 	}
 	
@@ -507,7 +507,10 @@ class Managestock extends CI_Controller {
 		$billid = ($this->input->post('billid'));
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
-		
+        
+        $this->stock->copyTemptoStock_return($userid,$branchid,$billid,$detail);
+        
+        /*
 		$query = $this->stock->getTemp(2,$userid);
 		
 		foreach($query as $loop) {
@@ -538,9 +541,11 @@ class Managestock extends CI_Controller {
 			$this->stock->incrementStock($productid,$branchid,$amount);
             unset($barcode);
 		}
+        
 		
 		$this->stock->delAllStockTemp(2,$userid);
-		
+		*/
+        $this->session->set_flashdata('showresult', 'success');
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
 	}
@@ -556,7 +561,8 @@ class Managestock extends CI_Controller {
         $listid = $this->stock->getMaxlist()[0]['max'];
         $listid++;
 		
-		
+        $this->stock->copyTemptoStock_out($userid,$branchid,$status,$detail,$listid);
+		/*
 		$query = $this->stock->getTemp(0,$userid);
 		
 		foreach($query as $loop) {
@@ -598,7 +604,7 @@ class Managestock extends CI_Controller {
 		}
 		
 		$this->stock->delAllStockTemp(0,$userid);
-		
+		*/
 		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
         
         redirect('managestock/printStockOut/'.$listid, 'location');

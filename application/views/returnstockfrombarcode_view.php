@@ -8,7 +8,9 @@
 <body>
 <div id="wrapper">
 	<?php $this->load->view('menu'); ?>
-	<?php $url = site_url("managestock/deletestocktemp_return"); ?>
+	<?php $url = site_url("managestock/deletestocktemp_return"); 
+          $successurl = site_url("managestock/returnstock");
+    ?>
 	
 	
 	<div id="page-wrapper">
@@ -98,7 +100,10 @@ $('#fancyboxview').fancybox({
 'autoScale':false,
 'transitionIn':'none', 
 'transitionOut':'none',
-'afterClose': function() {  parent.location.reload(true); }, 
+'afterClose': function() { 
+    var myurl = <?php echo json_encode($successurl); ?>; 
+    window.location.replace(myurl); 
+}, 
 'type':'iframe'}); 
 });
  </script>

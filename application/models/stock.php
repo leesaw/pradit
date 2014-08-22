@@ -253,6 +253,93 @@ Class Stock extends CI_Model
 	$query = $this->db->update('stock_product_temp', $stocktemp); 	
 	return $query;
  }
+    
+ function copyTemptoStock_in($userid,$branch,$status,$detail)
+ {
+    $currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+     
+    $sql = "insert into stock_product(productID,amount,userID,onDate,branchID,status,detail) ";
+    $sql .=  "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$status."','".$detail."' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
+    $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+    
+    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+     
+    $query = $this->db->query($sql);
+    $this->delAllStockTemp(1,$userid);
+    foreach ($query->result() as $row)
+    {
+        $productid = $row->id;
+        $amount = $row->samount;
+        if ($this->checkStock($productid,$branch)<1) {
+            $pid = array('productID'=>$productid, 'branchID'=>$branch,'amount' =>0);
+            $this->addNewStockTable($pid);
+        }
+        $this->incrementStock($productid,$branch,$amount);
+    }
+    
+ }
+    
+ function copyTemptoStock_return($userid,$branch,$billid,$detail)
+ {
+    $currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+     
+    $sql = "insert into stock_return(productID,amount,userID,onDate,branchID,billid,detail) ";
+    $sql .=  "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$billid."','".$detail."' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
+    $sql .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+    
+    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+     
+    $query = $this->db->query($sql);
+    $this->delAllStockTemp(2,$userid);
+    foreach ($query->result() as $row)
+    {
+        $productid = $row->id;
+        $amount = $row->samount;
+        if ($this->checkStock($productid,$branch)<1) {
+            $pid = array('productID'=>$productid, 'branchID'=>$branch,'amount' =>0);
+            $this->addNewStockTable($pid);
+        }
+        $this->incrementStock($productid,$branch,$amount);
+    }
+    
+ }
+    
+ function copyTemptoStock_out($userid,$branch,$billid,$detail,$listid)
+ {
+    $currentdate= explode('/',date("d/m/Y/H/i/s"));
+    $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+     
+    $sql = "insert into stock_out(productID,amount,stock,userID,onDate,branchID,status,detail,listid) ";
+    $sql .=  "select product.id,sum(stock_product_temp.amount),stock.amount,'".$userid."','".$currentdate."','".$branch."','".$billid."','".$detail."','".$listid."' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode left join stock on stock.productID=product.id ";
+    $sql .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+    
+    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+     
+    $query = $this->db->query($sql);
+    $this->delAllStockTemp(0,$userid);
+    foreach ($query->result() as $row)
+    {
+        $productid = $row->id;
+        $amount = $row->samount;
+        if ($this->checkStock($productid,$branch)<1) {
+            $pid = array('productID'=>$productid, 'branchID'=>$branch,'amount' =>0);
+            $this->addNewStockTable($pid);
+        }
+        $this->decrementStock($productid,$branch,$amount);
+    }
+    
+ }
  
 
 }
