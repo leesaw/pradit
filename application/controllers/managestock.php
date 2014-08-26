@@ -455,13 +455,23 @@ class Managestock extends CI_Controller {
 	
 	function savetemptostock()
 	{
-		
-		$branchid = ($this->input->post('branchid'));
-		$status = ($this->input->post('status'));
-		$detail = ($this->input->post('detail'));
-		$userid = $this->session->userdata('sessid');
-		
-		$this->stock->copyTemptoStock_in($userid,$branchid,$status,$detail);
+		if ($this->session->userdata('postdata') == FALSE) {
+            $testpost = 1;
+            $this->session->set_userdata('postdata',1);
+        }else{
+            $testpost = 2;
+        }
+            
+
+            $branchid = ($this->input->post('branchid'));
+            $status = ($this->input->post('status'));
+            $detail = ($this->input->post('detail'));
+            $userid = $this->session->userdata('sessid');
+
+        if ($testpost < 2) {
+            $this->stock->copyTemptoStock_in($userid,$branchid,$status,$detail);
+            $this->session->unset_userdata('postdata');
+        }
 		/*
 		$query = $this->stock->getTemp(1,$userid);
 		
@@ -502,13 +512,23 @@ class Managestock extends CI_Controller {
 	
 	function savetemptostock_return()
 	{
-		
+        if ($this->session->userdata('postdata') == FALSE) {
+            $testpost = 1;
+            $this->session->set_userdata('postdata',1);
+        }else{
+            $testpost = 2;
+        }
+        
 		$branchid = ($this->input->post('branchid'));
 		$billid = ($this->input->post('billid'));
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
         
-        $this->stock->copyTemptoStock_return($userid,$branchid,$billid,$detail);
+        if ($testpost < 2) {
+            $this->stock->copyTemptoStock_return($userid,$branchid,$billid,$detail);
+            $this->session->unset_userdata('postdata');
+        }
+        
         
         /*
 		$query = $this->stock->getTemp(2,$userid);
@@ -552,7 +572,13 @@ class Managestock extends CI_Controller {
 	
 	function savetemptostock_out()
 	{
-		
+		if ($this->session->userdata('postdata') == FALSE) {
+            $testpost = 1;
+            $this->session->set_userdata('postdata',1);
+        }else{
+            $testpost = 2;
+        }
+        
 		$branchid = ($this->input->post('branchid'));
 		$status = ($this->input->post('status'));
 		$detail = ($this->input->post('detail'));
@@ -561,7 +587,11 @@ class Managestock extends CI_Controller {
         $listid = $this->stock->getMaxlist()[0]['max'];
         $listid++;
 		
-        $this->stock->copyTemptoStock_out($userid,$branchid,$status,$detail,$listid);
+        if ($testpost < 2) {
+            $this->stock->copyTemptoStock_out($userid,$branchid,$status,$detail,$listid);
+            $this->session->unset_userdata('postdata');
+        }
+        
 		/*
 		$query = $this->stock->getTemp(0,$userid);
 		

@@ -259,8 +259,9 @@ Class Stock extends CI_Model
     $currentdate= explode('/',date("d/m/Y/H/i/s"));
     $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
      
+     
     $sql = "insert into stock_product(productID,amount,userID,onDate,branchID,status,detail) ";
-    $sql .=  "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$status."','".$detail."' ";
+    $sql .= "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$status."','".$detail."' ";
     $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
     $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
     $result = $this->db->query($sql);
@@ -280,6 +281,7 @@ Class Stock extends CI_Model
         }
         $this->incrementStock($productid,$branch,$amount);
     }
+
     
  }
     
