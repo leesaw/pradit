@@ -13,7 +13,7 @@
 <td width="100"> </td>
 <td width="200"><div style="text-align: right; font-weight: bold; font-size: 16pt;">ใบรายการสินค้าออกจากสต๊อก</div></td>
 </tr>
-<?php foreach($stock_array as $loop) { $datetime = $loop->onDate; $editor = $loop->firstname." ".$loop->lastname; break; } 
+<?php foreach($stock_array as $loop) { $datetime = $loop->onDate; $editor = $loop->firstname." ".$loop->lastname; $stockdetail = $loop->stockdetail; $status = $loop->stockstatus; break; } 
 
  $GGyear=substr($datetime,0,4); 
  $GGmonth=substr($datetime,5,2); 
@@ -23,6 +23,17 @@
 <tr>
     <td>วันที่ : <?php echo $GGdate."/".$GGmonth."/".$GGyear; ?> เวลา : <?php echo $time; ?></td><td> </td><td> ชื่อผู้ใส่ข้อมูล:  <?php echo $editor; ?>
     </td>
+</tr>
+<tr>
+    <td>รายละเอียด : <?php echo $stockdetail; ?> </td><td> </td><td>สถานะ : 
+<?php switch ($status) {
+     case 1 : echo "ขายออก"; break;
+     case 2 : echo "ย้ายคลัง"; break;
+     case 3 : echo "เบิกใช้ซ่อม"; break;
+     case 4 : echo "ของเคลม"; break;
+     case 5 : echo "ของแถม"; break;
+ }
+?> </td>
 </tr>
 </tbody>
 </table>

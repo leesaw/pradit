@@ -7,6 +7,8 @@
 <table border="0">
 <tbody>
 <?php if(isset($bill_array)) { foreach($bill_array as $loop) { ?>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php echo $loop->_customerID; ?></td><td width="10"> </td><td width="80"> </td><td width="100"><?php echo $loop->billID; ?></td></tr>
 <tr><td width="400"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80"> </td><td width="100"> </td></tr>
@@ -28,7 +30,7 @@
 <table>
 <thead>
 	<tr>
-		<th width="50"> </th><th width="300"> </th><th width="200" > </th><th width="80"> </th><th width="80"> </th>
+		<th width="20"> </th><th width="300"> </th><th width="200" > </th><th width="80"> </th><th width="80"> </th>
 	</tr>
 </thead>
 <tbody>
@@ -37,12 +39,12 @@
 <tr><td align="left"><?php echo $no; ?></td>
 <td align="left"><?php echo "&nbsp;&nbsp;".$loop->productname; ?></td>
 <td align="center" ><?php echo $loop->amount." &nbsp; ".$loop->unit; ?></td>
-<td align="right" ><?php echo number_format($loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="center" ><?php echo number_format($loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 <td align="right" ><?php echo number_format($loop->amount*$loop->pricePerUnit, 2, '.', ',')."&nbsp;&nbsp;"; $sum += $loop->amount*$loop->pricePerUnit; ?></td>
 </tr>
 <?php $no++; $discount=$loop->discount; $discount2=$loop->discountPercent; $tax=$loop->tax; } }
 
-if ($no<=15) { for($i=15-$no; $i>0; $i--) {?> 
+if ($no<=15) { for($i=13-$no; $i>0; $i--) {?> 
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <?php } } ?>
 
@@ -58,7 +60,7 @@ if ($no<=15) { for($i=15-$no; $i>0; $i--) {?>
 <td align="right" colspan=4 scope="row">&nbsp;</td><td align="right"><?php echo number_format($sum-($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row"><?php echo $percentvat; ?></td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row"><?php echo $percentvat; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="left" colspan=2 scope="row">( <?php echo num2thai($sum-($discount+($sum*$discount2/100))+$tax); ?> )</td>

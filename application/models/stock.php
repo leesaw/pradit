@@ -259,17 +259,16 @@ Class Stock extends CI_Model
     $currentdate= explode('/',date("d/m/Y/H/i/s"));
     $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
      
-     
     $sql = "insert into stock_product(productID,amount,userID,onDate,branchID,status,detail) ";
-    $sql .= "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$status."','".$detail."' ";
+    $sql .=  "select product.id,sum(amount),'".$userid."','".$currentdate."','".$branch."','".$status."','".$detail."' ";
     $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
     $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
     $result = $this->db->query($sql);
     
-    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
-    $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $sql2 = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql2 .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
      
-    $query = $this->db->query($sql);
+    $query = $this->db->query($sql2);
     $this->delAllStockTemp(1,$userid);
     foreach ($query->result() as $row)
     {
@@ -281,7 +280,6 @@ Class Stock extends CI_Model
         }
         $this->incrementStock($productid,$branch,$amount);
     }
-
     
  }
     
@@ -296,10 +294,10 @@ Class Stock extends CI_Model
     $sql .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
     $result = $this->db->query($sql);
     
-    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
-    $sql .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $sql2 = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql2 .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
      
-    $query = $this->db->query($sql);
+    $query = $this->db->query($sql2);
     $this->delAllStockTemp(2,$userid);
     foreach ($query->result() as $row)
     {
@@ -325,10 +323,10 @@ Class Stock extends CI_Model
     $sql .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
     $result = $this->db->query($sql);
     
-    $sql = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
-    $sql .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $sql2 = "select product.id,sum(amount) as samount from stock_product_temp left join product on stock_product_temp.barcode=product.barcode "; 
+    $sql2 .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
      
-    $query = $this->db->query($sql);
+    $query = $this->db->query($sql2);
     $this->delAllStockTemp(0,$userid);
     foreach ($query->result() as $row)
     {

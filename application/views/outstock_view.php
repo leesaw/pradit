@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <?php $this->load->view('header_view'); ?>
@@ -13,7 +13,7 @@
 	<div id="page-wrapper">
 		<div class="row">
             <div class="col-lg-8">
-                <h3 class="page-header">สินค้าเข้า</h3>
+                <h3 class="page-header">สินค้าออก</h3>
             </div>
         </div>
 		

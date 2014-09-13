@@ -762,7 +762,7 @@ class Managepurchase extends CI_Controller {
 		$mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printPurchasehtml", $data, TRUE));
-        $mpdf->Output();
+        $mpdf->Output('', 'I');
 		
 		
 	}
@@ -807,7 +807,7 @@ class Managepurchase extends CI_Controller {
 		$mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printPurchasehtml_cash", $data, TRUE));
-        $mpdf->Output();
+        $mpdf->Output('', 'I');
 		
 		
 	}

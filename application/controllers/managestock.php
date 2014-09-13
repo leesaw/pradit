@@ -1118,7 +1118,7 @@ class Managestock extends CI_Controller {
         $mpdf->SetJS('this.print();');
 		$mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($this->load->view("printStockOuthtml", $data, TRUE));
-        $mpdf->Output();
+        $mpdf->Output('', 'I');
 
     }
     
