@@ -112,9 +112,9 @@ class Managestock extends CI_Controller {
 	}
 
 	function addstockfrombarcode()
-	{
+	{   
 		$this->load->helper(array('form'));
-		
+        
 		$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
 		
 		$data['title'] = "Pradit and Friends - Add Barcode";
@@ -452,27 +452,65 @@ class Managestock extends CI_Controller {
 		if ($in>0)	redirect('managestock/addstockfrombarcode', 'refresh');
 		else redirect('managestock/addstockfrombarcode_out', 'refresh');
 	}
+    
+    function clearproduct_status0()
+	{
+		$table = $this->uri->segment(3);
+        $userid = $this->session->userdata('sessid');
+		$result = $this->stock->delAllStockProduct_status0($userid);
+		redirect('managestock/addstockfrombarcode', 'refresh');
+	}
 	
 	function savetemptostock()
 	{
+        /*
 		if ($this->session->userdata('postdata') == FALSE) {
             $testpost = 1;
             $this->session->set_userdata('postdata',1);
         }else{
             $testpost = 2;
         }
-            
+        */
 
             $branchid = ($this->input->post('branchid'));
             $status = ($this->input->post('status'));
+            //$carnumber = ($this->input->post('carnumber'));
+            //$customername = ($this->input->post('customername'));
             $detail = ($this->input->post('detail'));
             $userid = $this->session->userdata('sessid');
-
+        
+            $currentdate= explode('/',date("d/m/Y/H/i/s"));
+            $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
+            
+            $stock = array(
+                'branchID' => $branchid,
+                'status' => $status,
+                //'carNumber' => $carnumber,
+                //'customerName' => $customername,
+                'onDate' => $currentdate,
+                'detail' => $detail
+		    );
+        
+            $query = $this->stock->getStockProduct_status0($this->session->userdata('sessid'));
+            foreach($query as $loop) {
+                $id = $loop->sid;
+                $productid = $loop->pid;
+                $amount = $loop->samount;
+                $stock['id'] = $id;
+                $this->stock->editStockProduct($stock);
+                
+                if ($this->stock->checkStock($productid,$branchid)<1) {
+                    $pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
+                    $this->stock->addNewStockTable($pid);
+			    }
+                $this->stock->incrementStock($productid,$branchid,$amount);
+            }
+        /*
         if ($testpost < 2) {
             $this->stock->copyTemptoStock_in($userid,$branchid,$status,$detail);
             $this->session->unset_userdata('postdata');
         }
-		/*
+		
 		$query = $this->stock->getTemp(1,$userid);
 		
 		foreach($query as $loop) {
@@ -504,33 +542,51 @@ class Managestock extends CI_Controller {
             unset($barcode);
 		}
 		*/
-		//$this->stock->delAllStockTemp(1,$userid);
+		$this->stock->delAllStockTemp(1,$userid);
         $this->session->set_flashdata('showresult', 'success');
-        echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+        redirect('managestock/addstockfrombarcode', 'refresh');
+        //echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
 		
 	}
 	
 	function savetemptostock_return()
 	{
-        if ($this->session->userdata('postdata') == FALSE) {
-            $testpost = 1;
-            $this->session->set_userdata('postdata',1);
-        }else{
-            $testpost = 2;
-        }
-        
 		$branchid = ($this->input->post('branchid'));
 		$billid = ($this->input->post('billid'));
 		$detail = ($this->input->post('detail'));
 		$userid = $this->session->userdata('sessid');
+        $currentdate= explode('/',date("d/m/Y/H/i/s"));
+        $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
         
+        $stock = array(
+                'branchID' => $branchid,
+                'billID' => $billid,
+                //'carNumber' => $carnumber,
+                //'customerName' => $customername,
+                'onDate' => $currentdate,
+                'detail' => $detail
+		    );
+        
+            $query = $this->stock->getStockReturn_status0($this->session->userdata('sessid'));
+            foreach($query as $loop) {
+                $id = $loop->sid;
+                $productid = $loop->pid;
+                $amount = $loop->samount;
+                $stock['id'] = $id;
+                $this->stock->editStockReturn($stock);
+                
+                if ($this->stock->checkStock($productid,$branchid)<1) {
+                    $pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
+                    $this->stock->addNewStockTable($pid);
+			    }
+                $this->stock->incrementStock($productid,$branchid,$amount);
+            }
+        /*
         if ($testpost < 2) {
             $this->stock->copyTemptoStock_return($userid,$branchid,$billid,$detail);
             $this->session->unset_userdata('postdata');
         }
-        
-        
-        /*
+
 		$query = $this->stock->getTemp(2,$userid);
 		
 		foreach($query as $loop) {
@@ -562,37 +618,65 @@ class Managestock extends CI_Controller {
             unset($barcode);
 		}
         
-		
-		$this->stock->delAllStockTemp(2,$userid);
 		*/
+		$this->stock->delAllStockTemp(2,$userid);
         $this->session->set_flashdata('showresult', 'success');
-		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+        redirect('managestock/returnstockfrombarcode', 'refresh');
 		
 	}
 	
 	function savetemptostock_out()
 	{
-		if ($this->session->userdata('postdata') == FALSE) {
-            $testpost = 1;
-            $this->session->set_userdata('postdata',1);
-        }else{
-            $testpost = 2;
-        }
+
+            $branchid = ($this->input->post('branchid'));
+            $status = ($this->input->post('status'));
+            $carnumber = ($this->input->post('carnumber'));
+            $customername = ($this->input->post('customername'));
+            $detail = ($this->input->post('detail'));
+            $userid = $this->session->userdata('sessid');
         
-		$branchid = ($this->input->post('branchid'));
-		$status = ($this->input->post('status'));
-		$detail = ($this->input->post('detail'));
-		$userid = $this->session->userdata('sessid');
+            $currentdate= explode('/',date("d/m/Y/H/i/s"));
+            $currentdate= ($currentdate[2]+543)."-".$currentdate[1]."-".$currentdate[0]." ".$currentdate[3].":".$currentdate[4].":".$currentdate[5];
         
-        $listid = $this->stock->getMaxlist()[0]['max'];
-        $listid++;
-		
+        
+            $stock = array(
+                'branchID' => $branchid,
+                'status' => $status,
+                'carNumber' => $carnumber,
+                'customerName' => $customername,
+                'onDate' => $currentdate,
+                'detail' => $detail
+		    );
+        
+            $query = $this->stock->getStockOut_status0($this->session->userdata('sessid'));
+            foreach($query as $loop) {
+                $id = $loop->sid;
+                $productid = $loop->pid;
+                $amount = $loop->samount;
+                $barcodeid = $loop->pbarcode;
+                $listid = $loop->listid;
+                $stock['id'] = $id;
+                
+                $query2 = $this->stock->getProductID_branch($barcodeid,$branchid);
+                foreach($query2 as $loop2) {
+                    $stock['stock'] = $loop2->amount;
+                }
+                
+                $this->stock->editStockOut($stock);
+                
+                if ($this->stock->checkStock($productid,$branchid)<1) {
+                    $pid = array('productID'=>$productid, 'branchID'=>$branchid,'amount' =>0);
+                    $this->stock->addNewStockTable($pid);
+			    }
+                $this->stock->decrementStock($productid,$branchid,$amount);
+            }
+		/*
         if ($testpost < 2) {
             $this->stock->copyTemptoStock_out($userid,$branchid,$status,$detail,$listid);
             $this->session->unset_userdata('postdata');
         }
         
-		/*
+		
 		$query = $this->stock->getTemp(0,$userid);
 		
 		foreach($query as $loop) {
@@ -632,12 +716,15 @@ class Managestock extends CI_Controller {
 			$this->stock->decrementStock($productid,$branchid,$amount);
             unset($barcode);
 		}
-		
-		$this->stock->delAllStockTemp(0,$userid);
 		*/
-		echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
+		$this->stock->delAllStockTemp(0,$userid);
+		$this->session->set_flashdata('showresult', 'success');
+		//echo '<script type="text/javascript">parent.$.fancybox.close();</script>';
         
-        redirect('managestock/printStockOut/'.$listid, 'location');
+        $data['listid'] = $listid;
+        $data['title'] = "Print out";
+        $this->load->view("showstockout_view", $data);
+        //redirect('managestock/printStockOut/'.$listid, 'location');
 		
 	}
 	
@@ -647,7 +734,17 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
+        $this->stock->delAllStockProduct_status0($this->session->userdata('sessid'));
+		//$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
+
+        $this->stock->copyTempProduct($this->session->userdata('sessid'));
+        
+        $query = $this->stock->getStockProduct_status0($this->session->userdata('sessid'));
+        if($query){
+			$data['product_array'] =  $query;
+		}else{
+			$data['product_array'] = array();
+		}
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -657,7 +754,7 @@ class Managestock extends CI_Controller {
 		}
 		
 		
-		$data['title'] = "Pradit and Friends - Add Barcode";
+		$data['title'] = "Pradit and Friends - Add Detail";
 		$this->load->view("adddetailtotemp_view", $data);
 	}
 	
@@ -667,7 +764,17 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount(2,$this->session->userdata('sessid'));
+		$this->stock->delAllStockReturn_status0($this->session->userdata('sessid'));
+		//$data['count'] = $this->stock->getTempCount(1,$this->session->userdata('sessid'));
+
+        $this->stock->copyTempProduct_return($this->session->userdata('sessid'));
+        
+        $query = $this->stock->getStockReturn_status0($this->session->userdata('sessid'));
+        if($query){
+			$data['product_array'] =  $query;
+		}else{
+			$data['product_array'] = array();
+		}
 		
 		$query = $this->branch->getBranch();
 		if($query){
@@ -687,8 +794,20 @@ class Managestock extends CI_Controller {
 		
 		$this->load->model('branch','',TRUE);
 		
-		$data['count'] = $this->stock->getTempCount(0,$this->session->userdata('sessid'));
-		
+		$this->stock->delAllStockOut_status0($this->session->userdata('sessid'));
+        
+        $listid = $this->stock->getMaxlist()[0]['max'];
+        $listid++;
+        
+		$this->stock->copyTempProduct_out($this->session->userdata('sessid'),$listid);
+        
+        $query = $this->stock->getStockOut_status0($this->session->userdata('sessid'));
+        if($query){
+			$data['product_array'] =  $query;
+		}else{
+			$data['product_array'] = array();
+		}
+        
 		$query = $this->branch->getBranch();
 		if($query){
 			$data['branch_array'] =  $query;
@@ -861,7 +980,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -878,7 +997,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -895,7 +1014,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_return";
 		$sql .= " left join product on product.id = stock_return.productID";
 		$sql .= " left join branch on branch.id = stock_return.branchID";
@@ -923,7 +1042,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ, stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ, stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -951,7 +1070,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -979,7 +1098,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_return";
 		$sql .= " left join product on product.id = stock_return.productID";
 		$sql .= " left join branch on branch.id = stock_return.branchID";
@@ -1009,7 +1128,7 @@ class Managestock extends CI_Controller {
         $delimiter = ",";
         $newline = "\r\n";
 		
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, bill_product.amount as จำนวน, pricePerUnit as ราคา, product.unit as หน่วย, bill_product.amount*pricePerUnit as รวมราคาที่ขาย";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, bill_product.amount as จำนวน, pricePerUnit as ราคา, product.unit as หน่วย, bill_product.amount*pricePerUnit as รวมราคาที่ขาย";
 		$sql .= " from bill";
 		$sql .= " left join bill_product on bill_product.billID = bill.id";
 		$sql .= " left join customer on customer.id = bill.customerID";
@@ -1030,7 +1149,7 @@ class Managestock extends CI_Controller {
         $delimiter = ",";
         $newline = "\r\n";
 		
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, stock.amount as จำนวน, product.unit as หน่วย, costPrice as ราคา,  stock.amount*costPrice as จำนวนเงิน";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, stock.amount as จำนวน, product.unit as หน่วย, costPrice as ราคา,  stock.amount*costPrice as จำนวนเงิน";
 		$sql .= " from stock";
 		$sql .= " left join product on product.id = stock.productID";
 		$sql .= " where stock.branchID =".$id." and categoryID=".$catid;
@@ -1067,7 +1186,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select standardID as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";

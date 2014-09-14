@@ -32,6 +32,18 @@ Class Stock extends CI_Model
 	
  }
     
+ function getProductID_branch($barcode=NULL,$branchid=NULL)
+ {
+	$this->db->select("product.id, amount");
+	$this->db->from('product');	
+    $this->db->join('stock','stock.productID = product.id');
+	$this->db->where('barcode', $barcode);
+    $this->db->where('branchid', $branchid);
+	$query = $this->db->get();	
+	return $query->result();
+	
+ }
+    
  function getProductIDfromBarcode($barcode=null)
  {
     $this->db->select("product.id");
@@ -112,13 +124,14 @@ Class Stock extends CI_Model
     
  function getOneStockOUTprint($id=null)
  {
- 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, stock_out.amount, priceVAT, stock_out.stock as stockamount");
+ 	$this->db->select("stock_out.id as stockid, onDate, stock_out.status as stockstatus, stock_out.detail as stockdetail, standardID, supplierID, barcode, product.name as pname, category.name as cname, unit, username, firstname, lastname, branch.name as bname, category.id as categoryID, stock_out.amount, priceVAT, stock_out.stock as stockamount, stock_out.carNumber , stock_out.customerName");
+    $this->db->distinct();
  	$this->db->from("stock_out");
  	$this->db->join("product", "product.id = stock_out.productID",'left');
  	$this->db->join("branch", "branch.id = stock_out.branchID",'left');
  	$this->db->join("category", "category.id = product.categoryID",'left');
  	$this->db->join("users", "users.id = stock_out.userID",'left');
-    $this->db->join("stock", "stock.productID = stock_out.productID");
+    $this->db->join("stock", "stock.productID = stock_out.productID", 'left');
 	$this->db->where("stock_out.listid", $id);
  	$query = $this->db->get();
  	return $query->result();
@@ -231,12 +244,57 @@ Class Stock extends CI_Model
     $this->db->where('userid',$userid);
 	$this->db->delete('stock_product_temp'); 
  }
+    
+ function delAllStockProduct_status0($userid=NULL)
+ {
+	$this->db->where('status', 0);
+    $this->db->where('userid',$userid);
+	$this->db->delete('stock_product'); 
+ }
+ 
+ function delAllStockOut_status0($userid=NULL)
+ {
+	$this->db->where('status', 0);
+    $this->db->where('userid',$userid);
+	$this->db->delete('stock_out'); 
+ }
+    
+ function delAllStockReturn_status0($userid=NULL)
+ {
+	$this->db->where('branchid', 0);
+    $this->db->where('userid',$userid);
+	$this->db->delete('stock_return'); 
+ }
  
  function editStock($stock=NULL)
  {
 	$this->db->where('id', $stock['id']);
 	unset($stock['id']);
 	$query = $this->db->update('stock_product', $stock); 	
+	return $query;
+ }
+    
+ function editStockProduct($stock=NULL)
+ {
+	$this->db->where('id', $stock['id']);
+	unset($stock['id']);
+	$query = $this->db->update('stock_product', $stock); 	
+	return $query;
+ }
+    
+ function editStockOut($stock=NULL)
+ {
+	$this->db->where('id', $stock['id']);
+	unset($stock['id']);
+	$query = $this->db->update('stock_out', $stock); 	
+	return $query;
+ }
+    
+ function editStockReturn($stock=NULL)
+ {
+	$this->db->where('id', $stock['id']);
+	unset($stock['id']);
+	$query = $this->db->update('stock_return', $stock); 	
 	return $query;
  }
  
@@ -340,6 +398,61 @@ Class Stock extends CI_Model
     }
     
  }
+    
+ function copyTempProduct($userid) {
+    $sql = "insert into stock_product(productID,amount,userID,status) ";
+    $sql .=  "select product.id,sum(amount),'".$userid."','0' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
+    $sql .= "where `in`='1' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+ }
+    
+ function copyTempProduct_out($userid, $listid) {
+    $sql = "insert into stock_out(productID,amount,userID,status,listid) ";
+    $sql .=  "select product.id,sum(stock_product_temp.amount),'".$userid."','0','".$listid."' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
+    $sql .= "where `in`='0' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+ }
+    
+ function copyTempProduct_return($userid) {
+    $sql = "insert into stock_return(productID,amount,userID,branchID) ";
+    $sql .=  "select product.id,sum(amount),'".$userid."','0' ";
+    $sql .= "from stock_product_temp left join product on stock_product_temp.barcode=product.barcode ";
+    $sql .= "where `in`='2' and stock_product_temp.userid='".$userid."' group by stock_product_temp.barcode";
+    $result = $this->db->query($sql);
+ }
+    
+ function getStockProduct_status0($userid) {
+    $query = $this->db->select("product.barcode as pbarcode, product.name as pname, stock_product.amount as samount, unit, stock_product.id as sid, stock_product.productID as pid")
+	                  ->from('stock_product')	
+                      ->join('product', 'product.id = stock_product.productID','left')
+		              ->where('status', 0)
+                      ->where('stock_product.userid', $userid)
+	                  ->get();		
+	return $query->result();
+ }
+    
+ function getStockOut_status0($userid) {
+    $query = $this->db->select("product.barcode as pbarcode, product.name as pname, stock_out.amount as samount, unit, stock_out.id as sid, stock_out.productID as pid, listid ")
+	                  ->from('stock_out')	
+                      ->join('product', 'product.id = stock_out.productID','left')
+		              ->where('status', 0)
+                      ->where('stock_out.userid', $userid)
+	                  ->get();		
+	return $query->result();
+ }
+
+ function getStockReturn_status0($userid) {
+    $query = $this->db->select("product.barcode as pbarcode, product.name as pname, stock_return.amount as samount, unit, stock_return.id as sid, stock_return.productID as pid")
+	                  ->from('stock_return')	
+                      ->join('product', 'product.id = stock_return.productID','left')
+		              ->where('branchid', 0)
+                      ->where('stock_return.userid', $userid)
+	                  ->get();		
+	return $query->result();
+ }
+
  
 
 }

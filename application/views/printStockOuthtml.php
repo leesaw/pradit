@@ -7,13 +7,13 @@
 <table border="0">
 <tbody>
 <tr>
-<td width="450">
+<td width="400">
 <div style="text-align: left; font-weight: bold; font-size: 20pt;">บริษัท ประดิษฐ์ แอนด์ เฟรนด์ แมชีนเนอรี่ จำกัด</div><br\><div style="text-align: left; font-weight: font-size: 16pt;">102/17-20 หมู่ 9 ถ.ท่าเรือ-พระแท่น ต.ตะคร้ำเอน อ.ท่ามะกา จ.กาญจนบุรี 71130</div>
 </td> 
 <td width="100"> </td>
 <td width="200"><div style="text-align: right; font-weight: bold; font-size: 16pt;">ใบรายการสินค้าออกจากสต๊อก</div></td>
 </tr>
-<?php foreach($stock_array as $loop) { $datetime = $loop->onDate; $editor = $loop->firstname." ".$loop->lastname; $stockdetail = $loop->stockdetail; $status = $loop->stockstatus; break; } 
+<?php foreach($stock_array as $loop) { $datetime = $loop->onDate; $editor = $loop->firstname." ".$loop->lastname; $stockdetail = $loop->stockdetail; $status = $loop->stockstatus; $carnumber = $loop->carNumber; $customername = $loop->customerName; break; } 
 
  $GGyear=substr($datetime,0,4); 
  $GGmonth=substr($datetime,5,2); 
@@ -22,6 +22,10 @@
 ?>
 <tr>
     <td>วันที่ : <?php echo $GGdate."/".$GGmonth."/".$GGyear; ?> เวลา : <?php echo $time; ?></td><td> </td><td> ชื่อผู้ใส่ข้อมูล:  <?php echo $editor; ?>
+    </td>
+</tr>
+<tr>
+    <td>ชื่อลูกค้า : <?php echo $customername; ?></td><td> </td><td> หมายเลขรถ:  <?php echo $carnumber; ?>
     </td>
 </tr>
 <tr>

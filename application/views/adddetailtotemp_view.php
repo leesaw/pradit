@@ -6,9 +6,19 @@
 </head>
 
 <body>
-
+<div id="wrapper">
+	<?php $this->load->view('menu'); ?>
+	
+	
+	<div id="page-wrapper">
 		<div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-8">
+                <h3 class="page-header">สินค้าเข้าสต็อก</h3>
+            </div>
+        </div>
+        
+		<div class="row">
+            <div class="col-lg-8">
                 <div class="panel panel-default">
 					<div class="panel-heading"><strong>เลือกสาขา และ สถานะสินค้า</strong></div>
 					<?php if ($this->session->flashdata('showresult') == 'success') echo '<div class="alert-message alert alert-success"> ระบบทำการเพิ่มข้อมูลเรียบร้อยแล้ว</div>'; 
@@ -17,7 +27,7 @@
 					?>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                                 <?php 
 									$attributes = array('class' =>'myform', 'id' => 'myform');
 									echo form_open('managestock/savetemptostock', $attributes); ?>
@@ -34,7 +44,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-lg-8">
                                     <div class="form-group">
                                     	<label>สถานะ *</label>
 										<div class="form-group">
@@ -46,30 +56,84 @@
 							
 							</div>
 						</div>
+                        <!--
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>หมายเลขรถ</label>
+                                    <input type="text" class="form-control" name="carnumber" id="carnumber">
+										
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ชื่อลูกค้า</label>
+                                    <input type="text" class="form-control" name="customername" id="customername">
+										
+                                </div>
+                            </div>
+                        </div>
+                        -->
 						<div class="row">
-							<div class="col-lg-4">
+							<div class="col-lg-8">
                                     <div class="form-group">
                                             <label>รายละเอียด</label>
 											<textarea class="form-control" name="detail" id="detail" rows="2"></textarea>
                                     </div>
 							</div>
 						</div>
-		
+		      
 		
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-8">
 									<button type="submit" class="btn btn-primary btn-lg">  บันทึก  </button></a>
-									<button type="button" id="cancel" class="btn btn-warning btn-lg">  ยกเลิก  </button></a>
+									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managestock/addstockfrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
 								
 						<?php echo form_close(); ?>
-
-
+                    <br/>
+        <div class="row">
+			<div class="col-lg-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><strong>รายการสินค้า</strong></div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped row-border table-hover" id="tablebarcode" width="100%">
+                                <thead>
+                                    <tr>
+										<th></th>
+                                        <th>Barcode</th>
+										<th>ชื่อ</th>
+										<th width="80">จำนวน</th>
+										<th>หน่วย</th>
+                                    </tr>
+                                </thead>
+								<tbody>
+                                    <?php   $count = 1;
+                                            foreach($product_array as $loop) { ?>
+                                    <tr>
+                                        <td><?php echo $count; ?></td>
+                                        <td><?php echo $loop->pbarcode; ?></td>
+                                        <td><?php echo $loop->pname; ?></td>
+                                        <td><?php echo $loop->samount; ?></td>
+                                        <td><?php echo $loop->unit; ?></td>
+                                    </tr>
+                                    <?php $count++; } ?>
+                                </tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>	
 		</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+    
+    </div>
+</div>
 
 <br><br><br><br><br><br>
 <?php $this->load->view('js_footer'); ?>
@@ -84,50 +148,6 @@ $(document).ready(function() {
      });
 	 
 });
-</script>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function()
-    {
-		$("#barcode").focus();
-	
-        var oTable = $('#tablebarcode').dataTable
-        ({
-            "bJQueryUI": false,
-            "bProcessing": true,
-            "sPaginationType": "simple_numbers",
-            'bServerSide'    : false,
-			'bFilter'  : false,
-			"bInfo": false,
-			"bLengthChange" : false,
-			"bPaginate" : false,
-			"iDisplayLength": 10000,
-            "bDeferRender": false,
-            'sAjaxSource'    : '<?php echo site_url("managestock/ajaxGetStockTempNoDelete"); ?>',
-            "fnServerData": function ( sSource, aoData, fnCallback ) {
-                $.ajax( {
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": sSource,
-                    "data": aoData,
-                    "success":fnCallback
-                
-                });
-            },
-			
-			"fnDrawCallback": function ( oSettings ) {
-                /* Need to redo the counters if filtered or sorted */
-                if ( oSettings.bSorted || oSettings.bFiltered )
-                {
-                    for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-                    {
-                        $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
-                    }
-                }
-            }
-			
-        });
-		
-    });
 </script>
 </body>
 </html>
