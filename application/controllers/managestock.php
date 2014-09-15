@@ -1081,6 +1081,42 @@ class Managestock extends CI_Controller {
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
 	}
+    
+    function excelcarnumber_out()
+	{	
+        $carnumber = $this->input->post("carnumber");
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_out";
+		$sql .= " left join product on product.id = stock_out.productID";
+		$sql .= " left join branch on branch.id = stock_out.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_out.userID";
+		$sql .= " where carNumber like '%".$carnumber."%'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
+    
+    function excelcustomername_out()
+	{	
+        $customername = $this->input->post("customername");
+		$this->load->dbutil();
+        $delimiter = ",";
+        $newline = "\r\n";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql .= " from stock_out";
+		$sql .= " left join product on product.id = stock_out.productID";
+		$sql .= " left join branch on branch.id = stock_out.branchID";
+		$sql .= " left join category on category.id = product.categoryID";
+		$sql .= " left join users on users.id = stock_out.userID";
+		$sql .= " where customerName like '%".$customername."%'";
+        $result = $this->db->query($sql);
+
+        $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
+	}
 	
 	function excelbetweendate_return()
 	{

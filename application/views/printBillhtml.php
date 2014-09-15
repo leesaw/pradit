@@ -7,22 +7,21 @@
 <table border="0">
 <tbody>
 <?php if(isset($bill_array)) { foreach($bill_array as $loop) { ?>
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td height="62">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?php echo $loop->_customerID; ?></td><td width="10"> </td><td width="80"> </td><td width="100"><?php echo $loop->billID; ?></td></tr>
-<tr><td width="400"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80"> </td><td width="100"> </td></tr>
-<tr><td width="400"><?php echo $loop->customerAddress; ?></td><td width="10"> </td><td width="80"> </td><td width="150"> 
+<?php echo $loop->_customerID; ?></td><td width="10"> </td><td width="80"> </td><td width="120"><?php echo $loop->billID; ?></td></tr>
+<tr><td width="400" height="30"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80"> </td><td width="120"><br> 
 <?php  
  $GGyear=substr($loop->date,0,4); 
  $GGmonth=substr($loop->date,5,2); 
  $GGdate=substr($loop->date,8,2); 
- echo $GGdate."/".$GGmonth."/".$GGyear; ?>
+ echo $GGdate."/".$GGmonth."/".$GGyear; ?></td></tr>
+<tr><td width="400" height="44"><?php echo $loop->customerAddress; ?></td><td width="10"> </td><td width="80"> </td><td width="150"> 
  </td></tr>
- <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <?php echo $loop->transport;?></td><td width="10"> </td><td width="80"> </td><td width="150"><?php echo $loop->fname." ".$loop->lname; ?></td></tr>
+ <tr><td height="30">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td width="400">&nbsp;</td><td width="10"> </td><td width="80"> </td><td width="200"><?php echo $loop->fname." ".$loop->lname; ?></td></tr>
+<tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <?php echo $loop->transport;?></td><td width="10"> </td><td width="80"> </td><td width="200"> </td></tr>
  <?php $percentvat=$loop->percentvat; } }?>
 </tbody>
 </table>
@@ -30,11 +29,11 @@
 <table>
 <thead>
 	<tr>
-		<th width="20"> </th><th width="300"> </th><th width="200" > </th><th width="80"> </th><th width="80"> </th>
+		<th width="20"> </th><th width="360"> </th><th width="140" > </th><th width="100"> </th><th width="100"> </th>
 	</tr>
 </thead>
 <tbody>
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td height="40"> </td><td> </td><td> </td><td> </td><td> </td></tr>
 <?php $no=1; $sum=0; if(isset($billproduct_array)) { foreach($billproduct_array as $loop) { ?>
 <tr><td align="left"><?php echo $no; ?></td>
 <td align="left"><?php echo "&nbsp;&nbsp;".$loop->productname; ?></td>
@@ -44,23 +43,24 @@
 </tr>
 <?php $no++; $discount=$loop->discount; $discount2=$loop->discountPercent; $tax=$loop->tax; } }
 
-if ($no<=15) { for($i=13-$no; $i>0; $i--) {?> 
+if ($no<=15) { for($i=15-$no; $i>0; $i--) {?> 
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <?php } } ?>
-
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 </tbody>
 <tbody>
 <tr>
-<td align="right" colspan=4 scope="row" >&nbsp;</td><td align="right"><?php echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">&nbsp;</td><td align="right"><?php echo number_format($sum, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row">&nbsp;</td><td align="right" ><?php echo number_format(($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row">&nbsp;</td><td align="right" style="padding:0px; margin:0px;"><?php echo number_format(($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="right" colspan=4 scope="row">&nbsp;</td><td align="right"><?php echo number_format($sum-($discount+($sum*$discount2/100)), 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
-<td align="right" colspan=4 scope="row"><?php echo $percentvat; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
+<td align="right" colspan=4 scope="row"><?php echo $percentvat; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="right"><?php echo number_format($tax, 2, '.', ',')."&nbsp;&nbsp;"; ?></td>
 </tr>
 <tr>
 <td align="left" colspan=2 scope="row">( <?php echo num2thai($sum-($discount+($sum*$discount2/100))+$tax); ?> )</td>

@@ -21,9 +21,10 @@
 		<div class="row">
 				<div class="col-md-8">
 					<div class="form-group">
-						<a href="<?php echo site_url("managestock/historystockexcel_out"); ?>" class="btn btn-success btn-md">Export Excel ทั้งหมด</a>
-						<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Export Excel เลือกช่วงวันที่</a>
-						
+						<a href="<?php echo site_url("managestock/historystockexcel_out"); ?>" class="btn btn-success btn-md">Excel ทั้งหมด</a>
+						<a data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Excel เลือกช่วงวันที่</a>
+                        <a data-toggle="modal" data-target="#myModal_car" class="btn btn-danger" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Excel เลือกหมายเลขรถ</a>
+						<a data-toggle="modal" data-target="#myModal_customer" class="btn btn-warning" data-title="View" data-toggle="tooltip" data-target="#view" data-placement="top" rel="tooltip" title="เลือกช่วงวันที่" data-backdrop="static" data-keyboard="false">Excel เลือกชื่อลูกค้า</a>
 						<!-- datepicker modal-->
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						
@@ -56,7 +57,64 @@
 							</div>
 						</div>
 					</div>
+                    
+                    <!-- datepicker modal car-->
+						<div class="modal fade" id="myModal_car" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						
+						  <div class="modal-dialog modal-md">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">	                 	
+										<strong>เลือกหมายเลขรถที่ต้องการ</strong> 
+									</h4>
+								</div>            <!-- /modal-header -->
+								<div class="modal-body">
+									<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelcarnumber_out"); ?>" method="POST" >
+									<div class="form-group">
+										<label for="">หมายเลขรถ : </label>
+										<input type="text" class="form-control" id="carnumber" name="carnumber" />
+									</div>
+										
+								</div>            <!-- /modal-body -->
+							
+								<div class="modal-footer">
+										<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+										<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+								</div> 	
+								</form>								
+							</div>
+						</div>
+					</div>
+                        
+				        <!-- datepicker modal customer-->
+						<div class="modal fade" id="myModal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						
+						  <div class="modal-dialog modal-md">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">	                 	
+										<strong>เลือกชื่อลูกค้าที่ต้องการ</strong> 
+									</h4>
+								</div>            <!-- /modal-header -->
+								<div class="modal-body">
+									<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelcustomername_out"); ?>" method="POST" >
+									<div class="form-group">
+										<label for="">ชื่อลูกค้า : </label>
+										<input type="text" class="form-control" id="customername" name="customername" />
+									</div>
+										
+								</div>            <!-- /modal-body -->
+							
+								<div class="modal-footer">
+										<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> ตกลง</button>			
+										<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> ปิด</button>
+								</div> 	
+								</form>								
+							</div>
+						</div>
+					</div>
                     </div>
 				</div>
 		</div>
