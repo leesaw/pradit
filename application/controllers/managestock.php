@@ -980,7 +980,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย, priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน, onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ,  stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -997,7 +997,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -1014,7 +1014,7 @@ class Managestock extends CI_Controller {
         $this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_return";
 		$sql .= " left join product on product.id = stock_return.productID";
 		$sql .= " left join branch on branch.id = stock_return.branchID";
@@ -1042,7 +1042,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ, stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา, case stock_product.status when 1 then 'ซื้อเข้า' when 2 then 'ย้ายคลัง' end as สถานะ, stock_product.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_product";
 		$sql .= " left join product on product.id = stock_product.productID";
 		$sql .= " left join branch on branch.id = stock_product.branchID";
@@ -1070,7 +1070,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
@@ -1088,13 +1088,13 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
-		$sql .= " where carNumber like '%".$carnumber."%'";
+		$sql .= " where carNumber like '%".$carnumber."%' or stock_out.detail like '%".$carnumber."%'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -1106,13 +1106,13 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา, case stock_out.status when 1 then 'ขายออก' when 2 then 'ย้ายคลัง' when 3 then 'เบิกใช้ซ่อม' when 4 then 'ของเคลม' when 5 then 'ของแถม' end as สถานะ, stock_out.carNumber as หมายเลขรถ, stock_out.customerName as ชื่อลูกค้า, stock_out.detail as รายละเอียด, barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_out";
 		$sql .= " left join product on product.id = stock_out.productID";
 		$sql .= " left join branch on branch.id = stock_out.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
-		$sql .= " where customerName like '%".$customername."%'";
+		$sql .= " where customerName like '%".$customername."%' or stock_out.detail like '%".$customername."%'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -1134,7 +1134,7 @@ class Managestock extends CI_Controller {
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
-		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
+		$sql = "select concat('\'',standardID,'\'') as รหัสสินค้า, product.name as ชื่อสินค้า, amount as จำนวน, unit as หน่วย,priceVAT as ราคาขาย, amount*priceVAT as จำนวนเงิน,onDate as วันและเวลา,  stock_return.detail as รายละเอียด, stock_return.billID as เลขที่ใบส่งของ ,barcode, category.name as ชนิดสินค้า,  branch.name as สาขา, firstname as ชื่อผู้ใส่ข้อมูล, lastname as นามสกุลผู้ใส่ข้อมูล";
 		$sql .= " from stock_return";
 		$sql .= " left join product on product.id = stock_return.productID";
 		$sql .= " left join branch on branch.id = stock_return.branchID";
