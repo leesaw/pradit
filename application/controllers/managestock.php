@@ -1085,6 +1085,17 @@ class Managestock extends CI_Controller {
     function excelcarnumber_out()
 	{	
         $carnumber = $this->input->post("carnumber");
+        $start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+        
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
@@ -1094,7 +1105,8 @@ class Managestock extends CI_Controller {
 		$sql .= " left join branch on branch.id = stock_out.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
-		$sql .= " where carNumber like '%".$carnumber."%' or stock_out.detail like '%".$carnumber."%'";
+		$sql .= " where (carNumber like '%".$carnumber."%' or stock_out.detail like '%".$carnumber."%')";
+        $sql .= " and onDate between '".$start."' and '".$end." 23:59:59.999'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
@@ -1103,6 +1115,18 @@ class Managestock extends CI_Controller {
     function excelcustomername_out()
 	{	
         $customername = $this->input->post("customername");
+        
+        $start = $this->input->post("startdate");
+		if ($start != "") {
+			$start = explode('/', $start);
+			$start= $start[2]."-".$start[1]."-".$start[0];
+		}
+		$end = $this->input->post("enddate");
+		if ($end != "") {
+			$end = explode('/', $end);
+			$end= $end[2]."-".$end[1]."-".$end[0];
+		}
+        
 		$this->load->dbutil();
         $delimiter = ",";
         $newline = "\r\n";
@@ -1112,7 +1136,8 @@ class Managestock extends CI_Controller {
 		$sql .= " left join branch on branch.id = stock_out.branchID";
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
-		$sql .= " where customerName like '%".$customername."%' or stock_out.detail like '%".$customername."%'";
+		$sql .= " where (customerName like '%".$customername."%' or stock_out.detail like '%".$customername."%')";
+        $sql .= " and onDate between '".$start."' and '".$end." 23:59:59.999'";
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));

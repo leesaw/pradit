@@ -74,6 +74,14 @@
 									<div class="form-group">
 										<label for="">หมายเลขรถ : </label>
 										<input type="text" class="form-control" id="carnumber" name="carnumber" />
+									</div><br><br>
+                                    <div class="form-group">
+										<label for="">เริ่ม: </label>
+										<input type="text" class="form-control" id="startdate_car" name="startdate" />
+									</div>
+									<div class="form-group">
+										<label for=""> สิ้นสุด :</label>
+										<input type="text" class="form-control" id="enddate_car" name="enddate" />
 									</div>
 										
 								</div>            <!-- /modal-body -->
@@ -103,6 +111,14 @@
 									<div class="form-group">
 										<label for="">ชื่อลูกค้า : </label>
 										<input type="text" class="form-control" id="customername" name="customername" />
+									</div><br><br>
+                                    <div class="form-group">
+										<label for="">เริ่ม: </label>
+										<input type="text" class="form-control" id="startdate_customer" name="startdate" />
+									</div>
+									<div class="form-group">
+										<label for=""> สิ้นสุด :</label>
+										<input type="text" class="form-control" id="enddate_customer" name="enddate" />
 									</div>
 										
 								</div>            <!-- /modal-body -->
@@ -183,6 +199,10 @@
     {
 		get_datepicker("#startdate");
 		get_datepicker("#enddate");
+        get_datepicker("#startdate_car");
+		get_datepicker("#enddate_car");
+        get_datepicker("#startdate_customer");
+		get_datepicker("#enddate_customer");
         var oTable = $('#dataTables-example').dataTable
         ({
             "bJQueryUI": false,
