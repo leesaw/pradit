@@ -7,7 +7,7 @@
 <table border="0">
 <tbody>
 <?php if(isset($bill_array)) { foreach($bill_array as $loop) { ?>
-<tr><td height="62">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td height="58">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td width="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php echo $loop->_customerID; ?></td><td width="10"> </td><td width="80"> </td><td width="120"><?php echo $loop->billID; ?></td></tr>
 <tr><td width="400" height="30"><?php echo $loop->title." ".$loop->customerName; ?></td><td width="10"> </td><td width="80"> </td><td width="120"><br> 
@@ -29,11 +29,11 @@
 <table>
 <thead>
 	<tr>
-		<th width="20"> </th><th width="360"> </th><th width="140" > </th><th width="100"> </th><th width="100"> </th>
+		<th width="20"> </th><th width="380"> </th><th width="140" > </th><th width="110"> </th><th width="100"> </th>
 	</tr>
 </thead>
 <tbody>
-<tr><td height="40"> </td><td> </td><td> </td><td> </td><td> </td></tr>
+<tr><td height="43"> </td><td> </td><td> </td><td> </td><td> </td></tr>
 <?php $no=1; $sum=0; if(isset($billproduct_array)) { foreach($billproduct_array as $loop) { ?>
 <tr><td align="left"><?php echo $no; ?></td>
 <td align="left"><?php echo "&nbsp;&nbsp;".$loop->productname; ?></td>
