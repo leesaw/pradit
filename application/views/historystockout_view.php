@@ -38,6 +38,10 @@
 								</div>            <!-- /modal-header -->
 								<div class="modal-body">
 									<form class="form-inline" role="form" action="<?php echo site_url("managestock/excelbetweendate_out"); ?>" method="POST" >
+                                    <div class="form-group">
+								    <label for="">รหัสสินค้า : </label>
+								        <input type="text" class="form-control" id="productid" name="productid" />
+									</div><br><br>
 									<div class="form-group">
 										<label for="">เริ่ม: </label>
 										<input type="text" class="form-control" id="startdate" name="startdate" />
