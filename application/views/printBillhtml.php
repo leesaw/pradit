@@ -29,7 +29,7 @@
 <table>
 <thead>
 	<tr>
-		<th width="20"> </th><th width="380"> </th><th width="140" > </th><th width="110"> </th><th width="100"> </th>
+		<th width="20"> </th><th width="380"> </th><th width="140" > </th><th width="110"> </th><th width="110"> </th>
 	</tr>
 </thead>
 <tbody>
