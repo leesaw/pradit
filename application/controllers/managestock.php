@@ -1079,7 +1079,9 @@ class Managestock extends CI_Controller {
 		$sql .= " left join category on category.id = product.categoryID";
 		$sql .= " left join users on users.id = stock_out.userID";
 		$sql .= " where onDate between '".$start."' and '".$end." 23:59:59.999'";
-        $sql .= " and standardID = '".$productid."'";
+        if ($productid!="") {
+            $sql .= " and standardID = '".$productid."'";
+        }
         $result = $this->db->query($sql);
 
         $this->load->view('exportedToCsv', array('csv'=> $this->dbutil->csv_from_result($result, $delimiter, $newline)));
