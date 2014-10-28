@@ -28,9 +28,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-4">
-                                <?php 
-									$attributes = array('class' =>'myform', 'id' => 'myform');
-									echo form_open('managestock/savetemptostock', $attributes); ?>
+                                <form action="<?php echo site_url("managestock/savetemptostock"); ?>" method="post" accept-charset="utf-8" class="myform" id="myform" onsubmit="mySubmit.disabled = true; return true;">
                                     <div class="form-group">
                                     	<label>เข้าสต็อก สาขา *</label>
                                         <select class="form-control" name="branchid" id="branchid">
@@ -86,7 +84,7 @@
 		
 						<div class="row">
 							<div class="col-lg-8">
-									<button type="submit" class="btn btn-primary btn-lg">  บันทึก  </button></a>
+									<button type="submit" class="btn btn-primary btn-lg" name="mySubmit">  บันทึก  </button></a>
 									<button type="button" id="cancel" class="btn btn-warning btn-lg" onClick="window.location.href='<?php echo site_url("managestock/addstockfrombarcode"); ?>'">  ยกเลิก  </button></a>
 							</div>
 						</div>
