@@ -31,13 +31,13 @@
 			  $TSCObj->ActiveXbarcode("450", "110", "128", "200", "1", "0", "2", "2", $bc);	
 			 
 			  // print number of copies
-			  $copy = ceil($_GET["copy"]/2);
+			  $copy = ceil($copy/2);
 			  if ($copy > 0) {
 				for ($i=0; $i<$copy; $i++) {
 					//$TSCObj->ActiveXprintlabel("1","1");
 				}
-				echo "Printing....";
-				echo "bc = $bc, name = $name, price1 = $price1";
+				echo "Printing.... ";
+				//echo "bc = $bc, name = $name, price1 = $price1";
 			  }else{
 				echo "Error!!!";
 			  }
