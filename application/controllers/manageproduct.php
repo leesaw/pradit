@@ -256,6 +256,7 @@ class Manageproduct extends CI_Controller {
 		}
 		
 		$data['title'] = "Pradit and Friends - View Product";
+        $data['id'] = $id;
 		$this->load->view('viewproduct_view',$data);
 	}
 	
@@ -390,11 +391,38 @@ class Manageproduct extends CI_Controller {
 	
     function jquerybarcode() 
     {
-		$data['barcodeid'] = $this->uri->segment(3);
-		$data['pname'] = $this->uri->segment(4);
-		$data['price'] = $this->uri->segment(5);
-		
+        $id = $this->uri->segment(3);
+        $query = $this->product->getOneProduct($id);
+		if($query){
+			$data['product_array'] =  $query;
+		}
+		//$data['barcodeid'] = $this->uri->segment(3);
+		//$data['pname'] = $this->uri->segment(4);
+		//$data['price'] = $this->uri->segment(5);
+		$data['id'] = $id;
 		$data['title'] = "Pradit and Friends - Barcode printing";
 		$this->load->view('barcode_view',$data);
+    } 
+    
+    function printbarcode() 
+    {
+        $id = $this->uri->segment(3);
+        $copy = $this->uri->segment(4);
+        $query = $this->product->getOneProduct($id);
+		if($query){
+			foreach($query as $loop){
+                $data['bc'] = $loop->barcode;
+                $data['name'] = $loop->pname;
+                $data['price'] = $loop->priceVAT;
+            }
+		}
+		//$data['barcodeid'] = $this->uri->segment(3);
+		//$data['pname'] = $this->uri->segment(4);
+		//$data['price'] = $this->uri->segment(5);
+        
+		$data['id'] = $id;
+        $data['copy'] = $copy;
+		$data['title'] = "Pradit and Friends - Barcode printing";
+		$this->load->view('printbarcode',$data);
     } 
 }

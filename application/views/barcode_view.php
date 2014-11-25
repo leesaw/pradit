@@ -12,6 +12,15 @@ html {
 </head>
 
 <body>
+<?php
+    if(is_array($product_array)) {
+        foreach($product_array as $loop){
+            $barcodeid = $loop->barcode;
+            $pname = $loop->pname;
+            $price = number_format($loop->priceVAT, 2, '.', ',');
+        }
+    }
+?>
 <div class="row">
             <div class="col-md-10">
 			<div class="panel panel-default">
@@ -46,7 +55,7 @@ $(document).ready(function() {
 
 function sendPrinter() {
 	var txtbox = document.getElementById("copy");
-	window.location.href="<?php echo base_url()."/tsc/printbarcode.php?bc=".$barcodeid."&name=".$pname."&price=".$price; ?>"+"&copy="+txtbox.value;
+	window.location.href="<?php echo site_url("manageproduct/printbarcode/".$id); ?>"+"/"+txtbox.value;
 }
  </script>
 </body>

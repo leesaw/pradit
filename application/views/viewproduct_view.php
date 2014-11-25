@@ -133,7 +133,7 @@
 									<button type="button" class="btn btn-warning" onClick="window.location.href='<?php echo site_url("manageproduct/viewSelectedCat/".$loop->categoryID); ?>'"> กลับไปหน้าจัดการข้อมูลสินค้า </button>
 							</div>
 							<div class="col-md-3">
-								<a id="fancyboxview" href="<?php echo site_url("manageproduct/jquerybarcode/".$loop->barcode."/".$loop->pname."/".$loop->priceVAT);  ?>"><button type="button" class="btn btn-info btn-md"> พิมพ์ Barcode </button></a>
+								<a id="fancyboxview" href="<?php echo site_url("manageproduct/jquerybarcode/".$id);  ?>"><button type="button" class="btn btn-info btn-md"> พิมพ์ Barcode </button></a>
 							</div>
 							<!--
 							<div class="col-md-3">
